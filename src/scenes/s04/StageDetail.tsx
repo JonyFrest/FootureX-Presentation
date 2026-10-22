@@ -19,7 +19,7 @@ export function StageDetail({ selected, onSelect, reducedMotion }: StageDetailPr
   const go = (delta: number) => onSelect((selected + delta + COUNT) % COUNT);
 
   return (
-    <Glass strong className="relative overflow-hidden p-[var(--gap-4)]" aria-live="polite">
+    <Glass strong className="relative overflow-hidden p-[clamp(16px,calc(var(--u)*1.9),40px)]" aria-live="polite">
       <span
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/80 to-transparent"
@@ -39,21 +39,29 @@ export function StageDetail({ selected, onSelect, reducedMotion }: StageDetailPr
         </div>
       </div>
 
-      <div className="relative mt-[var(--gap-2)] min-h-[clamp(180px,calc(var(--u)*14),290px)]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={stage.id}
-            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-            transition={{ duration: reducedMotion ? 0.01 : 0.32, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <StageBody stage={stage} />
-          </motion.div>
-        </AnimatePresence>
+      {/* Все этапы лежат в одной ячейке сетки: высота карточки = самый высокий этап, без скачков при переключении */}
+      <div className="relative mt-[var(--gap-2)] grid">
+        {LIFECYCLE.map((s) => (
+          <div key={s.id} className="invisible [grid-area:1/1]" aria-hidden>
+            <StageBody stage={s} />
+          </div>
+        ))}
+        <div className="[grid-area:1/1]">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={stage.id}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: reducedMotion ? 0.01 : 0.32, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <StageBody stage={stage} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
-      <div className="mt-[var(--gap-3)] flex gap-1.5" aria-hidden>
+      <div className="mt-[var(--gap-2)] flex gap-1.5" aria-hidden>
         {LIFECYCLE.map((s, i) => (
           <span
             key={s.id}

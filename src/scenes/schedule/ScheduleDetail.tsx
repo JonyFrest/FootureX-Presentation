@@ -51,7 +51,7 @@ function Summary() {
         <span className="t-small font-semibold text-white">{SUMMARY.line}</span>
       </p>
       <p className="t-small text-soft">{SUMMARY.scope}</p>
-      <p className="t-micro text-mute">Наведите или нажмите на работу либо веху — здесь появятся детали</p>
+      <p className="t-micro text-mute">ид — идеальные человеко-дни. Наведите или нажмите на работу либо веху</p>
     </>
   );
 }

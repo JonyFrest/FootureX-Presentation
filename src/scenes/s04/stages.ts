@@ -58,20 +58,20 @@ export const LIFECYCLE: readonly LifecycleStage[] = [
     id: 'initiating',
     ru: 'Инициация',
     en: 'Initiating',
-    text: 'Устав фиксирует цель по SMART, границы MVP и спонсора.',
+    text: 'Устав официально запускает проект MVP.',
     figure: {
       value: String(PROJECT.durationMonths),
       unit: ruPlural(PROJECT.durationMonths, MONTH_FORMS),
       caption: 'срок MVP · цель по SMART',
     },
-    points: ['Устав проекта', 'Цель по SMART', 'Границы MVP', `Спонсор — ${PROJECT.sponsor}`],
+    points: ['Цель по SMART', 'Границы MVP', `Спонсор — ${PROJECT.sponsor}`],
     result: 'Устав утверждён',
   },
   {
     id: 'planning',
     ru: 'Планирование',
     en: 'Planning',
-    text: 'Базовый план: содержание, сроки, стоимость и риски.',
+    text: 'Цель → работы, график, бюджет и риски.',
     facts: [
       {
         value: String(WORK_PACKAGES.length),
@@ -85,13 +85,13 @@ export const LIFECYCLE: readonly LifecycleStage[] = [
       { value: String(RISKS.length), label: `${ruPlural(RISKS.length, RISK_FORMS)} в реестре` },
     ],
     points: [],
-    result: 'Базовый план: содержание, сроки, бюджет',
+    result: 'Базовый план: объём, сроки, бюджет',
   },
   {
     id: 'executing',
     ru: 'Исполнение',
     en: 'Executing',
-    text: 'Команда создаёт продукт короткими итерациями по Scrum.',
+    text: 'Команда создаёт продукт итерациями по Scrum.',
     figure: {
       value: String(PROJECT.sprints),
       unit: ruPlural(PROJECT.sprints, SPRINT_FORMS),
@@ -105,7 +105,7 @@ export const LIFECYCLE: readonly LifecycleStage[] = [
     ru: 'Мониторинг и контроль',
     en: 'Monitoring & Controlling',
     enShort: 'Monitoring',
-    text: 'Идёт параллельно всем этапам — от устава до приёмки.',
+    text: 'Сравниваем факт с планом и корректируем курс.',
     figure: { value: INDEX_TARGET, caption: 'SPI и CPI · целевое значение' },
     points: [`Вехи ${MILESTONE_RANGE}`, 'Диаграмма сгорания', 'Изменения — через бэклог и спонсора'],
     result: 'Корректирующие действия и обновлённый план',
@@ -115,7 +115,7 @@ export const LIFECYCLE: readonly LifecycleStage[] = [
     id: 'closing',
     ru: 'Завершение',
     en: 'Closing',
-    text: 'Приёмка MVP и передача опыта следующему этапу.',
+    text: 'Приёмка MVP и передача опыта дальше.',
     figure: {
       value: String(PROJECT.acceptance.length),
       unit: `${ruPlural(PROJECT.acceptance.length, CRITERION_FORMS)} приёмки`,
