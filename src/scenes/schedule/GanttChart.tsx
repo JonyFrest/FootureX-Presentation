@@ -34,7 +34,7 @@ const VARS = {
   '--dia': 'clamp(11px, calc(var(--u) * 0.85), 17px)',
 } as CSSProperties;
 
-const COLUMNS = 'clamp(90px, calc(var(--u) * 7.4), 150px) clamp(282px, calc(var(--u) * 20.5), 410px) minmax(0, 1fr)';
+const COLUMNS = 'clamp(86px, calc(var(--u) * 6.6), 136px) clamp(304px, calc(var(--u) * 21), 420px) minmax(0, 1fr)';
 
 /** Раскладка строк сетки: шапка (месяцы, спринты), группы результатов с отступами, ось вех. */
 function buildLayout() {
@@ -218,7 +218,7 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
                 active={on}
                 className={`absolute top-0 right-0 size-[var(--dia)] translate-x-1/2 -translate-y-1/2 group-hover:scale-110 ${on ? 'scale-125' : ''}`}
               />
-              <span className="block pt-[calc(var(--dia)*0.75)] pr-[calc(var(--dia)*0.7)] pl-1">
+              <span className="block pt-[calc(var(--dia)*0.75)] pr-[3px] text-balance">
                 <span className={`t-micro block leading-tight transition-colors duration-300 ${on ? 'text-white' : 'text-ice'}`}>
                   <span className="font-display text-highlight">{m.id}</span> {m.title}
                 </span>
@@ -291,7 +291,7 @@ function GanttRowButton({ row, line, index, show, reducedMotion, active, pinned,
                 outlineOffset: 2,
               }}
               initial={reducedMotion ? false : { scaleX: 0 }}
-              animate={{ scaleX: show ? 1 : 0 }}
+              animate={show ? { scaleX: 1 } : undefined}
               transition={{ duration: 0.75, delay: 0.1 + (seg.start - 1) * 0.07 + index * 0.02, ease: [0.16, 1, 0.3, 1] }}
             />
           </span>

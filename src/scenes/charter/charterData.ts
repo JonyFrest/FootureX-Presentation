@@ -48,7 +48,10 @@ function segmentGoal(goal: string): GoalSegment[] {
   return out;
 }
 
-export const GOAL_SEGMENTS = segmentGoal(PROJECT.goal);
+/** Узкие неразрывные пробелы в числах («15 000», «$5 000»), чтобы они не разрывались переносом. */
+const goalText = PROJECT.goal.replace(/(\d)[\u00A0\u202F ](?=\d{3})/g, '$1\u202F');
+
+export const GOAL_SEGMENTS = segmentGoal(goalText);
 export const LETTERS_IN_GOAL = new Set(GOAL_SEGMENTS.flatMap((s) => (s.letter ? [s.letter] : [])));
 
 /** «Руководитель проекта (Product Owner)» → «Product Owner». */
