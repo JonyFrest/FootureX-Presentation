@@ -229,7 +229,7 @@ export function ProjectFacts({ stage, compact = false }: { stage: RoadmapStage; 
       {stage.facts.map((fact, i) => (
         <div
           key={fact.id}
-          className={`flex min-w-0 flex-col gap-1 px-[var(--gap-2)] py-[var(--gap-2)] ${
+          className={`flex flex-col gap-1 px-[var(--gap-2)] py-[var(--gap-2)] ${
             compact
               ? `${i % 2 ? 'border-l border-white/[0.08]' : ''} ${i > 1 ? 'border-t border-white/[0.08]' : ''}`
               : i > 0
