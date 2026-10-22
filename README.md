@@ -90,16 +90,17 @@ npm run preview    # просмотр сборки: http://localhost:4173
 
 | | |
 |---|---|
-| ![02 Цель и задачи](docs/screenshots/scene-02-1920x1080.jpg) | ![04 Жизненный цикл HR](docs/screenshots/scene-04-1920x1080.jpg) |
-| ![06 Что такое FootureX](docs/screenshots/scene-06-1920x1080.jpg) | ![08 Оргструктура](docs/screenshots/scene-08-1920x1080.jpg) |
-| ![10 ФОТ и HR-бюджет](docs/screenshots/scene-10-1920x1080.jpg) | ![11 Воронка найма](docs/screenshots/scene-11-1920x1080.jpg) |
-| ![13 KPI-панель](docs/screenshots/scene-13-1920x1080.jpg) | ![15 Финал и источники](docs/screenshots/scene-15-1920x1080.jpg) |
+| ![02 Цель и задачи](docs/screenshots/scene-02-1920x1080.jpg) | ![03 Актуальность](docs/screenshots/scene-03-1920x1080.jpg) |
+| ![05 Гибридная методология](docs/screenshots/scene-05-1920x1080.jpg) | ![08 Устав проекта](docs/screenshots/scene-08-1920x1080.jpg) |
+| ![09 Команда и RACI](docs/screenshots/scene-09-1920x1080.jpg) | ![10 WBS](docs/screenshots/scene-10-1920x1080.jpg) |
+| ![11 Диаграмма Ганта](docs/screenshots/scene-11-1920x1080.jpg) | ![12 Бюджет проекта](docs/screenshots/scene-12-1920x1080.jpg) |
+| ![13 Управление рисками](docs/screenshots/scene-13-1920x1080.jpg) | ![14 Контроль и выводы](docs/screenshots/scene-14-1920x1080.jpg) |
 
 Телефон (390×844): раскладка перестраивается — карточки, аккордеоны и вкладки вместо широких схем.
 
 | | | | |
 |---|---|---|---|
-| ![01](docs/screenshots/scene-01-390x844.jpg) | ![08](docs/screenshots/scene-08-390x844.jpg) | ![10](docs/screenshots/scene-10-390x844.jpg) | ![13](docs/screenshots/scene-13-390x844.jpg) |
+| ![01](docs/screenshots/scene-01-390x844.jpg) | ![08](docs/screenshots/scene-08-390x844.jpg) | ![11](docs/screenshots/scene-11-390x844.jpg) | ![13](docs/screenshots/scene-13-390x844.jpg) |
 
 Скриншоты всех 15 сцен в 1920×1080 — в папке [docs/screenshots](docs/screenshots).
 
@@ -208,15 +209,15 @@ npm run shots -- --scenes all --sizes 1920x1080,1366x768,390x844
 | Проверка | Результат |
 |---|---|
 | `tsc -b` | без ошибок |
-| `npm run build` | успешно |
-| Бюджет: суммы строк и долей (месяц/год) | все проверки пройдены |
+| `npm run build` | успешно (локально и на Vercel) |
+| Данные проекта: WBS, ёмкость, бюджет, RACI, риски, вехи (`npm run test:sums`) | все проверки пройдены |
 | Навигация, клавиатура, меню, fullscreen, окно докладчика (production-сборка) | 26/26 |
 | Вёрстка: 15 сцен × 1920×1080, 1600×900, 1366×768, 390×844, 844×390 (production-сборка) | 75/75 без замечаний |
 | Интерактив сцен: клики, наведение, касания, вкладки, Tab — сцена не перелистывается | все сценарии пройдены |
 | Режим без WebGL (`?lite=1`) и `prefers-reduced-motion` | работают |
 
 Проверки выполнялись в headless Chromium с программным WebGL (без GPU), поэтому FPS там не
-показателен (≈4 кадра/с); переход при этом укладывается в ≈1,35 с реального времени.
+показателен; переход при этом укладывается в ≈1,35 с реального времени.
 Плавность 60 FPS нужно оценить на вашем ноутбуке и проекторе — откройте `?fps=1`.
 
 ## Публикация в интернете
