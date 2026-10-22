@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useScene } from '@/components/scene';
 import { pad2 } from '@/data/scenes';
-import { TASKS, sceneRange, type GoalTask } from './data';
+import { GOAL_MARK, TASKS, sceneRange, tasksLabel, type GoalTask } from './data';
 
 /** Радиус кольца точек подключения — доля от стороны ядра (viewBox 200 → r = 68). */
 export const ANCHOR_RATIO = 68 / 200;
@@ -165,8 +165,10 @@ export function GoalCore({ active, className = '' }: GoalCoreProps) {
               transition={{ duration: reducedMotion ? 0.15 : 0.28 }}
             >
               <span className="t-eyebrow text-ice/80">Goal</span>
-              <span className="t-stat mt-1 text-white">HR</span>
-              <span className="t-micro mt-1 whitespace-nowrap text-ice/85">4 задачи</span>
+              <span className="t-stat mt-1 text-white" lang="en">
+                {GOAL_MARK}
+              </span>
+              <span className="t-micro mt-1 whitespace-nowrap text-ice/85">{tasksLabel()}</span>
             </motion.div>
           )}
         </AnimatePresence>
