@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { SceneFrame, SceneHeader, Reveal, useScene } from '@/components/scene';
 import { useIsCompact } from '@/hooks/useMediaQuery';
+import { PROJECT } from '@/data/project';
 import { Timeline } from './s07/Timeline';
 import { TimelineMobile } from './s07/TimelineMobile';
 
-const TITLE = 'Дорожная карта развития';
-const LEAD = 'Каждый этап развития FootureX требует своей кадровой стратегии.';
+const TITLE = 'Программа развития';
+const LEAD = `Три этапа — три проекта одной программы. Сейчас идёт первый: ${PROJECT.code}.`;
 
 export default function Scene07Roadmap() {
   const { ready, reducedMotion } = useScene();

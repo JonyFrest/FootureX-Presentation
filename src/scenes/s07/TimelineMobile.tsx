@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { CountUp } from '@/components/ui';
 import { ROADMAP, STATUS_LABEL } from './stages';
-import { FocusList } from './Timeline';
+import { FocusList, ProjectFacts, ProjectTag } from './Timeline';
 
 interface TimelineMobileProps {
   selected: number;
@@ -76,6 +75,7 @@ export function TimelineMobile({ selected, onSelect, ready, reducedMotion }: Tim
                   </span>
                 </span>
                 <span className="t-h3 font-display font-normal text-white">{stage.title}</span>
+                <ProjectTag stage={stage} />
                 <span className="t-small text-soft">{stage.text}</span>
               </button>
               <AnimatePresence initial={false}>
@@ -89,15 +89,7 @@ export function TimelineMobile({ selected, onSelect, ready, reducedMotion }: Tim
                     className="overflow-hidden"
                   >
                     <div className="flex flex-col gap-3 pt-3">
-                      {stage.stat ? (
-                        <div>
-                          <div className="flex items-baseline gap-2">
-                            <CountUp to={stage.stat.value} className="t-stat text-gradient" />
-                            <span className="t-small font-medium text-highlight">{stage.stat.unit}</span>
-                          </div>
-                          <p className="t-micro mt-1 text-mute">{stage.stat.caption}</p>
-                        </div>
-                      ) : null}
+                      <ProjectFacts stage={stage} compact />
                       <FocusList stage={stage} />
                     </div>
                   </motion.div>
