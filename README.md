@@ -217,11 +217,28 @@ npm run shots -- --scenes all --sizes 1920x1080,1366x768,390x844
 показателен (≈4 кадра/с); переход при этом укладывается в ≈1,35 с реального времени.
 Плавность 60 FPS нужно оценить на вашем ноутбуке и проекторе — откройте `?fps=1`.
 
-## Публикация на GitHub Pages
+## Публикация в интернете
 
-В репозитории есть workflow `.github/workflows/deploy.yml`. Один раз включите
-**Settings → Pages → Build and deployment → Source: GitHub Actions** — после этого каждый
-push в `main` публикует презентацию по адресу `https://<user>.github.io/<repo>/`.
+Сборка — статический сайт (`npm run build` → `dist/`), поэтому подходит любой хостинг.
+Конфигурация для Vercel, Netlify и Cloudflare Pages уже лежит в репозитории
+(`vercel.json`, `netlify.toml`, `public/_headers`, Node 22 в `.nvmrc`). После подключения
+каждый push в `main` публикуется автоматически.
+
+| Хостинг | Как подключить |
+|---|---|
+| **Vercel** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJonyFrest%2FFootureX-Presentation&project-name=footurex-presentation) — войдите через GitHub и нажмите **Deploy**. Адрес: `https://<проект>.vercel.app` |
+| **Netlify** | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/JonyFrest/FootureX-Presentation) — войдите через GitHub и нажмите **Deploy**. Адрес: `https://<проект>.netlify.app` |
+| **Cloudflare Pages** | Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → репозиторий `FootureX-Presentation`; Framework preset **Vite** (Build command `npm run build`, Build output `dist`) → **Save and Deploy**. Адрес: `https://<проект>.pages.dev` |
+| **GitHub Pages** | **Settings → Pages → Source: GitHub Actions**, затем перезапустите workflow `Deploy to GitHub Pages`. Адрес: `https://jonyfrest.github.io/FootureX-Presentation/` |
+
+Публикация из командной строки (нужен токен сервиса в переменной окружения):
+
+```bash
+npm run build
+npx vercel deploy --prod                                  # VERCEL_TOKEN
+npx netlify-cli deploy --prod --dir=dist                  # NETLIFY_AUTH_TOKEN
+npx wrangler pages deploy dist --project-name=footurex    # CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID
+```
 
 ## Технологии
 
