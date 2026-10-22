@@ -23,7 +23,7 @@ export default function Scene01Opening() {
         </Reveal>
 
         <h1 className="t-display mt-[var(--gap-4)] max-w-[22ch] text-balance [filter:drop-shadow(0_4px_24px_rgba(7,10,18,0.7))] sm:max-w-none">
-          <MaskLine delay={0.18}>Управление персоналом</MaskLine>
+          <MaskLine delay={0.18}>Управление проектами</MaskLine>
           <MaskLine delay={0.32} className="text-gradient">
             FootureX Uzbekistan
           </MaskLine>
@@ -101,7 +101,7 @@ interface MetaItem {
 
 const META: readonly MetaItem[] = [
   { label: 'Студент', value: 'Зафарбек Якубов', sub: 'Группа RB 25-01' },
-  { label: 'Преподаватель', value: 'Парвиз Мамедов', sub: 'Дисциплина «Управление персоналом»' },
+  { label: 'Преподаватель', value: 'Парвиз Мамедов', sub: 'Дисциплина «Управление проектами»' },
   {
     label: 'Университет · TIUE',
     value: 'Tashkent International University of Education',

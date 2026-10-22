@@ -8,13 +8,13 @@ export type Vec3 = readonly [number, number, number];
 /** Пространственные объекты 3D-мира, которые проявляются на конкретных сценах. */
 export type WorldFeature =
   | 'ball' // голографический мяч над полем
-  | 'ring' // кольцо из шести узлов жизненного цикла
-  | 'flow' // потоки данных HR → сотрудник → рост
-  | 'path' // световая дорога этапов развития
-  | 'tower' // ярусы оргструктуры
-  | 'pillars' // 3D-столбцы численности и бюджета
-  | 'funnel' // кольца воронки найма
-  | 'orbit'; // орбиты удержания
+  | 'ring' // кольцо из пяти узлов жизненного цикла проекта
+  | 'flow' // потоки данных: вход → спринты → результат
+  | 'path' // световая дорога этапов и вех
+  | 'tower' // ярусы иерархии: проект → результаты → пакеты работ
+  | 'pillars' // 3D-столбцы бюджета и показателей
+  | 'funnel' // кольца-фильтры: риски проходят через меры реагирования
+  | 'orbit'; // орбиты команды и стейкхолдеров
 
 export interface CameraPose {
   position: Vec3;
@@ -42,8 +42,8 @@ export const SCENES: readonly SceneMeta[] = [
   {
     id: 'opening',
     number: 1,
-    title: 'Управление персоналом FootureX Uzbekistan',
-    eyebrow: 'FootureX · HR',
+    title: 'Управление проектами FootureX Uzbekistan',
+    eyebrow: 'FootureX · PM',
     camera: { position: [0, 28, 92], target: [0, 7, 0] },
     features: [],
     dim: 0.15,
@@ -62,7 +62,7 @@ export const SCENES: readonly SceneMeta[] = [
   {
     id: 'relevance',
     number: 3,
-    title: 'Актуальность HR для технологической компании',
+    title: 'Актуальность проектного управления',
     eyebrow: 'Relevance',
     camera: { position: [104, 22, 12], target: [0, 14, -40] },
     features: [],
@@ -72,22 +72,22 @@ export const SCENES: readonly SceneMeta[] = [
   {
     id: 'lifecycle',
     number: 4,
-    title: 'Жизненный цикл HR',
-    eyebrow: 'HR Lifecycle',
+    title: 'Жизненный цикл проекта',
+    eyebrow: 'Project Lifecycle',
     camera: { position: [64, 58, -64], target: [0, 12, 0] },
     features: ['ring'],
     dim: 0.55,
-    durationSec: 45,
+    durationSec: 40,
   },
   {
-    id: 'model',
+    id: 'method',
     number: 5,
-    title: 'Модель управления персоналом',
-    eyebrow: 'HR Model',
+    title: 'Гибридная методология',
+    eyebrow: 'Hybrid Method',
     camera: { position: [-84, 60, 70], target: [0, 22, -64] },
     features: ['flow'],
-    dim: 0.45,
-    durationSec: 40,
+    dim: 0.5,
+    durationSec: 45,
   },
   {
     id: 'about',
@@ -97,86 +97,86 @@ export const SCENES: readonly SceneMeta[] = [
     camera: { position: [0, 9.8, 25], target: [0, 8.4, 0], fov: 46 },
     features: ['ball'],
     dim: 0.1,
-    durationSec: 35,
+    durationSec: 30,
   },
   {
     id: 'roadmap',
     number: 7,
-    title: 'Дорожная карта развития',
+    title: 'Программа развития',
     eyebrow: 'Roadmap',
     camera: { position: [-64, 48, -20], target: [0, 2, -128] },
     features: ['path'],
     dim: 0.35,
-    durationSec: 40,
+    durationSec: 35,
   },
   {
-    id: 'structure',
+    id: 'charter',
     number: 8,
-    title: 'Организационная структура',
-    eyebrow: 'Org Structure',
-    camera: { position: [-72, 34, -42], target: [0, 16, 0] },
-    features: ['tower'],
-    dim: 0.55,
+    title: 'Устав проекта',
+    eyebrow: 'Project Charter',
+    camera: { position: [-72, 34, -42], target: [0, 12, 0] },
+    features: ['ball'],
+    dim: 0.6,
     durationSec: 45,
   },
   {
-    id: 'workforce',
+    id: 'team',
     number: 9,
-    title: 'Штатное расписание этапа 1',
-    eyebrow: 'Workforce Planning',
-    camera: { position: [-42, 72, 52], target: [0, 0, 0] },
-    features: ['pillars'],
+    title: 'Команда и стейкхолдеры',
+    eyebrow: 'Team & Stakeholders',
+    camera: { position: [-42, 72, 52], target: [0, 4, 0] },
+    features: ['orbit'],
     dim: 0.6,
     durationSec: 45,
   },
   {
-    id: 'payroll',
+    id: 'wbs',
     number: 10,
-    title: 'Фонд оплаты труда и HR-бюджет',
-    eyebrow: 'Payroll & HR Budget',
-    camera: { position: [22, 46, 80], target: [0, 4, 0] },
-    features: ['pillars'],
+    title: 'Иерархическая структура работ',
+    eyebrow: 'WBS',
+    camera: { position: [22, 46, 80], target: [0, 10, 0] },
+    features: ['tower'],
     dim: 0.6,
-    durationSec: 50,
+    durationSec: 45,
   },
   {
-    id: 'recruitment',
+    id: 'schedule',
     number: 11,
-    title: 'Воронка найма',
-    eyebrow: 'Recruitment Pipeline',
-    camera: { position: [46, 30, 54], target: [0, 18, 0] },
-    features: ['funnel'],
-    dim: 0.45,
-    durationSec: 40,
-  },
-  {
-    id: 'onboarding',
-    number: 12,
-    title: 'Адаптация: 90 дней',
-    eyebrow: 'Onboarding 30 · 60 · 90',
+    title: 'Календарный план',
+    eyebrow: 'Schedule · Gantt',
     camera: { position: [0, 40, -42], target: [0, 4, -150] },
     features: ['path'],
     dim: 0.62,
-    durationSec: 40,
+    durationSec: 50,
   },
   {
-    id: 'kpi',
-    number: 13,
-    title: 'KPI-панель: целевые показатели',
-    eyebrow: 'KPI Dashboard',
+    id: 'budget',
+    number: 12,
+    title: 'Бюджет проекта',
+    eyebrow: 'Project Budget',
     camera: { position: [62, 76, -52], target: [0, 0, 0] },
     features: ['pillars'],
     dim: 0.62,
     durationSec: 45,
   },
   {
-    id: 'retention',
+    id: 'risks',
+    number: 13,
+    title: 'Управление рисками',
+    eyebrow: 'Risk Management',
+    camera: { position: [-32, 30, -82], target: [0, 16, 0] },
+    features: ['funnel'],
+    dim: 0.58,
+    durationSec: 50,
+  },
+  {
+    id: 'control',
     number: 14,
-    title: 'Мотивация и удержание',
-    eyebrow: 'Motivation & Retention',
-    camera: { position: [-32, 30, -82], target: [0, 13, 0] },
-    features: ['orbit'],
-    dim: 0.5,
+    title: 'Мониторинг, контроль и выводы',
+    eyebrow: 'Control & Conclusions',
+    camera: { position: [46, 30, 54], target: [0, 14, 0] },
+    features: ['ring'],
+    dim: 0.55,
     durationSec: 45,
   },
   {
@@ -187,7 +187,7 @@ export const SCENES: readonly SceneMeta[] = [
     camera: { position: [0, 64, 150], target: [0, 4, -30] },
     features: ['ball'],
     dim: 0.35,
-    durationSec: 20,
+    durationSec: 15,
   },
 ] as const;
 

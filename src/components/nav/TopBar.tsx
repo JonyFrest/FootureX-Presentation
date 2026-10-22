@@ -29,7 +29,7 @@ export function TopBar() {
       >
         <BrandLogo size="clamp(15px, calc(var(--u) * 1.15), 21px)" />
         <span className="hidden h-5 w-px bg-white/15 md:block" aria-hidden />
-        <span className="t-micro hidden text-soft md:block">Управление персоналом · TIUE 2026</span>
+        <span className="t-micro hidden text-soft md:block">Управление проектами · TIUE 2026</span>
       </div>
 
       <div className="pointer-events-auto flex items-center gap-2">

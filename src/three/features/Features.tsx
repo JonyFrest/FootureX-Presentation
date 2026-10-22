@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useFeatureFade } from '../useFeatureFade';
+import { DELIVERABLES, WORK_PACKAGES } from '@/data/project';
 import { BRAND, disposeObject, ellipsePoints, glowMaterial, mulberry32 } from '../utils';
 
 /**
@@ -79,7 +80,7 @@ function sprite(color: string, scale: number, opacity = 1, position?: [number, n
 }
 
 /* ------------------------------------------------------------------ */
-/** Голографический мяч FootureX над центром поля (сцены 06, 15). */
+/** Голографический мяч FootureX над центром поля (сцены 06, 08, 15). */
 export function HoloBall({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('ball');
   const spin = useRef<THREE.Group>(null!);
@@ -135,7 +136,7 @@ export function HoloBall({ animate }: { animate: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/** Кольцо жизненного цикла HR: шесть узлов над стадионом (сцена 04). */
+/** Кольцо жизненного цикла проекта: пять групп процессов над стадионом (сцены 04, 14). */
 export function LifecycleRing({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('ring');
   const { group, targets } = useGroup(() => {
@@ -144,8 +145,8 @@ export function LifecycleRing({ animate }: { animate: boolean }) {
     const r = 17;
     g.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(ellipsePoints(r, r, 0, 160).slice(0, -1)), lineMaterial(BRAND.secondary, 0.7)));
     g.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(ellipsePoints(r - 2.2, r - 2.2, 0, 160).slice(0, -1)), lineMaterial(BRAND.primary, 0.35)));
-    for (let i = 0; i < 6; i++) {
-      const a = (i / 6) * Math.PI * 2;
+    for (let i = 0; i < 5; i++) {
+      const a = (i / 5) * Math.PI * 2;
       const node = new THREE.Group();
       node.position.set(Math.cos(a) * r, 0, Math.sin(a) * r);
       node.add(new THREE.Mesh(new THREE.SphereGeometry(0.75, 20, 14), new THREE.MeshBasicMaterial({ color: BRAND.ice, transparent: true })));
@@ -168,7 +169,7 @@ export function LifecycleRing({ animate }: { animate: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/** Потоки данных: HR → сотрудники → рост компании (сцена 05). */
+/** Потоки: вход проекта → спринты → результат (сцена 05). */
 export function DataFlow({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('flow');
   const material = useMemo(
@@ -220,7 +221,7 @@ export function DataFlow({ animate }: { animate: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/** Световая дорога этапов развития на север, к FootureX City (сцены 07, 12). */
+/** Световая дорога этапов и вех на север, к FootureX City (сцены 07, 11). */
 export function LightPath({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('path');
   const roadMaterial = useMemo(
@@ -276,8 +277,8 @@ export function LightPath({ animate }: { animate: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/** Ярусы оргструктуры: CEO → 5 направлений → сотрудники (сцена 08). */
-export function OrgTower({ animate }: { animate: boolean }) {
+/** Ярусы иерархии: проект → 4 результата → пакеты работ (сцена 10). */
+export function WbsTower({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('tower');
   const { group, targets } = useGroup(() => {
     const g = new THREE.Group();
@@ -294,22 +295,25 @@ export function OrgTower({ animate }: { animate: boolean }) {
     top.position.set(0, 26, 0);
     g.add(top, sprite('#DCE7FF', 9, 0.8, [0, 26, 0]));
     const links: number[] = [];
-    for (let i = 0; i < 5; i++) {
-      const a = (i / 5) * Math.PI * 2 + Math.PI / 2;
+    // Проект → результаты WBS → пакеты работ (сколько пакетов у каждого результата).
+    const tiers = DELIVERABLES.map((d) => WORK_PACKAGES.filter((p) => p.deliverable === d.id).length);
+    tiers.forEach((count, i) => {
+      const a = (i / tiers.length) * Math.PI * 2 + Math.PI / 4;
       const p = new THREE.Vector3(Math.cos(a) * 10, 18, Math.sin(a) * 10);
       const n = hex(1.7, 0.8);
       n.position.copy(p);
       g.add(n);
       links.push(0, 25.4, 0, p.x, p.y + 0.4, p.z);
-      for (let j = 0; j < 3; j++) {
-        const b = a + (j - 1) * 0.36;
+      const spread = Math.min(0.32, 1.3 / count);
+      for (let j = 0; j < count; j++) {
+        const b = a + (j - (count - 1) / 2) * spread;
         const q = new THREE.Vector3(Math.cos(b) * 17, 10, Math.sin(b) * 17);
         const s = hex(0.9, 0.5);
         s.position.copy(q);
         g.add(s);
         links.push(p.x, p.y - 0.4, p.z, q.x, q.y + 0.25, q.z);
       }
-    }
+    });
     const lg = new THREE.BufferGeometry();
     lg.setAttribute('position', new THREE.Float32BufferAttribute(links, 3));
     g.add(new THREE.LineSegments(lg, lineMaterial(BRAND.secondary, 0.6)));
@@ -323,7 +327,7 @@ export function OrgTower({ animate }: { animate: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/** 3D-столбцы данных на поле (сцены 09, 10, 13): «вырастают» при появлении. */
+/** 3D-столбцы данных на поле (сцена 12): «вырастают» при появлении. */
 export function DataPillars() {
   const fade = useFeatureFade('pillars', 1.6);
   const { mesh, heights } = useMemo(() => {
@@ -383,8 +387,8 @@ export function DataPillars() {
 }
 
 /* ------------------------------------------------------------------ */
-/** Кольца воронки найма с «кандидатами», проходящими сквозь неё (сцена 11). */
-export function FunnelRings({ animate }: { animate: boolean }) {
+/** Кольца-фильтры с частицами: риски проходят через меры реагирования (сцена 13). */
+export function RiskFilters({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('funnel');
   const particleMaterial = useMemo(
     () =>
@@ -448,8 +452,8 @@ export function FunnelRings({ animate }: { animate: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/** Ядро удержания и четыре орбиты мотивации (сцена 14). */
-export function RetentionOrbits({ animate }: { animate: boolean }) {
+/** Ядро и четыре орбиты команды проекта (сцена 09). */
+export function TeamOrbits({ animate }: { animate: boolean }) {
   const fade = useFeatureFade('orbit');
   const { group, targets } = useGroup(() => {
     const g = new THREE.Group();

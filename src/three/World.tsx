@@ -10,7 +10,7 @@ import { CameraRig } from './CameraRig';
 import { City } from './City';
 import { Ground, Particles, Sky } from './Environment';
 import { Stadium } from './Stadium';
-import { DataFlow, DataPillars, FunnelRings, HoloBall, LifecycleRing, LightPath, OrgTower, RetentionOrbits } from './features/Features';
+import { DataFlow, DataPillars, RiskFilters, HoloBall, LifecycleRing, LightPath, WbsTower, TeamOrbits } from './features/Features';
 
 interface WorldProps {
   onContextLost?: () => void;
@@ -72,10 +72,10 @@ export default function World({ onContextLost }: WorldProps) {
       <LifecycleRing animate={animate} />
       <DataFlow animate={animate} />
       <LightPath animate={animate} />
-      <OrgTower animate={animate} />
+      <WbsTower animate={animate} />
       <DataPillars />
-      <FunnelRings animate={animate} />
-      <RetentionOrbits animate={animate} />
+      <RiskFilters animate={animate} />
+      <TeamOrbits animate={animate} />
     </Canvas>
   );
 }
