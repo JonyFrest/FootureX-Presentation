@@ -31,8 +31,8 @@ export function barStyle(kind: BarKind, emphasis: 'normal' | 'strong' = 'normal'
     };
   if (kind === 'optional')
     return {
-      background: 'repeating-linear-gradient(135deg, rgba(142,180,255,0.16) 0 4px, rgba(142,180,255,0.04) 4px 8px)',
-      border: '1.5px dashed rgba(142,180,255,0.75)',
+      background: 'repeating-linear-gradient(135deg, rgba(142,180,255,0.32) 0 3px, rgba(142,180,255,0.06) 3px 7px)',
+      border: '1.5px dashed rgba(142,180,255,0.9)',
     };
   return {
     background: 'linear-gradient(90deg, rgba(142,180,255,0.55), rgba(142,180,255,0.38))',

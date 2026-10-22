@@ -27,14 +27,14 @@ const pct = (sprintOffset: number) => (sprintOffset / SPRINTS) * 100;
 
 const VARS = {
   '--hdr': 'clamp(19px, calc(var(--u) * 1.5), 30px)',
-  '--row': 'clamp(22px, calc(var(--u) * 1.72), 34px)',
+  '--row': 'clamp(22px, calc(var(--u) * 1.66), 34px)',
   '--bar': 'calc(var(--row) * 0.56)',
   '--ggap': 'clamp(5px, calc(var(--u) * 0.5), 10px)',
-  '--ms-h': 'clamp(46px, calc(var(--u) * 3.5), 70px)',
+  '--ms-h': 'clamp(56px, calc(var(--u) * 3.6), 72px)',
   '--dia': 'clamp(11px, calc(var(--u) * 0.85), 17px)',
 } as CSSProperties;
 
-const COLUMNS = 'clamp(86px, calc(var(--u) * 6.6), 136px) clamp(304px, calc(var(--u) * 21), 420px) minmax(0, 1fr)';
+const COLUMNS = 'clamp(100px, calc(var(--u) * 7.3), 150px) clamp(304px, calc(var(--u) * 21), 420px) minmax(0, 1fr)';
 
 /** Раскладка строк сетки: шапка (месяцы, спринты), группы результатов с отступами, ось вех. */
 function buildLayout() {
@@ -160,9 +160,9 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
             borderLeftStyle: group.code ? 'solid' : 'dashed',
           }}
         >
-          <span className="t-micro leading-tight text-soft">
-            {group.code ? <span className="font-display text-highlight">{group.code} </span> : null}
-            {group.title}
+          <span className="flex min-w-0 items-baseline gap-[5px]">
+            {group.code ? <span className="t-micro shrink-0 font-display text-highlight">{group.code}</span> : null}
+            <span className="t-micro min-w-0 leading-tight text-soft">{group.title}</span>
           </span>
         </div>
       ))}
@@ -197,7 +197,7 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
         </span>
         <span className="t-micro flex items-center gap-[var(--gap-1)] text-soft">
           <Diamond className="mx-[6px] size-[9px]" /> веха · конец спринта
-          <LegendSwatch kind="optional" className="ml-[var(--gap-1)]" /> задел
+          <LegendSwatch kind="optional" className="ml-[var(--gap-1)]" /> задел · ид — идеальные человеко-дни
         </span>
       </div>
       <div className="relative border-t border-[rgba(142,180,255,0.35)]" style={{ gridColumn: 3, gridRow: LAYOUT.msLine }}>
