@@ -1,81 +1,129 @@
-import { HEADCOUNT, KPI_GROUPS, TIME_TO_HIRE_DAYS } from '@/data/hr';
-import { DAY_FORMS, PEOPLE_FORMS, ruPlural } from './ru';
+import {
+  BUDGET,
+  CONTROL_PILLARS,
+  MILESTONES,
+  PROJECT,
+  RISKS,
+  WBS_TOTAL,
+  WORK_PACKAGES,
+  formatUsd,
+} from '@/data/project';
+import {
+  CRITERION_FORMS,
+  MILESTONE_FORMS,
+  MONTH_FORMS,
+  PACKAGE_FORMS,
+  RISK_FORMS,
+  SPRINT_FORMS,
+  WEEK_FORMS,
+  ruPlural,
+} from './ru';
 
-/** Цель по годовой текучести — из плановых KPI (src/data/hr.ts). */
-export const TURNOVER_TARGET =
-  KPI_GROUPS.find((g) => g.id === 'hr')?.metrics.find((m) => m.label === 'Годовая текучесть')?.target ?? '';
+/** Диапазон вех: «M1–M5». */
+export const MILESTONE_RANGE = `${MILESTONES[0].id}–${MILESTONES[MILESTONES.length - 1].id}`;
+
+/** Целевой порог индексов SPI/CPI из плана контроля: «≥ 0,95». */
+export const INDEX_TARGET = (CONTROL_PILLARS.find((p) => p.id === 'schedule')?.metric ?? '').replace(/^SPI\s*/, '');
+
+export interface StageFact {
+  value: string;
+  label: string;
+}
 
 export interface LifecycleStage {
   id: string;
   ru: string;
+  /** Группа процессов PMI (латинская подпись). */
   en: string;
-  /** Одна короткая фраза: что этап значит для FootureX. */
+  /** Короткая латинская подпись для узла кольца. */
+  enShort?: string;
+  /** Одна короткая фраза: что этап значит для FootureX MVP. */
   text: string;
-  /** Ключевая цифра или формула этапа. */
+  /** Ключевая цифра этапа. */
   figure?: { value: string; unit?: string; caption: string };
-  /** Ступени карьерной лестницы (вместо цифры). */
-  ladder?: readonly string[];
-  /** Инструменты / каналы этапа. */
+  /** Сетка ключевых чисел (вместо одной цифры). */
+  facts?: readonly StageFact[];
+  /** Документы и инструменты этапа. */
   points: readonly string[];
+  /** Выход этапа. */
+  result: string;
+  /** Процесс идёт через весь проект, параллельно остальным этапам. */
+  spansAll?: boolean;
 }
 
+const nb = (s: string) => s.replace(/ /g, ' ');
+
 export const LIFECYCLE: readonly LifecycleStage[] = [
+  {
+    id: 'initiating',
+    ru: 'Инициация',
+    en: 'Initiating',
+    text: 'Устав фиксирует цель по SMART, границы MVP и спонсора.',
+    figure: {
+      value: String(PROJECT.durationMonths),
+      unit: ruPlural(PROJECT.durationMonths, MONTH_FORMS),
+      caption: 'срок MVP · цель по SMART',
+    },
+    points: ['Устав проекта', 'Цель по SMART', 'Границы MVP', `Спонсор — ${PROJECT.sponsor}`],
+    result: 'Устав утверждён',
+  },
   {
     id: 'planning',
     ru: 'Планирование',
     en: 'Planning',
-    text: 'Потребность в кадрах по этапам развития FootureX.',
-    figure: {
-      value: String(HEADCOUNT),
-      unit: ruPlural(HEADCOUNT, PEOPLE_FORMS),
-      caption: 'штатное расписание этапа 1 · план',
-    },
+    text: 'Базовый план: содержание, сроки, стоимость и риски.',
+    facts: [
+      {
+        value: String(WORK_PACKAGES.length),
+        label: `${ruPlural(WORK_PACKAGES.length, PACKAGE_FORMS)} WBS · ${WBS_TOTAL} ид`,
+      },
+      {
+        value: String(PROJECT.sprints),
+        label: `${ruPlural(PROJECT.sprints, SPRINT_FORMS)} · ${MILESTONES.length} ${ruPlural(MILESTONES.length, MILESTONE_FORMS)}`,
+      },
+      { value: nb(formatUsd(BUDGET.total)), label: 'бюджет с резервом · план' },
+      { value: String(RISKS.length), label: `${ruPlural(RISKS.length, RISK_FORMS)} в реестре` },
+    ],
     points: [],
+    result: 'Базовый план: содержание, сроки, бюджет',
   },
   {
-    id: 'recruitment',
-    ru: 'Подбор',
-    en: 'Recruitment',
-    text: 'Каналы поиска кандидатов:',
+    id: 'executing',
+    ru: 'Исполнение',
+    en: 'Executing',
+    text: 'Команда создаёт продукт короткими итерациями по Scrum.',
     figure: {
-      value: `≤ ${TIME_TO_HIRE_DAYS}`,
-      unit: ruPlural(TIME_TO_HIRE_DAYS, DAY_FORMS),
-      caption: 'срок закрытия вакансии · цель',
+      value: String(PROJECT.sprints),
+      unit: ruPlural(PROJECT.sprints, SPRINT_FORMS),
+      caption: `по ${PROJECT.sprintWeeks} ${ruPlural(PROJECT.sprintWeeks, WEEK_FORMS)} · ${PROJECT.sprintCapacity.min}–${PROJECT.sprintCapacity.max} ид за спринт`,
     },
-    points: ['hh.uz', 'LinkedIn', 'Telegram-сообщества', 'IT Park', 'Вузы', 'Рекомендации'],
+    points: ['Планирование спринта', 'Daily Scrum', 'Обзор спринта', 'Ретроспектива'],
+    result: 'Инкремент продукта в конце каждого спринта',
   },
   {
-    id: 'onboarding',
-    ru: 'Адаптация',
-    en: 'Onboarding',
-    text: 'Новичок входит в продукт и команду по плану.',
-    figure: { value: '30 · 60 · 90', unit: 'дней', caption: 'программа адаптации' },
-    points: ['Наставник-бадди', 'Испытательный срок до 3 месяцев'],
+    id: 'monitoring',
+    ru: 'Мониторинг и контроль',
+    en: 'Monitoring & Controlling',
+    enShort: 'Monitoring',
+    text: 'Идёт параллельно всем этапам — от устава до приёмки.',
+    figure: { value: INDEX_TARGET, caption: 'SPI и CPI · целевое значение' },
+    points: [`Вехи ${MILESTONE_RANGE}`, 'Диаграмма сгорания', 'Изменения — через бэклог и спонсора'],
+    result: 'Корректирующие действия и обновлённый план',
+    spansAll: true,
   },
   {
-    id: 'performance',
-    ru: 'Оценка эффективности',
-    en: 'Performance',
-    text: 'Цели и результаты по каждому направлению.',
-    figure: { value: 'KPI · OKR', caption: 'цели по направлениям' },
-    points: ['Квартальный обзор', 'Встречи 1:1'],
-  },
-  {
-    id: 'development',
-    ru: 'Развитие',
-    en: 'Development',
-    text: 'Понятный карьерный путь внутри компании.',
-    ladder: ['Junior', 'Middle', 'Senior', 'Lead'],
-    points: ['Бюджет на обучение', 'Индивидуальный план развития'],
-  },
-  {
-    id: 'retention',
-    ru: 'Удержание',
-    en: 'Retention',
-    text: 'Сохраняем ключевых специалистов.',
-    figure: { value: TURNOVER_TARGET, caption: 'текучесть в год · цель' },
-    points: ['Премии по KPI', 'Карьерный рост', 'ДМС', 'Корпоративная культура'],
+    id: 'closing',
+    ru: 'Завершение',
+    en: 'Closing',
+    text: 'Приёмка MVP и передача опыта следующему этапу.',
+    figure: {
+      value: String(PROJECT.acceptance.length),
+      unit: `${ruPlural(PROJECT.acceptance.length, CRITERION_FORMS)} приёмки`,
+      caption: 'из устава проекта',
+    },
+    points: ['Кейс для раунда Seed', 'Ретроспектива', 'Бэклог следующего этапа'],
+    result: 'Проект закрыт, опыт — в следующий этап',
   },
 ] as const;
 
-export const LOOP_NOTE = { lead: 'Цикл замыкается:', rest: 'данные об удержании → новое планирование' } as const;
+export const LOOP_NOTE = { lead: 'Опыт завершения', rest: '→ инициация следующего этапа' } as const;

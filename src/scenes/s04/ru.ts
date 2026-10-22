@@ -1,4 +1,4 @@
-/** Русские формы множественного числа: ruPlural(14, ['сотрудник', 'сотрудника', 'сотрудников']). */
+/** Русские формы множественного числа: ruPlural(12, ['спринт', 'спринта', 'спринтов']). */
 export function ruPlural(n: number, forms: readonly [string, string, string]): string {
   const abs = Math.abs(Math.trunc(n));
   const mod100 = abs % 100;
@@ -9,5 +9,14 @@ export function ruPlural(n: number, forms: readonly [string, string, string]): s
   return forms[2];
 }
 
-export const PEOPLE_FORMS = ['сотрудник', 'сотрудника', 'сотрудников'] as const;
-export const DAY_FORMS = ['день', 'дня', 'дней'] as const;
+/** «12 спринтов», «5 вех», «13 пакетов работ». */
+export const plural = (n: number, forms: readonly [string, string, string]) => `${n} ${ruPlural(n, forms)}`;
+
+export const MONTH_FORMS = ['месяц', 'месяца', 'месяцев'] as const;
+export const WEEK_FORMS = ['неделя', 'недели', 'недель'] as const;
+export const SPRINT_FORMS = ['спринт', 'спринта', 'спринтов'] as const;
+export const MILESTONE_FORMS = ['веха', 'вехи', 'вех'] as const;
+export const PACKAGE_FORMS = ['пакет работ', 'пакета работ', 'пакетов работ'] as const;
+export const RISK_FORMS = ['риск', 'риска', 'рисков'] as const;
+export const CRITERION_FORMS = ['критерий', 'критерия', 'критериев'] as const;
+export const EPIC_FORMS = ['эпик', 'эпика', 'эпиков'] as const;
