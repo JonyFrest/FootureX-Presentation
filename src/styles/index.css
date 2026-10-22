@@ -1,0 +1,307 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   FootureX — дизайн-токены (брендбук FootureX: тёмная база + электрический синий).
+   Единственный источник цвета и типографики. Дублируются в src/styles/tokens.ts
+   для WebGL и графиков.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #0b0f0e;
+  --color-deep: #070a12;
+  --color-surface: #0e1629;
+  --color-line: #273b51;
+  --color-primary: #2550fa;
+  --color-secondary: #2593fa;
+  --color-highlight: #8eb4ff;
+  --color-ice: #dce7ff;
+  --color-soft: #b8c1d4;
+  --color-mute: #8a93a6;
+
+  --font-display: 'Zen Dots', 'Unbounded', system-ui, sans-serif;
+  --font-sans: 'Poppins', 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  /* 1 «презентационная единица» = 1% ширины кадра 16:9, вписанного в окно. */
+  --u: min(1vw, 1.7778vh);
+  --u: min(1vw, 1.7778dvh);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  /* Типографическая шкала — читаемость на проекторе в приоритете. */
+  --fs-display: clamp(34px, calc(var(--u) * 4.6), 92px);
+  --fs-h1: clamp(26px, calc(var(--u) * 3), 60px);
+  --fs-h2: clamp(20px, calc(var(--u) * 1.85), 36px);
+  --fs-h3: clamp(16px, calc(var(--u) * 1.3), 25px);
+  --fs-body: clamp(15px, calc(var(--u) * 1.08), 21px);
+  --fs-small: clamp(13px, calc(var(--u) * 0.9), 17px);
+  --fs-micro: clamp(11.5px, calc(var(--u) * 0.74), 14px);
+  --fs-stat: clamp(28px, calc(var(--u) * 3.3), 66px);
+
+  --gap-1: clamp(6px, calc(var(--u) * 0.5), 10px);
+  --gap-2: clamp(10px, calc(var(--u) * 0.9), 18px);
+  --gap-3: clamp(14px, calc(var(--u) * 1.4), 28px);
+  --gap-4: clamp(18px, calc(var(--u) * 2.2), 44px);
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Безопасные зоны сцены: верхняя панель и нижняя навигация. */
+  --topbar-h: clamp(52px, calc(var(--u) * 4.2), 76px);
+  --nav-h: clamp(56px, calc(var(--u) * 4.2), 72px);
+  --nav-gap: clamp(10px, calc(var(--u) * 1.3), 26px);
+  --stage-x: clamp(16px, calc(var(--u) * 4.4), 104px);
+  --content-top: calc(var(--topbar-h) + var(--safe-top) + clamp(6px, calc(var(--u) * 0.9), 20px));
+  --content-bottom: calc(var(--nav-h) + var(--nav-gap) + var(--safe-bottom) + clamp(12px, calc(var(--u) * 1.4), 30px));
+
+  --glass-bg: rgba(14, 22, 41, 0.58);
+  --glass-bg-strong: rgba(10, 16, 32, 0.78);
+  --glass-border: rgba(142, 180, 255, 0.16);
+  --glass-border-hi: rgba(37, 147, 250, 0.55);
+  --glow-blue: 0 0 0 1px rgba(37, 147, 250, 0.22), 0 18px 50px -18px rgba(37, 80, 250, 0.55);
+  --grad-brand: linear-gradient(135deg, #2593fa 0%, #2550fa 100%);
+  --grad-text: linear-gradient(100deg, #ffffff 0%, #dce7ff 40%, #8eb4ff 70%, #2593fa 100%);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html {
+    background: var(--color-deep);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-deep);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: rgba(37, 147, 250, 0.45);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Типографика
+   ------------------------------------------------------------------ */
+@layer components {
+  .t-display {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+  .t-h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    line-height: 1.12;
+    letter-spacing: -0.005em;
+    font-weight: 400;
+  }
+  .t-h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: 1.2;
+    font-weight: 400;
+  }
+  .t-h3 {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    line-height: 1.3;
+    font-weight: 600;
+  }
+  .t-body {
+    font-size: var(--fs-body);
+    line-height: 1.55;
+  }
+  .t-small {
+    font-size: var(--fs-small);
+    line-height: 1.5;
+  }
+  .t-micro {
+    font-size: var(--fs-micro);
+    line-height: 1.4;
+  }
+  .t-stat {
+    font-family: var(--font-display);
+    font-size: var(--fs-stat);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .t-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-highlight);
+  }
+  .t-num {
+    font-variant-numeric: tabular-nums;
+  }
+  .text-gradient {
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-brand-gradient {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Стеклянная панель — основная поверхность контента. */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 60px -30px rgba(0, 0, 0, 0.8);
+  }
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: blur(22px) saturate(150%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 70px -30px rgba(0, 0, 0, 0.85);
+  }
+  .glass-hover {
+    transition:
+      transform 0.35s var(--ease-out-expo),
+      border-color 0.35s ease,
+      box-shadow 0.35s ease,
+      background-color 0.35s ease;
+  }
+  .glass-hover:hover,
+  .glass-hover:focus-visible,
+  .glass-hover[data-active='true'] {
+    transform: translateY(-3px);
+    border-color: var(--glass-border-hi);
+    box-shadow: var(--glow-blue);
+  }
+
+  .hairline {
+    background: linear-gradient(90deg, transparent, rgba(142, 180, 255, 0.45), transparent);
+    height: 1px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: var(--fs-micro);
+    line-height: 1.3;
+    font-weight: 500;
+    border: 1px solid rgba(142, 180, 255, 0.25);
+    background: rgba(37, 80, 250, 0.12);
+    color: var(--color-ice);
+    white-space: nowrap;
+  }
+  .chip-plan {
+    border-style: dashed;
+    background: rgba(142, 180, 255, 0.06);
+    color: var(--color-highlight);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Сцена: слой контента между 3D-фоном и навигацией.
+   ------------------------------------------------------------------ */
+.scene-frame {
+  position: absolute;
+  inset: 0;
+  padding: var(--content-top) calc(var(--stage-x) + var(--safe-right)) var(--content-bottom)
+    calc(var(--stage-x) + var(--safe-left));
+  display: flex;
+  flex-direction: column;
+}
+
+/* На узких/невысоких экранах сцена прокручивается внутри, а не сжимается. */
+@media (max-width: 860px), (max-height: 560px) {
+  .scene-frame {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    /* Контент мягко исчезает под верхней панелью и нижней навигацией при прокрутке. */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--topbar-h) + var(--safe-top) - 8px),
+      #000 calc(var(--topbar-h) + var(--safe-top) + 10px),
+      #000 calc(100% - var(--nav-h) - var(--nav-gap) - var(--safe-bottom) - 14px),
+      transparent calc(100% - var(--nav-h) - var(--nav-gap) - var(--safe-bottom) + 6px)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--topbar-h) + var(--safe-top) - 8px),
+      #000 calc(var(--topbar-h) + var(--safe-top) + 10px),
+      #000 calc(100% - var(--nav-h) - var(--nav-gap) - var(--safe-bottom) - 14px),
+      transparent calc(100% - var(--nav-h) - var(--nav-gap) - var(--safe-bottom) + 6px)
+    );
+  }
+  .scene-frame::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
