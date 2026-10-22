@@ -129,14 +129,15 @@ export function Tabs<T extends string>({ tabs, value, onChange, idBase, label, c
               <motion.span
                 layoutId={`${idBase}-tab-pill`}
                 aria-hidden
-                className="absolute inset-0 rounded-full bg-[image:var(--grad-brand)] shadow-[0_8px_26px_-10px_rgba(37,80,250,0.9)]"
+                className="absolute inset-0 z-0 rounded-full bg-[image:var(--grad-brand)] shadow-[0_8px_26px_-10px_rgba(37,80,250,0.9)]"
                 transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 36 }}
               />
             ) : null}
-            <span className="relative">{tab.label}</span>
+            {/* z-10: скользящая «пилюля» не перекрывает подписи соседних вкладок. */}
+            <span className="relative z-10">{tab.label}</span>
             {tab.badge !== undefined ? (
               <span
-                className={`t-micro relative rounded-full px-1.5 leading-[1.5] t-num ${on ? 'bg-white/20 text-white' : 'bg-white/[0.06] text-mute'}`}
+                className={`t-micro relative z-10 rounded-full px-1.5 leading-[1.5] t-num ${on ? 'bg-white/20 text-white' : 'bg-white/[0.06] text-mute'}`}
               >
                 {tab.badge}
               </span>

@@ -270,7 +270,7 @@ export function StakeholderMatrix({ active, bind, visible }: { active: string | 
               />
               <span
                 ref={setLabel(s.id)}
-                className={`t-small absolute w-max max-w-[11.5em] rounded-[8px] border px-2 py-[2px] text-left leading-snug transition-colors duration-300 group-focus-visible:ring-2 group-focus-visible:ring-secondary ${
+                className={`t-small absolute w-max max-w-[12.5em] rounded-[8px] border px-2 py-[2px] text-left leading-snug transition-colors duration-300 group-focus-visible:ring-2 group-focus-visible:ring-secondary ${
                   on
                     ? 'border-secondary/70 bg-[rgba(25,48,140,0.92)] text-white'
                     : 'border-white/10 bg-[rgba(10,16,32,0.82)] text-ice group-hover:border-secondary/50'
@@ -387,8 +387,8 @@ export function StakeholderGroups() {
           <p className="t-small flex items-center gap-2 font-semibold text-white">
             <span aria-hidden className="size-2.5 rounded-full" style={{ background: STRATEGY_COLOR[g.strategy] }} />
             {STRATEGY_LABEL[g.strategy]}
-            <span className="t-micro font-normal text-mute">{quadrantHint(g.strategy)}</span>
           </p>
+          <p className="t-micro mt-0.5 text-mute">{quadrantHint(g.strategy)}</p>
           <ul className="mt-[var(--gap-1)] grid gap-[var(--gap-1)]">
             {g.items.map((s) => (
               <li key={s.id} className="border-t border-white/[0.07] pt-[var(--gap-1)] first:border-t-0 first:pt-0">

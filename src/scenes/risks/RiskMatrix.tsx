@@ -161,9 +161,13 @@ function RiskChip({
       aria-label={`${risk.id}: ${risk.title}. Вероятность ${risk.probability}, влияние ${risk.impact}, балл ${risk.score} — ${risk.levelLabel.toLowerCase()}`}
       data-risk-chip={risk.id}
       className={`relative z-[1] grid cursor-pointer place-items-center rounded-full border font-display leading-none transition-[background-color,color,box-shadow,border-color] duration-300 ${
-        small || tight
-          ? 'h-[clamp(22px,calc(var(--u)*1.75),34px)] min-w-[clamp(27px,calc(var(--u)*2.05),42px)] px-[3px] text-[length:var(--fs-micro)]'
-          : 'h-[clamp(24px,calc(var(--u)*2),38px)] min-w-[clamp(32px,calc(var(--u)*2.6),48px)] px-[6px] text-[length:var(--fs-micro)]'
+        small
+          ? tight
+            ? 'h-[20px] min-w-[24px] px-[2px] text-[length:var(--fs-micro)]'
+            : 'h-[24px] min-w-[30px] px-[4px] text-[length:var(--fs-micro)]'
+          : tight
+            ? 'h-[clamp(22px,calc(var(--u)*1.75),34px)] min-w-[clamp(27px,calc(var(--u)*2.05),42px)] px-[3px] text-[length:var(--fs-micro)]'
+            : 'h-[clamp(24px,calc(var(--u)*2),38px)] min-w-[clamp(32px,calc(var(--u)*2.6),48px)] px-[6px] text-[length:var(--fs-micro)]'
       } ${
         active
           ? 'border-white bg-white text-primary shadow-[0_0_20px_rgba(142,180,255,0.95)]'

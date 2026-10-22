@@ -1,9 +1,9 @@
 import { Reveal, SceneFrame, SceneHeader } from '@/components/scene';
 import { Glass } from '@/components/ui';
 import { useIsCompact } from '@/hooks/useMediaQuery';
-import { RiskDetail, RiskDetailBody } from './risks/RiskDetail';
+import { RiskDetail, RiskFacts } from './risks/RiskDetail';
 import { RiskMatrix } from './risks/RiskMatrix';
-import { LevelTag, RiskRegister } from './risks/RiskRegister';
+import { BacklogBadge, LevelTag, RiskRegister } from './risks/RiskRegister';
 import { REGISTER } from './risks/riskData';
 import { useHoverSelect } from './schedule/shared';
 
@@ -19,7 +19,7 @@ export default function Scene13Risks() {
     return (
       <SceneFrame justify="start">
         <SceneHeader title={TITLE} lead={LEAD} />
-        <div className="mt-3 grid gap-3 landscape:grid-cols-[minmax(0,300px)_minmax(0,1fr)] landscape:items-start">
+        <div className="mt-3 grid gap-3 landscape:grid-cols-[minmax(0,340px)_minmax(0,1fr)] landscape:items-start">
           <Reveal delay={0.15}>
             <Glass strong className="p-3">
               <RiskMatrix active={sel.active} pinned={sel.pinned} bind={sel.bind} small />
@@ -52,7 +52,12 @@ export default function Scene13Risks() {
                     </span>
                     {open ? (
                       <span className="mt-2 block border-t border-[rgba(142,180,255,0.15)] pt-2">
-                        <RiskDetailBody risk={r} compact />
+                        <RiskFacts risk={r} />
+                        {r.fromBacklog ? (
+                          <span className="mt-2 block">
+                            <BacklogBadge />
+                          </span>
+                        ) : null}
                       </span>
                     ) : null}
                   </button>
@@ -71,7 +76,7 @@ export default function Scene13Risks() {
       <div className="mt-[var(--gap-3)] grid items-stretch gap-[var(--gap-3)]" style={{ gridTemplateColumns: 'auto minmax(0, 1fr)' }}>
         <Reveal delay={0.2}>
           <Glass strong className="h-full p-[var(--gap-3)]">
-            <div style={{ width: 'clamp(300px, calc(var(--u) * 29.5), 560px)' }}>
+            <div style={{ width: 'clamp(300px, calc(var(--u) * 28), 540px)' }}>
               <RiskMatrix active={sel.active} pinned={sel.pinned} bind={sel.bind} />
             </div>
           </Glass>

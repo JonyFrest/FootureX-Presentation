@@ -60,10 +60,12 @@ export const LEVEL_RANGES = (() => {
 export const rangeText = (r: (typeof LEVEL_RANGES)[number]) =>
   r.max === Math.max(...SCALE) ** 2 ? `≥ ${r.min}` : r.min === 1 ? `≤ ${r.max}` : `${r.min}–${r.max}`;
 
-/** Сколько рисков на каждую стратегию реагирования (только встречающиеся). */
-export const STRATEGY_COUNTS = (Object.keys(STRATEGY_TITLE) as RiskStrategy[])
-  .map((s) => ({ id: s, title: STRATEGY_TITLE[s], count: RISKS.filter((r) => r.strategy === s).length }))
-  .filter((s) => s.count > 0);
+/** Стратегии реагирования на угрозы и число рисков с каждой из них. */
+export const STRATEGIES = (Object.keys(STRATEGY_TITLE) as RiskStrategy[]).map((s) => ({
+  id: s,
+  title: STRATEGY_TITLE[s],
+  count: RISKS.filter((r) => r.strategy === s).length,
+}));
 
 export const BACKLOG_COUNT = RISKS.filter((r) => r.fromBacklog).length;
 

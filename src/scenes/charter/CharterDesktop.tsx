@@ -96,7 +96,7 @@ function FactsStrip() {
   return (
     <Glass
       className="grid items-stretch"
-      style={{ gridTemplateColumns: 'minmax(0,1.2fr) minmax(0,1.1fr) minmax(0,0.8fr) minmax(0,1fr) minmax(0,1.15fr) minmax(0,1.45fr)' }}
+      style={{ gridTemplateColumns: 'minmax(0,1.2fr) minmax(0,1.05fr) minmax(0,0.75fr) minmax(0,0.95fr) minmax(0,1.1fr) minmax(0,1.6fr)' }}
     >
       {FACTS.map((fact, i) => (
         <div

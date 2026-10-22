@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useScene } from '@/components/scene';
 import type { HoverBind } from '../schedule/shared';
-import { BACKLOG_COUNT, REGISTER, STRATEGY_COUNTS, type RankedRisk } from './riskData';
+import { BACKLOG_COUNT, REGISTER, type RankedRisk } from './riskData';
 
 /** Маркер уровня: высокий — заливка бренда, средний — контур, низкий — пунктир (без новых цветов). */
 export function LevelTag({ risk }: { risk: RankedRisk }) {
@@ -38,7 +38,7 @@ export function RiskRegister({ active, pinned, bind }: RegisterProps) {
       <div className="flex flex-wrap items-baseline justify-between gap-x-[var(--gap-2)] gap-y-0.5 px-[var(--gap-1)]">
         <p className="t-eyebrow tracking-[0.14em]">Реестр рисков · балл = вероятность × влияние</p>
         <p className="t-micro text-mute">
-          {STRATEGY_COUNTS.map((s) => `${s.title} ${s.count}`).join(' · ')} · из бэклога {BACKLOG_COUNT} из {REGISTER.length}
+          из бэклога проекта — {BACKLOG_COUNT} из {REGISTER.length}
         </p>
       </div>
       <ol className="mt-[calc(var(--gap-1)*0.8)] flex flex-col gap-[2px]">

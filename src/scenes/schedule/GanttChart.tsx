@@ -39,11 +39,12 @@ const COLUMNS = 'clamp(110px, calc(var(--u) * 7.6), 152px) clamp(304px, calc(var
 /** Раскладка строк сетки: шапка (месяцы, спринты), группы результатов с отступами, ось вех. */
 function buildLayout() {
   const template: string[] = ['var(--hdr)', 'var(--hdr)', 'calc(var(--ggap) * 0.8)'];
+  let index = 0;
   const groups = GROUPS.map((g, gi) => {
     if (gi > 0) template.push('var(--ggap)');
     const start = template.length + 1;
     g.rows.forEach(() => template.push('var(--row)'));
-    return { group: g, start, rows: g.rows.map((r, i) => ({ row: r, line: start + i })) };
+    return { group: g, start, rows: g.rows.map((r, i) => ({ row: r, line: start + i, index: index++ })) };
   });
   template.push('calc(var(--ggap) * 0.8)', 'var(--ms-h)');
   return { template: template.join(' '), groups, msLine: template.length, lastBodyLine: template.length - 1 };
@@ -62,8 +63,6 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
   const activeRow = activeKey ? ROW_BY_KEY.get(activeKey) : undefined;
   const activeMs = activeKey ? MS_BY_KEY.get(activeKey) : undefined;
   const litSprints = new Set<number>(activeRow ? activeRow.sprints : activeMs ? [activeMs.sprint] : []);
-
-  let rowIndex = 0;
 
   return (
     <div
@@ -170,14 +169,13 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
 
       {/* Строки пакетов работ. */}
       {LAYOUT.groups.flatMap(({ rows }) =>
-        rows.map(({ row, line }) => {
-          const i = rowIndex++;
+        rows.map(({ row, line, index }) => {
           return (
             <GanttRowButton
               key={row.key}
               row={row}
               line={line}
-              index={i}
+              index={index}
               show={show}
               reducedMotion={reducedMotion}
               active={activeKey === row.key}

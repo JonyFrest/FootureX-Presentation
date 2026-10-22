@@ -1,4 +1,4 @@
-import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { useScene } from '@/components/scene';
 import { BUDGET, MILESTONES } from '@/data/project';
@@ -49,6 +49,13 @@ export function SCurve({ activeMonth, activeSlice, bindMonth }: SCurveProps) {
   const show = ready || reducedMotion;
   const uid = useId().replace(/:/g, '');
   const [ref, { w, h }] = useElementSize<HTMLDivElement>();
+  // После первого появления подписи реагируют на наведение без каскадных задержек.
+  const [entered, setEntered] = useState(reducedMotion);
+  useEffect(() => {
+    if (!show || entered) return;
+    const t = window.setTimeout(() => setEntered(true), 2200);
+    return () => window.clearTimeout(t);
+  }, [show, entered]);
 
   const gutter = Math.max(50, Math.min(76, w * 0.11));
   const top = Math.max(22, h * 0.09);
@@ -207,7 +214,7 @@ export function SCurve({ activeMonth, activeSlice, bindMonth }: SCurveProps) {
                   }}
                   initial={reducedMotion ? false : { opacity: 0 }}
                   animate={show ? { opacity: activeMonth === null || activeMonth === i + 1 ? 1 : 0.45 } : undefined}
-                  transition={{ duration: 0.3, delay: show && activeMonth === null ? 0.75 + i * 0.2 : 0 }}
+                  transition={{ duration: 0.3, delay: entered ? 0 : 0.75 + i * 0.2 }}
                 >
                   {formatUsd(MONTH_POINTS[i].cumulative)}
                 </motion.span>

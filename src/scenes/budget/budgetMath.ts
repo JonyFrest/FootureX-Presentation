@@ -91,7 +91,7 @@ export const SLICES: Slice[] = [
   {
     id: 'reserve',
     label: 'Управленческий резерв',
-    note: `${RESERVE_PERCENT}% сверх базового плана, только с одобрения спонсора`,
+    note: `Вне базового плана: +${RESERVE_PERCENT}% к нему, только с одобрения спонсора`,
     value: values[values.length - 1],
     share: shares[shares.length - 1],
     exactShare: (BUDGET.reserve / BUDGET.total) * 100,
@@ -125,9 +125,6 @@ export const MONTH_POINTS: MonthPoint[] = BASELINE_MONTHLY.map((value, m) => ({
   cumulative: PV_CUMULATIVE[m],
   parts: BUDGET_LINES.map((l) => ({ id: l.id as SliceId, label: l.label, value: l.monthly[m] })),
 }));
-
-/** Средние затраты месяца по базовому плану, $. */
-export const AVERAGE_MONTH = BUDGET.baseline / PROJECT.durationMonths;
 
 /* ------------------------------------------------------------------
    Команда по ролям (в месяц).

@@ -183,11 +183,11 @@ export function ScopeContent({ dense = false }: { dense?: boolean }) {
 
 const LIMIT_ICONS: ComponentType<LucideProps>[] = [Wallet, Users, CalendarClock, CreditCard];
 
-export function LimitsContent() {
+export function LimitsContent({ title = true }: { title?: boolean }) {
   return (
-    <section className="flex h-full flex-col">
-      <h3 className="t-small font-semibold text-white">Ограничения проекта</h3>
-      <ul className="mt-[var(--gap-2)] grid gap-[var(--gap-1)]">
+    <section className="flex h-full flex-col" aria-label="Ограничения проекта">
+      {title ? <h3 className="t-small mb-[var(--gap-2)] font-semibold text-white">Ограничения проекта</h3> : null}
+      <ul className="grid gap-[var(--gap-1)]">
         {PROJECT.constraints.map((item, i) => {
           const Icon = LIMIT_ICONS[i] ?? Minus;
           return (
@@ -210,11 +210,11 @@ export function LimitsContent() {
   );
 }
 
-export function AcceptContent() {
+export function AcceptContent({ title = true }: { title?: boolean }) {
   return (
-    <section className="flex h-full flex-col">
-      <h3 className="t-small font-semibold text-white">Критерии приёмки MVP</h3>
-      <ol className="mt-[var(--gap-2)] grid gap-[calc(var(--gap-1)*0.9)]">
+    <section className="flex h-full flex-col" aria-label="Критерии приёмки MVP">
+      {title ? <h3 className="t-small mb-[var(--gap-2)] font-semibold text-white">Критерии приёмки MVP</h3> : null}
+      <ol className="grid gap-[calc(var(--gap-1)*0.9)]">
         {PROJECT.acceptance.map((item, i) => (
           <li key={item} className="t-small flex items-start gap-[var(--gap-2)] leading-snug text-ice">
             <span
@@ -291,9 +291,8 @@ export function MilestoneTrack({ className = '' }: { className?: string }) {
     <div className={className}>
       <p className="t-small flex min-w-0 items-center gap-2 text-mute" aria-live="polite">
         {current ? (
-          <span className="min-w-0 truncate text-ice">
+          <span className="min-w-0 truncate text-ice" title={`${current.id} · ${current.title} · спринт ${current.sprint}`}>
             <span className="font-semibold text-white">{current.id}</span> · {current.title}
-            <span className="text-mute"> · спринт {current.sprint}</span>
           </span>
         ) : (
           <>

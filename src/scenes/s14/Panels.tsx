@@ -49,11 +49,11 @@ function PillarBody({ pillar, index }: { pillar: Pillar; index: number }) {
       </p>
       <h2 className="t-h3 mt-1 text-white">{pillar.ru}</h2>
       <div className="mt-[var(--gap-2)]">
-        <p className="flex flex-wrap items-baseline gap-x-2">
-          <span className="t-stat text-gradient whitespace-nowrap">{pillar.value}</span>
-          {pillar.unit ? <span className="t-small font-medium text-highlight">{pillar.unit}</span> : null}
+        <p className="t-stat text-gradient whitespace-nowrap">{pillar.value}</p>
+        <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+          {pillar.unit ? <span className="t-small font-semibold text-highlight">{pillar.unit}</span> : null}
+          <span className="chip chip-plan">целевое значение · план</span>
         </p>
-        <span className="chip chip-plan mt-1.5">целевое значение · план</span>
       </div>
       <ul className="mt-[var(--gap-3)] flex flex-col gap-[var(--gap-1)]" aria-label="Инструменты контроля">
         {pillar.instruments.map((item) => (

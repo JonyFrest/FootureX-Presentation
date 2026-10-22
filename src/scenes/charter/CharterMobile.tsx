@@ -49,7 +49,7 @@ function AccordionItem({ id, label, count, open, onToggle }: { id: CharterTab; l
             className="overflow-hidden"
           >
             <div className="border-t border-white/10 px-[var(--gap-3)] pt-[var(--gap-2)] pb-[var(--gap-3)]">
-              {id === 'scope' ? <ScopeContent dense /> : id === 'limits' ? <LimitsContent /> : <AcceptContent />}
+              {id === 'scope' ? <ScopeContent dense /> : id === 'limits' ? <LimitsContent title={false} /> : <AcceptContent title={false} />}
             </div>
           </motion.div>
         ) : null}
@@ -132,7 +132,7 @@ export function CharterMobile() {
           <Reveal key={t.id} delay={0.3 + i * 0.05}>
             <AccordionItem
               id={t.id}
-              label={t.id === 'scope' ? 'Содержание проекта' : t.id === 'limits' ? 'Ограничения' : 'Критерии приёмки'}
+              label={t.id === 'scope' ? 'Содержание проекта' : t.id === 'limits' ? 'Ограничения проекта' : 'Критерии приёмки MVP'}
               count={t.count}
               open={open === t.id}
               onToggle={() => setOpen((cur) => (cur === t.id ? null : t.id))}
