@@ -1,254 +1,202 @@
-# Research notes: HR-презентация FootureX Uzbekistan
+# Research notes: Управление проектами FootureX Uzbekistan
 
-Проверено 22.10.2026. Каждый источник открыт лично: страница издателя, PDF или lex.uz.
-Статусы:
-- **VERIFIED**: цифра и формулировка найдены в первоисточнике по указанному URL.
-- **PARTIAL**: подтверждено частично или только вторичным источником.
-- **NOT VERIFIED**: подтвердить не удалось, на слайды не выносить.
+Дисциплина «Управление проектами», TIUE, Ташкент, 2026. Проверено 22.10.2026.
 
----
+**Статусы проверки**
+- **[VERIFIED]**: прочитан первоисточник издателя (PDF или HTML-страница), цитата сверена дословно.
+- **[PARTIAL]**: страница издателя существует, но напрямую не открывается (pmi.org/HTML, ipgbook.com и blackwells отдают HTTP 403 Cloudflare; urait.ru рендерит выходные данные через JavaScript). Данные взяты из текста этой страницы в поисковом индексе, а где возможно, подтверждены вторым источником. Перед сдачей сверить вручную в браузере.
+- **[EXCLUDED]**: не проходит фильтр 2021–2026 или не подтверждено.
 
-## A. Статистика для слайда «Почему HR важен для технологической компании»
-
-### A.0. Исправления к исходным цифрам
-
-| # | Исходное утверждение | Статус | Как правильно |
-|---|---|---|---|
-| 1 | Gallup 2024: вовлечённость «упала» до 23% (2023); потери ≈ $8,9 трлн (≈9% мирового ВВП) | Цифры верны, формулировка нет | В 2023 г. вовлечённость **не изменилась**: 23%, изменение 0 п.п. к 2022 г. В отчёте: «In 2023, global employee engagement stagnated». Цифры $8,9 трлн и 9% ВВП верны. |
-| 2 | Gallup 2025: 21% за 2024 г. + оценка потерь | 21% верно; потери уточнены | «In 2024, the global percentage of engaged employees fell from 23% to 21%». **US$438 млрд** — потеря производительности из-за этого падения, а не общий ущерб. Отдельная оценка: полная вовлечённость добавила бы **US$9,6 трлн, или 9% мирового ВВП**. **Есть более свежий отчёт за 2026 г.:** 20% в 2025 г., потери ≈ **$10 трлн (9% ВВП)**. |
-| 3 | WEF 2025: 39% навыков; 63% работодателей | VERIFIED | Обе цифры верны (формулировки в A.2 и A.1). |
-| 4 | LinkedIn 2024: 90% и «обучение — стратегия удержания №1» | VERIFIED | Дословно: «90% of organizations are concerned about employee retention and providing learning opportunities is the No. 1 retention strategy.» |
-| 5 | ManpowerGroup: ~75–77% | Устарело или неточно | 2024 — **75%**, 2025 — **74%**, 2026 — **72%**. Последний опрос — 2026 г. |
-
-### A.1. Проблема 1: конкуренция за специалистов
-
-**1. ManpowerGroup, Global Talent Shortage 2026 (VERIFIED)**
-- Слайд: «72% работодателей в мире с трудом находят квалифицированных специалистов»
-- Число на слайд: **72%**
-- Цитата: «72% of employers reporting hiring difficulty—down modestly from 74% last year».
-- Охват: 39 063 работодателя, 41 страна, опрос 1–31.10.2025.
-- Также в релизе: навыки ИИ впервые возглавили список самых дефицитных (AI Model & Application Development — 20%, AI Literacy — 19%); в отрасли Information дефицит самый высокий — 75%.
-- Источник: ManpowerGroup, пресс-релиз «Global Talent Shortage Reaches Turning Point as AI Skills Claim Top Spot», 26.02.2026. https://investor.manpowergroup.com/node/68796
-
-**2. ManpowerGroup, 2025 Global Talent Shortage (VERIFIED, PDF)**
-- Слайд: «В IT-отрасли дефицит кадров отмечают 76% работодателей»
-- Число на слайд: **76%**
-- Глобальное среднее за 2025 г. — 74% (40 413 работодателей, 42 страны; PDF с. 10–11).
-- По отрасли Information Technology — 76% (PDF с. 14).
-- IT & Data — самые труднонаходимые навыки, 26% (PDF с. 15).
-- Источник: ManpowerGroup, *2025 Global Talent Shortage Survey* (страновой отчёт India Findings с глобальным разделом), январь 2025. https://manpowergroup.co.in/talent-shortage/talent-shortage-files/MPG-Talent-Shortage-2025-Findings.pdf
-- Для справки, 2024 г.: «75% of employers report difficulty in filling roles», 40 077 работодателей, 41 страна. https://go.manpowergroup.com/hubfs/Talent%20Shortage/Talent%20Shortage%202024/MPG_TS_2024_GLOBAL_Infographic.pdf
-
-**3. WEF, The Future of Jobs Report 2025 (VERIFIED, PDF)**
-- Слайд: «63% работодателей: дефицит навыков — главный барьер трансформации бизнеса»
-- Число на слайд: **63%**
-- Цитата: «Skill gaps are categorically considered the biggest barrier to business transformation by Future of Jobs Survey respondents, with 63% of employers identifying them as a major barrier over the 2025-2030 period» (с. 6; также разд. 4.1, с. 49).
-- Источник: World Economic Forum, *The Future of Jobs Report 2025*, январь 2025, ISBN 978-2-940631-90-2. https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf
-- Охват опроса: более 1 000 работодателей, 14 млн работников, 55 экономик.
-
-### A.2. Проблема 2: рост команды
-
-**4. WEF 2025, нестабильность навыков (VERIFIED)**
-- Слайд: «39% навыков работников изменятся или устареют к 2030 году»
-- Число на слайд: **39%**
-- Цитата: «On average, workers can expect that two-fifths (39%) of their existing skill sets will be transformed or become outdated over the 2025-2030 period» (с. 6).
-- Источник: тот же отчёт WEF 2025.
-
-**5. WEF 2025, ставка на обучение (VERIFIED)**
-- Слайд: «85% работодателей сделают приоритетом повышение квалификации персонала»
-- Число на слайд: **85%**
-- Цитата: «85% of employers surveyed plan to prioritize upskilling their workforce» (с. 6).
-- Источник: тот же отчёт WEF 2025.
-
-### A.3. Проблема 3: удержание талантов
-
-**6. Gallup, State of the Global Workplace: 2026 Report (VERIFIED, последний отчёт)**
-- Слайд: «Лишь 20% сотрудников в мире вовлечены в работу»
-- Число на слайд: **20%** (данные 2025 г.)
-- Цитаты:
-  - «The world's employee engagement has dropped to 20% from its peak in 2022 of 23%»
-  - «Last year, low engagement cost the world economy approximately $10 trillion in lost productivity, or 9% of GDP» (PDF с. 6)
-- Вторая карточка: «Низкая вовлечённость обходится экономике в ≈$10 трлн (9% ВВП)»; число **$10 трлн**.
-- Источник: Gallup, *State of the Global Workplace: 2026 Report*, 2026.
-  - PDF: https://www.gallup.com/file/workplace/707798/state-of-the-global-workplace-2026-download.pdf
-  - Страница: https://www.gallup.com/workplace/349484/state-of-the-global-workplace.aspx
-
-**7. Gallup, State of the Global Workplace: 2025 Report (VERIFIED, PDF)**
-- Слайд: «Каждый второй сотрудник в мире ищет или присматривает новую работу»
-- Число на слайд: **50%** (2024 г.)
-- Таблица «Intent to Leave», % Watching for or actively seeking new job, Global: 51 (2022), 52 (2023), 50 (2024); PDF с. 23.
-- Там же:
-  - «In 2024, the global percentage of engaged employees fell from 23% to 21%» (PDF с. 6)
-  - «US$438 billion in lost productivity» (PDF с. 5)
-  - «US$9.6 trillion … the equivalent of 9% in global GDP» (PDF с. 11)
-- Источник: Gallup, *State of the Global Workplace: 2025 Report*, 2025. https://www.gallup.com/file/workplace/659528/state-of-the-global-workplace-2025-download.pdf
-
-**8. LinkedIn Learning, Workplace Learning Report 2024 (VERIFIED, PDF с. 6)**
-- Слайд: «90% компаний обеспокоены удержанием; обучение — стратегия удержания №1»
-- Число на слайд: **90%**
-- Цитата: «90% of organizations are concerned about employee retention and providing learning opportunities is the No. 1 retention strategy.»
-- Также: «47% of companies are investing in career mentoring and coaching to boost employee retention»; «4 in 5 people want to learn more about how to use AI in their profession».
-- Источник: LinkedIn Learning, *Workplace Learning Report 2024*, 2024. https://learning.linkedin.com/content/dam/lem/business/en/learn/resources/workplace-learning-report-2024/LinkedIn-Workplace-Learning-Report-2024.pdf
-- Страница отчёта: https://business.linkedin.com/learn/resources/workplace-learning-report-2024
-
-**9. Gallup 2024, если нужна цифра именно этого отчёта (VERIFIED, PDF с. 5–6)**
-- Цитаты:
-  - «Gallup estimates that low employee engagement costs the global economy US$8.9 trillion, or 9% of global GDP.»
-  - «In 2023, global employee engagement stagnated»: 23%, изменение 0 п.п.
-- Источник: Gallup, *State of the Global Workplace: 2024 Report*, 2024. https://www.gallup.com/file/workplace/645608/state-of-the-global-workplace-2024-download.pdf
-
-### A.4. Цифры по Узбекистану (официальные или надёжные источники)
-
-| Слайд (≤ 12 слов) | Число | Источник | Статус |
-|---|---|---|---|
-| «38% работников Узбекистана ищут или присматривают новую работу» | **38%** | Gallup, *SOGW 2025 Report*, Post-Soviet Eurasia, Intent to Leave (PDF с. 112). Там же вовлечённость в Узбекистане — **45%**, 1-е место в регионе (PDF с. 110). Это **средние за 3 года** (2022–2024), так указано в отчёте. | VERIFIED |
-| «Цель «Узбекистан-2030»: экспорт IT-услуг — $5 млрд» | **$5 млрд** | Указ УП-158 от 11.09.2023, приложение, цель 57. Там же: «Увеличение количества резидентов IT-Парка в 10 раз … количества созданных в них рабочих мест до 100 тысяч». https://lex.uz/ru/docs/6600404 | VERIFIED |
-| «К 2030 году — 300 тыс. молодых людей в IT-сфере» | **300 тыс.** | УП-158, цель 33: «Обеспечение занятости 300 тысяч молодых людей в IT-сфере». В той же цели — расширение проекта «Один миллион программистов». | VERIFIED |
-| «3 200 компаний — резиденты IT Park» | **3 200** | president.uz, 21.10.2025, «The second phase of "IT-Park" project launched». Там же: услуги резидентов — $1,6 млрд в 2024 г.; «The volume of services exports will exceed $1 billion for the first time» (прогноз на 2025 г.). https://president.uz/en/lists/view/8580 | VERIFIED; экспорт — прогноз |
-| «92% IT-вакансий Узбекистана на hh.uz — в Ташкенте» | **91,9%** | hh.uz, «Рынок труда в сфере информационных технологий: итоги 2025 года на hh.uz», 18.02.2026. Число IT-вакансий в Ташкенте выросло на 27,6%. https://hh.uz/article/34221 | VERIFIED |
-
-**Не подтверждено, на слайды не выносить:**
-- Итоговый экспорт IT-услуг за 2025 г. Есть только вторичные источники: ≈$940 млн (anhor.uz со ссылкой на Мининвестпромторг) и «почти $1 млрд» (слова министра). Официальной страницы с итогом не нашёл.
-- Число участников «One Million Uzbek Coders» (2,5 млн регистраций). Видел только в выдаче поиска; первоисточник с датой не открыт.
-
-**Рекомендация (по одной цифре на проблему):**
-- Конкуренция за специалистов: **72%** (ManpowerGroup 2026).
-- Рост команды: **39%** (WEF 2025).
-- Удержание: **20%** (Gallup 2026) или **38%** (Gallup 2025, Узбекистан).
-- Плашка про Узбекистан: **$5 млрд / 300 тыс.** (Стратегия «Узбекистан-2030»).
+Примечание о доступе: PDF-файлы PMI по адресам `pmi.org/-/media/...` открываются анонимно. Все цифры PMI в части A взяты из этих PDF.
 
 ---
 
-## B. Право и расчёт ФОТ в Узбекистане (на 22.10.2026)
+## A. Статистика для слайда «Почему проектное управление критично для технологического стартапа»
 
-### B.1. Социальный налог работодателя: 12% (VERIFIED)
-- **НК РУз, ст. 405 «Налоговые ставки»:** налогоплательщики, кроме перечисленных в пп. 2–4, — **12%**. Бюджетные организации — 25%; SOS-Детские деревни — 7%; работодатели, использующие труд лиц с инвалидностью в специализированных цехах, — 4,7%. Источник — действующая редакция на lex.uz: https://lex.uz/ru/docs/4674893
-- **Ставка в 2025–2026 гг. не менялась.** Ст. 405 в текущей редакции без отметок об изменениях. PwC Worldwide Tax Summaries (Last reviewed 27.08.2026) также даёт 12% для «Other taxpayers»: https://taxsummaries.pwc.com/republic-of-uzbekistan/individual/other-taxes
-- **Премии входят в базу.** Ст. 404 → ст. 371 → ст. 372 («выплаты стимулирующего характера … положением о премировании»). Значит, в `hr.ts` налог правильно начисляется на «оклады + премии».
-- Временные льготные ставки 1% (НК, ст. 483) к FootureX не относятся:
-  - наём членов малоимущих семей с зарплатой ≥ 1,5 МРОТ (01.01.2025–01.01.2028);
-  - ученики школ, колледжей и техникумов до 30 лет на профобучении (01.09.2024–01.09.2027).
+### A1. Проблема «Сроки и бюджет»
 
-### B.2. НДФЛ 12% и ИНПС
-- **Ставка (VERIFIED).** НК, ст. 381: доходы резидента облагаются по ставке **12%**; дивиденды и проценты — 5%.
-- **Кто платит (VERIFIED).** По ст. 386–388 налог исчисляет, удерживает и перечисляет налоговый агент, то есть работодатель, из дохода работника. **НДФЛ не является дополнительным расходом работодателя.** Модель в `hr.ts` верна.
-- **ИНПС входит в 12% (VERIFIED, механизм).** НК, ст. 385: «Исчисленная сумма налога уменьшается на сумму обязательных ежемесячных взносов на индивидуальные накопительные пенсионные счета физических лиц». Взнос вычитается из уже исчисленного НДФЛ и сверху не начисляется.
-- **Ставка ИНПС 0,1% (PARTIAL).** Есть только вторичные источники: uzdaily.uz и kun.uz от 14.07.2026 называют её действующей.
-  - В июле 2026 г. обсуждались реформы: добровольный взнос 5% + 2,5% от государства; для зарплат выше 7,6 млн сум — 1% социального налога направлять на накопительный счёт. **Это предложения, не принятый закон.** По описанию, 1% предлагается перенаправить из уже уплачиваемого социального налога, а не добавить к нему.
-  - https://www.uzdaily.uz/en/mirziyoyev-orders-preparation-of-comprehensive-pension-system-reform/
-  - https://kun.uz/en/news/2026/07/14/government-proposes-changes-to-pension-calculations-and-funded-pension-savings-172c99
+**A1.1 (основная): PMI Pulse of the Profession 2026, самое свежее издание** [VERIFIED]
+- **Цифра:** 31% сложных проектов не получают всех запланированных выгод. Это более чем вдвое выше базового уровня провалов в 12%.
+- **Дословная цитата (с. 6):** "About a third (31%) of complex projects fail to achieve the full scope of their originally intended benefits, according to the latest PMI Pulse of the Profession® research — more than twice the 12% rate reported in our 2024 Maximizing Project Success research."
+- **Там же:** "97% of project professionals say they managed at least one complex project in the past year" и "Projects that manage complexity effectively are five times more likely to succeed. Eighty-eight percent of projects were rated extremely or very successful when teams were highly effective at managing complexity, compared with just 14% when teams were only slightly effective or ineffective."
+- **Отчёт:** *Pulse of the Profession® 2026: Driving Success in Complex Projects*. PMI, 2026 (©2026, PDF создан 12.05.2026, 33 с.). Выборка: 2 023 проектных специалиста и 511 топ-руководителей, 35 стран.
+- **URL:** https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pulse-of-the-profession_2026_pdf.pdf
+- **Подпись на слайде:** «31% сложных проектов не достигают запланированных выгод (PMI, 2026)»
+- **Внимание:** маркетинговые страницы PMI называют базовый уровень 13%, а сам отчёт даёт 12%. Цитировать по отчёту, то есть 12%.
 
-### B.3. Режим резидента IT Park
-- **Указ УП-5099 от 30.06.2017** (в ред. УП-6268 от 24.07.2021), https://lex.uz/ru/docs/3249654 (VERIFIED):
-  - п. 5: резиденты освобождаются **до 01.01.2028** от «уплаты всех видов налогов и обязательных отчислений в государственные целевые фонды, а также социального налога»;
-  - п. 8: зарплата работников резидентов, полученная до 01.01.2028, «облагается налогом на доходы физических лиц по фиксированной ставке **7,5 процента**».
-- **Сайт IT Park** (VERIFIED): подоходный налог — 7,5%, «Единые социальные выплаты» — 0%, корпоративный налог — 0%. https://www.it-park.uz/ru/itpark/residents
-- **После 2028 г.** НК, ст. 483: льготы с 01.01.2028 по 01.01.2040 (освобождение от всех налогов, кроме НДС) получат только резиденты, у которых экспорт > 50% совокупного дохода, или IT-образовательные организации (50% выпускников трудоустроены у экспортёров-резидентов).
-- **Общий режим как консервативное допущение обоснован:**
-  - статуса резидента у FootureX нет;
-  - для компании, работающей на внутренний рынок, льготы заканчиваются 01.01.2028, то есть внутри горизонта плана;
-  - 12% дают верхнюю оценку затрат.
-- Режим IT Park можно показать как сценарий: социальный налог 0% → экономия 12% от ФОТ. Ставка НДФЛ 7,5% увеличивает чистую зарплату работника при том же окладе, но не меняет затраты работодателя.
-- **NOT VERIFIED:** отчисление 1% выручки дирекции IT Park встречается только в стороннем документе. Не использовать.
+**A1.2 (сроки и бюджет отдельно): тот же отчёт, Figure 5** [VERIFIED]
+- **Цифры:** из-за плохо управляемой сложности 35% проектов срывают сроки поставки, 28% выходят за бюджет. Это колонка Total.
+- **Дословно (с. 16–17):** Figure 5 называется "Negative Outcomes of Poorly Managed Complexity on Projects". Строки: "Missing delivery deadlines 35%" и "Exceeding budget 28%". Текст рядом: "Four out of five projects experience some fallout as a result of poorly managed complexity."
+- **Подпись на слайде:** «Сложные проекты: 35% срывают сроки, 28% превышают бюджет (PMI, 2026)»
 
-### B.4. Трудовой кодекс и испытательный срок (VERIFIED)
-- **Принятие и вступление в силу:**
-  - Закон РУз от **28.10.2022 № ЗРУ-798** «Об утверждении Трудового кодекса Республики Узбекистан» (на lex.uz: ЎРҚ-798), опубликован 29.10.2022 (НБЗД № 03/22/798/0972). https://lex.uz/docs/6257345
-  - Ст. 5 закона: вступает в силу через шесть месяцев после опубликования, то есть **30.04.2023**. Первая редакция кодекса на lex.uz датирована 30.04.2023.
-  - Текст кодекса: https://lex.uz/ru/docs/6257291
-- **Ст. 130:** «Срок предварительного испытания не может превышать **трех месяцев**, а для руководителей организаций, их заместителей, главных бухгалтеров и руководителей обособленных подразделений организаций — **шести месяцев**». Периоды временной нетрудоспособности и другого фактического отсутствия в срок не засчитываются.
-- **Ст. 129:**
-  - испытание должно быть оговорено в трудовом договоре, иначе работник считается принятым без испытания;
-  - испытание не устанавливается: беременным; женщинам с ребёнком до 3 лет; лицам до 18 лет; при договоре до 6 месяцев; выпускникам, которые впервые трудоустраиваются по специальности в течение года после окончания учёбы; и в некоторых других случаях.
-- **Ст. 132:** любая сторона может расторгнуть договор в период испытания, письменно предупредив другую сторону за **3 дня**.
-- **Что это значит для слайдов:**
-  - испытательный срок 90 дней корректен для большинства должностей;
-  - для CEO и главного бухгалтера допустимо до 6 месяцев;
-  - выпускникам на первой работе по специальности испытательный срок назначить нельзя. Это важно для стажёров и junior-сотрудников.
+**A1.3 (базовый уровень успеха): PMI *Maximizing Project Success*** [VERIFIED]
+- **Цифры:** 48% проектов оценены как успешные, 40% как «смешанный результат», 12% как провал. Net Project Success Score = 36.
+- **Дословно (с. 13–14):** "Twelve percent (12%) of respondents said their project had been a failure (0–6), whereas 40% of projects were rated as producing a mixed result (7–8), and 48% were rated successful (9–10). To calculate the Global NPSS, we took the 48% of projects rated as successful and subtracted the 12% rated a failure, for an overall NPSS score of 36"
+- **Отчёт:** *Maximizing Project Success*. PMI, 2024 (©2024, PDF от 03.12.2024, 45 с.). Опрос более 10 000 специалистов, 55 вопросов, более 150 интервью, 19 стран.
+- **URL:** https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/project_success_report_2024.pdf
+- **Подпись на слайде:** «Успешны лишь 48% проектов, 12% — провал (PMI, 2024)»
+- **Внимание:** в предисловии Pulse 2026 эта работа датирована «2025», а в основном тексте Pulse 2026 и в выходных данных самого PDF стоит 2024. Цитировать как 2024.
 
-### B.5. МРОТ и БРВ, 2026 (VERIFIED)
-- Указ Президента от **23.06.2026 № УП-115** (на lex.uz: ПФ-115), п. 3(б). https://lex.uz/docs/8283656
-- **С 01.09.2026:**
-  - **МРОТ — 1 360 000 сум/мес.**
-  - **БРВ — 440 000 сум.**
-- **С 01.07.2026:** базовая величина для исчисления пенсии — 504 000 сум.
-- Текст на lex.uz на узбекском языке. Русское название указа взято из вторичных источников (buxgalter.uz).
+**A1.4 (резерв): Pulse of the Profession 2025 «Boosting Business Acumen»** [VERIFIED]
+- **Дословно (с. 3):** "only 18% of project professionals demonstrate high business acumen, while a majority (66%) of project professionals exhibit a moderate level of business acumen." Сравнение высокой бизнес-компетентности с остальными: бюджет соблюдают 73% против 68%, сроки 63% против 59%, провал 8% против 11%.
+- **URL:** https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pulse/pulse_of_the_profession_2025-1.pdf (©2025, n = 2 841)
 
-### B.6. Зарплаты в Ташкенте и проверка плана
+### A2. Проблема «Нехватка проектных специалистов»
 
-**Официальные ориентиры (VERIFIED).**
-Источник — Нацкомстат РУз, пресс-релиз от 25.07.2026 за январь–июнь 2026 г. (предварительные данные): https://stat.uz/img/press-relizlar/ish-haqi--rus_p84215.pdf
-- Средняя номинальная начисленная зарплата (до вычета налогов):
-  - по стране — 7 091,1 тыс. сум;
-  - **г. Ташкент — 12 013,9 тыс. сум**;
-  - отрасль «Информация и связь» — 17 417,4 тыс. сум.
-- **Компьютерное программирование и консультации — 22 234,7 тыс. сум**; информационное обслуживание — 21 410,3 тыс. сум. Это средние по стране по всем должностям; в квартальной статистике без малых предприятий и микрофирм.
-- Рост за год: по стране +18,4%, «Информация и связь» +15,3%.
+**A2.1: PMI *Global Project Management Talent Gap* (2025), обновление отчёта 2021 года** [VERIFIED]
+- **Цифры:** сейчас в мире 39,6 млн проектных специалистов. К 2035 году может понадобиться до 65 млн (рост спроса до 64%). Дефицит составит до 29,8 млн.
+- **Дословно (Foreword):** "There are nearly 40 million project professionals worldwide today, and by 2035, the talent gap could reach up to 30 million more."
+- **Дословно (Executive Summary):** "By 2035, organizations could need up to 65 million project professionals to keep pace with growth and change. These projections show the supply of qualified talent falling short by as many as 29.8 million project professionals over the next decade."
+- **Отчёт:** *Global Project Management Talent Gap*. PMI, 2025 (©2025, PDF от 06.05.2025, 23 с.).
+- **URL:** https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/talent_gap_2025-v3.pdf
+- **Подпись на слайде:** «К 2035 году дефицит — до 29,8 млн проектных специалистов (PMI)»
 
-**Рынок по должностям.** Опроса по Ташкенту с разбивкой по должностям и грейдам за 2025–2026 гг. найти не удалось. Опроса зарплат IT Park за 2025–2026 гг. тоже нет: найденная статья IT Park о зарплатах — 2020 года, не использовать. Поэтому ниже две публичные базы.
-- **hh.uz 2025** (VERIFIED) — https://hh.uz/article/34221
-  - медиана **предлагаемой** зарплаты в вакансиях, где она указана;
-  - все грейды, по Узбекистану (91,9% IT-вакансий — в Ташкенте);
-  - до или после вычета налогов — не указано.
-- **Paylab Узбекистан** (PARTIAL) — https://www.paylab.com/uz/zarabotnaya-plata?lang=ru
-  - анонимный опрос, диапазон, в который попадают 80% респондентов (P10–P90), по Узбекистану;
-  - на страницах одновременно стоят «брутто» и «в нетто»;
-  - малые выборки: Backend n=40, Frontend n=28.
-- **ACFP по данным HeadHunter** (PARTIAL), через buxgalter.uz от 25.02.2025, данные 01.01–19.02.2025: https://buxgalter.uz/publish/doc/text206550_kakuyu_zarplatu_chashche_vsego_predlagayut_buhgalteram_rabotodateli_uzbekistana
+**A2.2: данные по Узбекистану из того же отчёта (Figure 4 и Appendix, Figure 13)** [VERIFIED]
+- Узбекистан входит в «Top 10 Countries: Highest Demand Growth».
+- Пессимистичный сценарий: 107 тыс. специалистов в 2025 году, 182 тыс. потребуется к 2035 году, рост спроса 70%, дефицит 83 тыс.
+- Оптимистичный сценарий: 108 → 209 тыс., +93,1%, дефицит 109 тыс.
+- Строка таблицы дословно: "Uzbekistan 107 182 70% 8 83" (Current state 2025 / Projected demand by 2035 / % Demand growth / Attrition and retirements / Talent gap, в тысячах, low-growth scenario).
+- **Подпись на слайде:** «Узбекистан: спрос на проектных менеджеров +70% к 2035 году (PMI)»
+- Отраслевой срез (Figure 6): IT services, 4,87 млн специалистов, рост спроса 46–62%.
 
-| Должность (план, млн сум/мес, брутто) | hh.uz 2025, медиана, млн | Paylab, P10–P90, млн | Оценка для Ташкента 2026 |
-|---|---|---|---|
-| CEO — 25 | — | «Главный исполнительный директор» 8,7–44,7 | Правдоподобно |
-| CTO / Tech Lead — 35 | CIO 12,1; руководитель группы разработки 10,4; CTO 6,5 (мало данных) | Технический директор 6,2–29,7; Lead developer 9,6–28,5 | **Выше P90.** Обосновать наймом senior с удалёнными зарубежными офферами или снизить до 28–30 |
-| Backend — 22 | Программист/разработчик 8,9 (все грейды) | 5,9–32,9; после 5 лет — 25,4 | Правдоподобно для middle+/senior; ≈ средняя по «программированию» (22,2) |
-| Frontend / Telegram — 20 | 8,9 (все грейды) | Frontend 4,0–18,0; JavaScript 5,1–29,0 | Верх рынка; уровень senior |
-| Геймдизайнер — 15 | 8,7 | 4,6–16,2 | Верхняя часть диапазона |
-| QA — 12 | 7,2 | «Тестировщик информационных технологий» 4,0–13,3; «ИТ-тестер — автоматизированные тесты» 5,3–18,5 | Правдоподобно |
-| Product Manager — 20 | Менеджер продукта 6,7; руководитель проектов 11,4 | «Менеджер по ИТ продуктам» 6,4–21,7 | Верх диапазона; уровень senior |
-| UI/UX — 14 | Дизайнер 6,8 | «Веб-дизайнер» 5,6–18,8; «Специалист по взаимодействию с пользователями» 5,0–17,1 | Правдоподобно |
-| Маркетинг-менеджер — 14 | — | «Менеджер по цифровому маркетингу» 4,6–15,9 | Верхняя часть диапазона |
-| SMM / Community — 8 | — | «Специалист по социальным медиа» 3,3–9,9 | Правдоподобно |
-| HR-менеджер — 12 | — | Специалист по персоналу 4,0–11,0; руководитель отдела кадров 4,2–21,8 | Правдоподобно для HR-менеджера, ведущего всю функцию |
-| Бухгалтер — 10 | ACFP/HH, 02.2025: бухгалтер 7,5; главный бухгалтер 10,5 | Старший бухгалтер 3,9–12,9; главный бухгалтер 6,9–32,5 | Правдоподобно (на уровне главного бухгалтера) |
+### A3. Проблема «Неопределённость стартапа»
 
-**Вывод.**
-- Фонд по `hr.ts`: 14 человек (по 2 backend и frontend) — **249 млн сум/мес**, в среднем **≈17,8 млн**.
-- Это почти совпадает с официальной средней по отрасли «Информация и связь» (17,4 млн, I полугодие 2026) и ниже средней по «компьютерному программированию» (22,2 млн).
-- В целом план правдоподобен и находится в верхней-средней части рынка.
-- Единственная заметно завышенная позиция — **CTO 35**: выше всех найденных значений P90.
-- Медианы hh.uz относятся к 2025 г. и ко всем грейдам. С учётом роста зарплат на 15–18% в год они ниже плановых окладов senior-уровня — это ожидаемо.
+**A3.1: CB Insights, «The top 9 reasons startups fail»** [VERIFIED]
+- **Дата:** 5 марта 2026 года. На том же URL раньше лежала версия 2021 года с цифрами 38% и 35%; её заменили, и старые цифры больше не цитировать.
+- **Цифры:** у 70% закрывшихся венчурных стартапов закончились деньги, но это финальная, а не корневая причина. Корневые причины: слабое соответствие продукта рынку (product-market fit) — 43%, неудачный тайминг — 29%, неустойчивая юнит-экономика — 19%.
+- **Дословно:** "“Ran out of capital” tops the list at 70%, but it’s almost always the final cause of death, not the root problem." и "The more telling causes — poor product-market fit (43%), bad timing (29%), and unsustainable unit economics (19%) — reveal why the capital dried up in the first place."
+- **Выборка:** "431 VC-backed companies that shut down since 2023"; "The analysis includes 385 companies for which failure reasons could be identified." Сумма процентов больше 100%, потому что у компаний бывает несколько причин.
+- **URL:** https://www.cbinsights.com/research/report/startup-failure-reasons-top/
+- **Подпись на слайде:** «70% стартапов закрылись без денег; 43% — нет product-market fit»
+- Статистику BLS по выживаемости бизнеса проверить не удалось: bls.gov отдаёт HTTP 403 автоматическим запросам. Не использовать.
+
+### A4. Agile и гибридные подходы (опционально)
+
+**A4.1: PMI Pulse of the Profession 2024** [VERIFIED]
+- **Цифры:** доля гибридных подходов выросла с 20% в 2020 году до 31,5% в 2023 году. Предиктивные подходы упали с 58% до 43,9%, agile-подходы выросли с 23% до 24,6%. Чаще всего гибрид применяют в IT (55%).
+- **Дословно (с. 6):** "Over the last three years, respondents to the PMI Annual Global Survey on Project Management have reported a steady increase in the use of hybrid approaches in their projects — up 57% from 20% in 2020 to 31.5% in 2023. While predictive approaches are still the most common, they have declined 24% (from 58% to 43.9%) over the same period."
+- **Там же:** "Information technology (55%), healthcare (53%) and financial services (53%) are most likely to use hybrid approaches".
+- **Отчёт:** *Pulse of the Profession® 2024. The Future of Project Work: Moving Past Office-Centric Models* (15th Edition). PMI, 2024 (PDF от 28.02.2024).
+- **URL:** https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pmi-pulse-of-the-profession-2024-report.pdf
+- **Подпись на слайде:** «Гибридные подходы: рост с 20% до 31,5% проектов (PMI, 2024)»
+- В введении того же отчёта округлено до «31%». На слайде использовать 31,5%.
+
+### A5. Контекст Узбекистана (для слайда о рынке)
+
+**Указ УП-158 от 11.09.2023 «О Стратегии «Узбекистан — 2030»»** [VERIFIED]
+- **Цель 57:** «Доведение объема экспорта IT-услуг и программных продуктов до 5 миллиардов долларов». Там же: «Разработка первого (Unicorn) стартап-проекта по капитализации национального рынка на 1 миллиард долларов путем поддержки стартап-проектов посредством программы акселерации (развития) IT-парка».
+- **Цель 33:** «Обеспечение занятости 300 тысяч молодых людей в IT-сфере».
+- **URL:** https://lex.uz/ru/docs/6600404
 
 ---
 
-## C. Список литературы (14 позиций, 2021–2026)
+## B. Методологические факты для слайдов
 
-Оформление близко к ГОСТ Р 7.0.100-2018. Дата обращения для всех — 22.10.2026.
+**B1. PMBOK Guide, 7-е издание (PMI, 2021): 12 принципов и 8 доменов производительности. ПОДТВЕРЖДЕНО** [VERIFIED]
+- **12 принципов** по PDF PMI «12 Principles of Project Management», ©2021: Stewardship, Team, Stakeholders, Value, Systems Thinking, Leadership, Tailoring, Quality, Complexity, Risk, Adaptability and Resiliency, Change.
+  URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/pmbok-standards/12-project-management-principles.pdf
+- **8 доменов** по PDF PMI «Project Performance Domains», ©2021: Stakeholder, Team, Development Approach & Life Cycle, Planning, Project Work, Delivery, Measurement, Uncertainty.
+  Определение: "A Project Performance Domain is defined as a group of related activities that are critical for the effective delivery of project outcomes."
+  URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/pmbok-standards/pmi-project-performance-domains.pdf
+- В FAQ PMI (обновлён 01.12.2021) указан стандарт ANSI/PMI 99-001-2021.
+- Выходные данные: Newtown Square, PA, PMI, 2021, xxvi + 274 с., ISBN 978-1-62825-664-2. Источник: библиотечный каталог INTAN, https://www.w-ilmu.intan.my/neuseal/Record/0000071501/Description.
 
-1. Трудовой кодекс Республики Узбекистан : утв. Законом Республики Узбекистан от 28.10.2022 № ЗРУ-798 : вступ. в силу 30.04.2023 // Национальная база данных законодательства Республики Узбекистан (LEX.UZ). — URL: https://lex.uz/ru/docs/6257291 (дата обращения: 22.10.2026). — **VERIFIED**: проверены https://lex.uz/ru/docs/6257291 и https://lex.uz/docs/6257345.
-2. Налоговый кодекс Республики Узбекистан : новая ред. утв. Законом Республики Узбекистан от 30.12.2019 № ЗРУ-599 : ред. с изм., внесёнными в т. ч. Законом от 25.12.2025 № ЗРУ-1108 // LEX.UZ. — URL: https://lex.uz/ru/docs/4674893 (дата обращения: 22.10.2026). — **VERIFIED**: проверены ст. 371, 381, 385, 386, 404, 405, 483. *Примечание: кодекс 2019 г., но используется редакция 2026 г. Если преподаватель требует, чтобы сам документ был не старше 2021 г., пометить «в ред. 2026 г.».*
-3. О Стратегии «Узбекистан — 2030» : Указ Президента Республики Узбекистан от 11.09.2023 № УП-158 // LEX.UZ. — URL: https://lex.uz/ru/docs/6600404 (дата обращения: 22.10.2026). — **VERIFIED**: номер, дата и цели 33 и 57 сверены.
-4. О повышении размеров заработной платы, пенсий, стипендий и пособий : Указ Президента Республики Узбекистан от 23.06.2026 № УП-115 // LEX.UZ. — URL: https://lex.uz/docs/8283656 (дата обращения: 22.10.2026). — **VERIFIED**: текст и суммы; русское название — перевод, на lex.uz документ на узбекском.
-5. Кибанов, А. Я. Управление персоналом организации : учебник / под ред. А. Я. Кибанова. — 4-е изд., доп. и перераб. — Москва : ИНФРА-М, 2023. — 695 с. — (Высшее образование: Бакалавриат). — ISBN 978-5-16-003671-7. — URL: https://znanium.ru/catalog/product/1951170 (дата обращения: 22.10.2026). — **VERIFIED**: карточка https://znanium.ru/catalog/document?id=423680.
-6. Armstrong, M. Armstrong's Handbook of Human Resource Management Practice: A Guide to the Theory and Practice of People Management / M. Armstrong, S. Taylor. — 16th ed. — London : Kogan Page, 2023. — ISBN 978-1-3986-0663-0. — **VERIFIED**: ISBN, год и издатель — по Open Library: https://openlibrary.org/books/OL38181609M; номер издания — по карточкам книготорговцев. Сайт Kogan Page перенаправляет с карточки на каталог, поэтому издание там не проверено.
-7. Dessler, G. Human Resource Management / G. Dessler. — 17th ed. — Hoboken, NJ : Pearson, 2024 (опубл. 20.11.2023). — ISBN 978-0-13-792739-5. — **VERIFIED**: https://www.pearson.com/en-us/subject-catalog/p/human-resource-management/P200000009678/9780137930654 («Published 20 November 2023, © 2024»). Global Edition, © 2024: ISBN 978-1-292-44987-6. Место издания Hoboken взято из библиотечного каталога; на сайте Pearson его нет.
-8. Gallup. State of the Global Workplace: 2025 Report. — Gallup, Inc., 2025. — 142 p. — URL: https://www.gallup.com/file/workplace/659528/state-of-the-global-workplace-2025-download.pdf (дата обращения: 22.10.2026). — **VERIFIED**.
-9. Gallup. State of the Global Workplace: 2026 Report. — Gallup, Inc., 2026. — 251 p. — URL: https://www.gallup.com/file/workplace/707798/state-of-the-global-workplace-2026-download.pdf (дата обращения: 22.10.2026). — **VERIFIED**.
-10. World Economic Forum. The Future of Jobs Report 2025. — Cologny/Geneva : World Economic Forum, 2025. — 290 p. — ISBN 978-2-940631-90-2. — URL: https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf (дата обращения: 22.10.2026). — **VERIFIED**.
-11. LinkedIn Learning. Workplace Learning Report 2024. — LinkedIn, 2024. — 39 p. — URL: https://learning.linkedin.com/content/dam/lem/business/en/learn/resources/workplace-learning-report-2024/LinkedIn-Workplace-Learning-Report-2024.pdf (дата обращения: 22.10.2026). — **VERIFIED**.
-12. ManpowerGroup. Global Talent Shortage Reaches Turning Point as AI Skills Claim Top Spot : press release, 26.02.2026. — URL: https://investor.manpowergroup.com/node/68796 (дата обращения: 22.10.2026). — **VERIFIED**.
-13. Deloitte. 2025 Global Human Capital Trends: Turning tensions into triumphs: Helping leaders transform uncertainty into opportunity. — Deloitte, 2025. — URL: https://www.deloitte.com/us/en/services/consulting/articles/human-capital-and-hr-trends-thought-leadership.html (дата обращения: 22.10.2026). — **VERIFIED**: страница и пресс-релиз от 24.03.2025 https://www.deloitte.com/us/en/about/press-room/deloitte-report-aims-to-help-leaders-navigate-complex-workplace-tensions.html.
-    - Пригодная цифра: «Two-thirds (66%) of managers and executives say that most recent hires are not fully prepared».
-    - В материалах указан разный охват: «nearly 10,000» и «nearly 13,000» руководителей.
-14. Национальный комитет Республики Узбекистан по статистике. Среднемесячная номинальная начисленная заработная плата в Узбекистане за январь–июнь 2026 года (предварительные данные) : пресс-релиз от 25.07.2026. — URL: https://stat.uz/img/press-relizlar/ish-haqi--rus_p84215.pdf (дата обращения: 22.10.2026). — **VERIFIED**.
+**B2. PMBOK Guide, 8-е издание: существует, вышло в 2025 году; использовать как основной источник** [VERIFIED для структуры и ISBN; PARTIAL для месяца выхода]
+- **Источник:** официальный PDF PMI с обложкой и оглавлением (создан 17.09.2025), https://www.pmi.org/-/media/pmi/documents/public/pdf/publications/pmbok-guide-eighth-edition_table-of-contents.pdf
+- **Название:** *The Standard for Project Management and A Guide to the Project Management Body of Knowledge (PMBOK® Guide) — Eighth Edition*. Включает стандарт ANSI/PMI 99-001-2025. ISBN 978-1-62825-829-5.
+- **Дословно с обложки:** "Simplified to six actionable principles guiding effective project management"; "Reintroduction of Process Groups as Focus Areas to accommodate diverse project delivery approaches"; "Integration of technical ways of working and other core concepts into seven comprehensive project management performance domains, including 40 newly evolved processes"; "shaped by nearly 48,000 data points".
+- **6 принципов** (оглавление, гл. 3): Adopt a Holistic View; Focus on Value; Embed Quality Into Processes and Deliverables; Be an Accountable Leader; Integrate Sustainability Within All Project Areas; Build an Empowered Culture.
+- **7 доменов** (оглавление PMBOK Guide, гл. 2): Governance, Scope, Schedule, Finance, Stakeholders, Resources, Risk.
+- **5 фокус-областей** (Standard, раздел 4.5): Initiating, Planning, Executing, Monitoring and Controlling, Closing.
+- **Дата выхода:**
+  - По странице PMI https://www.pmi.org/standards/pmbok: «Publication Date November 2025», 408 страниц. Данные из поискового индекса; прямой запрос даёт 403. [PARTIAL]
+  - Австралийский дистрибьютор NewSouth Books указывает 1 марта 2026 года как местную дату выхода, 408 с. https://newsouthbooks.com.au/books/a-guide-to-the-project-management-body-of-knowledge-pmbok-guide-eighth-edition/ [VERIFIED]
+  - В библиографии указывать 2025 год.
 
-**Резерв (проверено, можно заменить любую позицию):**
-- Gallup. State of the Global Workplace: 2024 Report. — Gallup, Inc., 2024. — 152 p. — https://www.gallup.com/file/workplace/645608/state-of-the-global-workplace-2024-download.pdf — **VERIFIED**.
-- hh.uz. Рынок труда в сфере информационных технологий: итоги 2025 года на hh.uz. — 18.02.2026. — https://hh.uz/article/34221 — **VERIFIED**.
-- Кибанов, А. Я. Основы управления персоналом : учебник. — 3-е изд., перераб. и доп. — Москва : ИНФРА-М, 2026. — 440 с. — ISBN 978-5-16-018872-0. — https://znanium.ru/catalog/product/2229311 — **VERIFIED**.
-- ManpowerGroup. 2025 Global Talent Shortage Survey: India Findings, с глобальными данными. — 2025. — https://manpowergroup.co.in/talent-shortage/talent-shortage-files/MPG-Talent-Shortage-2025-Findings.pdf — **VERIFIED**.
+**B3. Process Groups: A Practice Guide (PMI, 2022)** [PARTIAL]
+- По карточке официального книжного магазина PMI (IPG): ноябрь 2022 года, 370 с., ISBN 978-1-62825-783-0. 49 процессов в пяти группах: Initiating, Planning, Executing, Monitoring and Controlling, Closing.
+  URL: https://pmi.bookstore.ipgbook.com/process-groups--a-practice-guide-products-9781628257830.php (прямой запрос даёт 403).
+- Формулировку пяти групп независимо подтверждает PMBOK 8. В нём те же пять названий вернулись как «Focus Areas»; см. B2, это [VERIFIED].
 
-**Не включать:** McKinsey «The State of Organizations 2023» — **NOT VERIFIED**. Сайт McKinsey блокирует автоматическую загрузку; название и «более 2 500 руководителей» видны только в выдаче поиска.
+**B4. Scrum Guide (Schwaber & Sutherland, ноябрь 2020)** [VERIFIED; для библиографии ВНЕ диапазона 2021–2026]
+- **URL:** https://scrumguides.org/scrum-guide.html ("a direct port of the November 2020 version")
+- **Длина спринта:** "They are fixed length events of one month or less to create consistency."
+- **События:** "Scrum combines four formal events for inspection and adaptation within a containing event, the Sprint." Пять событий: Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective.
+- **Таймбоксы для месячного спринта:**
+  - Sprint Planning: "a maximum of eight hours"
+  - Daily Scrum: "a 15-minute event"
+  - Sprint Review: "a maximum of four hours"
+  - Retrospective: "a maximum of three hours"
+- **Команда:** "one Scrum Master, one Product Owner, and Developers"; "typically 10 or fewer people".
+- На слайде цитировать можно. В список литературы не включать или пометить как классический источник 2020 года.
 
-## Решение по итогам проверки
+**B5. Освоенный объём: SPI = EV / PV, CPI = EV / AC** [PARTIAL]
+- **Источник PMI 2021–2026:** блог PMI «Earned Value Management: Reading the Numbers» (A Guide to Reading the Numbers), 31.08.2026, https://www.pmi.org/blog/earned-value-management. По тексту в поисковом индексе: SPI = EV ÷ PV, «1.0 means on pace»; CPI = EV ÷ AC. Пример в блоге: SPI = 0,90 и CPI = 0,80, «about 80 cents of value per dollar spent». Прямой запрос даёт 403.
+- В PMBOK 7 тема относится к домену Measurement. Определение домена прочитано в PDF PMI ©2021 (URL в B1): "The Measurement Performance Domain addresses activities and functions associated with assessing project performance and taking appropriate actions to maintain acceptable performance."
+- Есть ли формулы SPI и CPI в тексте PMBOK 7 или 8, напрямую проверить не удалось: полный текст закрыт.
+- **Интерпретация для слайда:** значение ниже 1 означает отставание от графика (SPI) или перерасход бюджета (CPI).
 
-- Оклад CTO / Tech Lead в плане снижен с 35 до 30 млн сум/мес, чтобы не превышать найденные рыночные ориентиры (≈28,5–29,7 млн). Итоги бюджета пересчитываются автоматически из `src/data/hr.ts`.
+**B6. RACI и матрица «власть/интерес»** [PARTIAL]
+- Блог PMI «Stakeholder Management and RACI», 29.07.2026, https://www.pmi.org/blog/stakeholder-management-raci. По поисковому индексу в нём описаны power/interest grid для сортировки стейкхолдеров и RACI для распределения ответственности с правилом «one Accountable owner per outcome». Прямой запрос даёт 403.
+- PMI Lexicon of Project Management Terms, v5.0, обновлён в январе 2026: "RACI … a type of responsibility assignment matrix that uses responsible, accountable, consulted, and informed statuses to define the involvement of stakeholders in project activities". PDF доступен только зарегистрированным пользователям, анонимно 403. Формулировка взята из поискового индекса.
+- Классический первоисточник матрицы «власть/интерес» — Mendelow, 1991. Он вне диапазона 2021–2026.
+- **Рекомендация:** на слайде ссылаться на PMI (2026) и сверить блог вручную в браузере.
+
+**B7. Agile Practice Guide, 2-е издание** [VERIFIED: факт выхода и ISBN; PARTIAL: дата PMI]
+- **Название:** *Agile Practice Guide — Second Edition*. Подготовлено PMI совместно с Agile Alliance, согласовано с PMBOK 8. ISBN 978-1-62825-831-8.
+- **Дистрибьютор NewSouth Books:** 15 октября 2026 года, 198 с.: "developed collaboratively by Project Management Institute (PMI) and Agile Alliance … aligned with … (PMBOK® Guide)—Eighth Edition". https://newsouthbooks.com.au/books/agile-practice-guide-second-edition-english/ [VERIFIED]
+- **Страница PMI:** «Publication Date July 2026», 182 pages. https://www.pmi.org/standards/agile, по поисковому индексу; прямой запрос даёт 403. [PARTIAL]
+- Объём страниц у источников расходится. В библиографии указывать год 2026 без числа страниц.
+
+---
+
+## C. Список литературы (только 2021–2026, оформление по ГОСТ Р 7.0.100-2018)
+
+Дата обращения для всех электронных ресурсов: 22.10.2026.
+
+1. The Standard for Project Management and A Guide to the Project Management Body of Knowledge (PMBOK® Guide). – 8th ed. – Newtown Square, PA : Project Management Institute, 2025. – 408 p. – ISBN 978-1-62825-829-5. – Текст : непосредственный.
+   **[VERIFIED: ISBN, состав]** https://www.pmi.org/-/media/pmi/documents/public/pdf/publications/pmbok-guide-eighth-edition_table-of-contents.pdf. Дата и страницы: [PARTIAL], см. B2.
+2. The Standard for Project Management and A Guide to the Project Management Body of Knowledge (PMBOK® Guide). – 7th ed. – Newtown Square, PA : Project Management Institute, 2021. – xxvi, 274 p. – ISBN 978-1-62825-664-2. – Текст : непосредственный.
+   **[VERIFIED]** https://www.w-ilmu.intan.my/neuseal/Record/0000071501/Description; https://www.pmi.org/-/media/pmi/documents/public/pdf/pmbok-standards/pmbok-guide-public-faqs-1-july-2021.pdf
+3. Process Groups: A Practice Guide. – Newtown Square, PA : Project Management Institute, 2022. – 370 p. – ISBN 978-1-62825-783-0. – Текст : непосредственный.
+   **[PARTIAL]** https://pmi.bookstore.ipgbook.com/process-groups--a-practice-guide-products-9781628257830.php
+4. Agile Practice Guide / Project Management Institute ; Agile Alliance. – 2nd ed. – Newtown Square, PA : Project Management Institute, 2026. – ISBN 978-1-62825-831-8. – Текст : непосредственный.
+   **[VERIFIED у дистрибьютора; дата PMI: PARTIAL]** https://newsouthbooks.com.au/books/agile-practice-guide-second-edition-english/
+5. Pulse of the Profession® 2026: Driving Success in Complex Projects / Project Management Institute. – Newtown Square, PA : PMI, 2026. – 33 p. – URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pulse-of-the-profession_2026_pdf.pdf (дата обращения: 22.10.2026). – Текст : электронный.
+   **[VERIFIED]**
+6. Maximizing Project Success / Project Management Institute. – Newtown Square, PA : PMI, 2024. – 45 p. – URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/project_success_report_2024.pdf (дата обращения: 22.10.2026). – Текст : электронный.
+   **[VERIFIED]**
+7. Global Project Management Talent Gap / Project Management Institute. – Newtown Square, PA : PMI, 2025. – 23 p. – URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/talent_gap_2025-v3.pdf (дата обращения: 22.10.2026). – Текст : электронный.
+   **[VERIFIED]**
+8. Pulse of the Profession® 2024. The Future of Project Work: Moving Past Office-Centric Models / Project Management Institute. – Newtown Square, PA : PMI, 2024. – 41 p. – URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pmi-pulse-of-the-profession-2024-report.pdf (дата обращения: 22.10.2026). – Текст : электронный.
+   **[VERIFIED]**
+9. Kerzner, H. Project Management: A Systems Approach to Planning, Scheduling, and Controlling / H. Kerzner. – 13th ed. – [Hoboken, NJ] : Wiley, 2022. – 880 p. – ISBN 978-1-119-80537-3. – Текст : непосредственный.
+   **[VERIFIED]** https://www.wiley.com/en-us/Project+Management%3A+A+Systems+Approach+to+Planning%2C+Scheduling%2C+and+Controlling%2C+13th+Edition-p-9781119805373. Твёрдый переплёт — март 2022, e-book — январь 2022. Место издания взято из стандартных выходных данных Wiley и на странице не указано, поэтому стоит в квадратных скобках.
+10. Управление проектами : учебник и практикум для вузов / А. И. Балашов, Е. М. Рогова, М. В. Тихонова, Е. А. Ткаченко ; под редакцией Е. М. Роговой. – Москва : Юрайт, 2026. – 302 с. – (Высшее образование). – ISBN 978-5-534-21476-5. – URL: https://urait.ru/bcode/582619 (дата обращения: 22.10.2026). – Текст : электронный.
+    **[PARTIAL]** Карточка urait.ru по поисковому индексу, подтверждено двумя независимыми запросами. Гриф УМО ВО, научная школа НИУ ВШЭ.
+11. Горбашко, Е. А. Управление проектами : учебник для вузов / Е. А. Горбашко. – Москва : Юрайт, 2026. – 358 с. – (Высшее образование). – ISBN 978-5-534-19021-2. – URL: https://urait.ru/bcode/589651 (дата обращения: 22.10.2026). – Текст : электронный.
+    **[PARTIAL]** Как в п. 10. В аннотации упомянута «система поставки ценности» из PMBOK 7.
+12. Швабер, К. Скрам: гибкое управление продуктом и бизнесом / К. Швабер ; перевод с английского. – Москва : Альпина Паблишер, 2024. – 236 с. – (Гибкие методы управления). – ISBN 978-5-9614-2546-8. – Текст : непосредственный.
+    **[VERIFIED]** https://alpinabook.ru/catalog/book-skram/. Оригинальное название: «Agile Project Management with Scrum». Год 2024 взят из поля «Год выпуска» карточки текущего тиража.
+13. О Стратегии «Узбекистан — 2030» : Указ Президента Республики Узбекистан от 11.09.2023 № УП-158. – URL: https://lex.uz/ru/docs/6600404 (дата обращения: 22.10.2026). – Текст : электронный.
+    **[VERIFIED]**
+14. The top 9 reasons startups fail / CB Insights. – 2026. – 5 March. – URL: https://www.cbinsights.com/research/report/startup-failure-reasons-top/ (дата обращения: 22.10.2026). – Текст : электронный.
+    **[VERIFIED]**
+
+**Резерв (2021–2026, можно добавить или заменить любой пункт выше)**
+- Pulse of the Profession® 2025: Boosting Business Acumen / PMI. – 2025. – URL: https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pulse/pulse_of_the_profession_2025-1.pdf. **[VERIFIED]**
+- Telegram Mini Apps / Telegram. – URL: https://core.telegram.org/bots/webapps. **[VERIFIED]** У страницы нет даты публикации. В разделе «Recent changes» последняя запись: «June 11, 2026 — Bot API 10.1».
+- Bot Payments API for Digital Goods and Services / Telegram. – URL: https://core.telegram.org/bots/payments-stars. **[VERIFIED]** Даты нет. Дословно: "all transactions must be carried out in Telegram Stars, with currency tag XTR".
+- Telegram Stars: Pay for Digital Goods and More / Telegram Blog. – 2024. – 6 June. – URL: https://telegram.org/blog/telegram-stars. **[VERIFIED]**
+- За 7 месяцев 2025 года к IT Park присоединились 481 новый экспортер и 232 иностранные компании / IT Park Uzbekistan. – 2025. – 7 авг. – URL: https://www.it-park.uz/ru/itpark/news/za-7-mesyacev-2025-goda-k-it-park-prisoedinilis-481-novyy-eksporter-i-232-inostrannye-kompanii. **[VERIFIED]** Дословно: «резиденты IT Park экспортируют услуги более чем в 90 стран мира».
+- Earned Value Management: Reading the Numbers / PMI Blog. – 2026. – 31 Aug. – URL: https://www.pmi.org/blog/earned-value-management. **[PARTIAL]**
+- Stakeholder Management and RACI / PMI Blog. – 2026. – 29 July. – URL: https://www.pmi.org/blog/stakeholder-management-raci. **[PARTIAL]**
+
+**Исключено [EXCLUDED]**
+- Полковников А. В., Дубовик М. Ф. «Управление проектами. Полный курс MBA». Страница издательства Олимп-Бизнес (https://www.olbuss.ru/catalog/upravlenie-proektami-polnyy-kurs-mba/) указывает «Год издания / Переиздание 2018», ISBN 978-5-9693-0346-1. Магазин mdk-arbat пишет 2021 год, но издательство это не подтверждает.
+- Мазур И. И., Шапиро В. Д., Ольдерогге Н. Г. «Управление проектами». Найдены только издания Омега-Л 2007–2010 годов; изданий 2021–2026 нет.
+- Кузнецова Е. В. «Управление портфелем проектов как инструмент реализации корпоративной стратегии» (Юрайт). Последнее найденное издание 2020 года (2-е изд.); изданий 2021–2026 не найдено.
+- Зуб А. Т. «Управление проектами» (Юрайт, 2-е изд., 2026; https://urait.ru/bcode/583111). Год подтверждён, но ISBN вузовской версии противоречив: 978-5-534-17500-4 против 978-5-534-17511-0 (СПО). Можно включить после ручной сверки на urait.ru.
+- Larson E. W., Gray C. F. «Project Management: The Managerial Process». 9-е издание не найдено. По 8-му изданию в каталогах указаны 2020 и 2021 годы, оно не проверено.
+- Scrum Guide (2020) вне диапазона годов, см. B4.
+- CB Insights, версия 2021 года (38% / 35%) заменена на том же URL версией 2026 года.

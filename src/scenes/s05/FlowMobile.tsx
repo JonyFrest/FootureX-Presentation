@@ -1,40 +1,52 @@
-import { useState, type ReactNode } from 'react';
-import { ArrowDown, ChartLine, CornerLeftUp, Users } from 'lucide-react';
-import { AMO, AMO_NOTE, EFFECTIVENESS, GROWTH_ITEMS, HR_PROCESSES, LOOP_LABEL, type AmoId } from './model';
+import { useMemo, useState, type ReactNode } from 'react';
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, ChartLine, CornerLeftUp } from 'lucide-react';
+import { OUTPUT_ICONS } from './FlowDiagram';
+import {
+  CASCADE,
+  COLUMNS,
+  INPUTS,
+  LOOP_LABEL,
+  METHOD_NOTE,
+  OUTPUTS,
+  SCRUM,
+  SPRINTS,
+  SPRINTS_BADGE,
+  highlightedEdges,
+  highlightedNodes,
+  type NodeKey,
+} from './model';
 
-type Sel = { kind: 'hr'; id: string } | { kind: 'amo'; id: AmoId } | null;
-
-/** Телефон: вертикальный поток. Тап по процессу подсвечивает факторы AMO, тап по фактору — процессы. */
+/** Телефон: вертикальный поток. Тап по узлу подсвечивает его связи в соседних блоках (тот же граф, что на десктопе). */
 export function FlowMobile({ reducedMotion }: { reducedMotion: boolean }) {
-  const [sel, setSel] = useState<Sel>(null);
-  const hrOn = (id: string, feeds: readonly AmoId[]) =>
-    sel === null ? null : sel.kind === 'hr' ? sel.id === id : feeds.includes(sel.id);
-  const amoOn = (id: AmoId) =>
-    sel === null
-      ? null
-      : sel.kind === 'amo'
-        ? sel.id === id
-        : (HR_PROCESSES.find((p) => p.id === sel.id)?.feeds.includes(id) ?? false);
+  const [sel, setSel] = useState<NodeKey | null>(null);
+  const lit = useMemo(() => highlightedNodes(highlightedEdges(sel), sel), [sel]);
+  const state = (key: NodeKey) => (lit ? (lit.has(key) ? 'on' : 'off') : 'idle');
+  const toggle = (key: NodeKey) => setSel((cur) => (cur === key ? null : key));
+  const [cIn, cSt, cSc, cOut] = COLUMNS;
+
+  const btn = (key: NodeKey) => {
+    const st = state(key);
+    return {
+      type: 'button' as const,
+      'aria-pressed': sel === key,
+      onClick: () => toggle(key),
+      className: `cursor-pointer rounded-[12px] border text-left transition-[transform,border-color,background-color,opacity] duration-300 hover:-translate-y-0.5 ${
+        st === 'on' ? 'border-secondary/80 bg-[rgba(18,34,82,0.88)]' : 'border-white/10 bg-[rgba(10,16,32,0.78)]'
+      } ${st === 'off' ? 'opacity-45' : ''}`,
+    };
+  };
 
   return (
     <div className="flex flex-col">
-      <Section n="01" en="HR Processes" ru="HR-процессы">
+      <Section n={cIn.n} en={cIn.en} ru={cIn.ru}>
         <div className="grid grid-cols-2 gap-2">
-          {HR_PROCESSES.map((p) => {
-            const on = hrOn(p.id, p.feeds);
-            const Icon = p.icon;
+          {INPUTS.map((n) => {
+            const Icon = n.icon;
+            const b = btn(`in:${n.id}`);
             return (
-              <button
-                key={p.id}
-                type="button"
-                aria-pressed={sel?.kind === 'hr' && sel.id === p.id}
-                onClick={() => setSel(sel?.kind === 'hr' && sel.id === p.id ? null : { kind: 'hr', id: p.id })}
-                className={`flex cursor-pointer items-center gap-2 rounded-[12px] border px-3 py-2 text-left transition-[transform,border-color,background-color,opacity] duration-300 hover:-translate-y-0.5 ${
-                  on ? 'border-secondary/80 bg-[rgba(18,34,82,0.88)]' : 'border-white/10 bg-[rgba(10,16,32,0.78)]'
-                } ${on === false ? 'opacity-45' : ''}`}
-              >
-                <Icon className="size-4 shrink-0 text-secondary" aria-hidden strokeWidth={1.8} />
-                <span className="t-small font-medium text-white">{p.label}</span>
+              <button key={n.id} {...b} className={`${b.className} flex items-center gap-2 px-3 py-2`}>
+                {Icon ? <Icon className="size-4 shrink-0 text-secondary" aria-hidden strokeWidth={1.8} /> : null}
+                <span className="t-small font-medium leading-tight text-white">{n.label}</span>
               </button>
             );
           })}
@@ -43,65 +55,104 @@ export function FlowMobile({ reducedMotion }: { reducedMotion: boolean }) {
 
       <Connector reducedMotion={reducedMotion} />
 
-      <Section n="02" en="Employee · AMO" ru="Сотрудник" focal>
-        <div className="glass-strong grid grid-cols-3 gap-2 p-2" style={{ borderColor: 'rgba(37,147,250,0.55)' }}>
-          {AMO.map((a) => {
-            const on = amoOn(a.id);
+      <Section n={cSt.n} en={cSt.en} ru={cSt.ru}>
+        <ol className="flex flex-col">
+          {CASCADE.map((n, i) => {
+            const b = btn(`st:${n.id}`);
             return (
-              <button
-                key={a.id}
-                type="button"
-                aria-pressed={sel?.kind === 'amo' && sel.id === a.id}
-                onClick={() => setSel(sel?.kind === 'amo' && sel.id === a.id ? null : { kind: 'amo', id: a.id })}
-                className={`flex cursor-pointer flex-col items-center gap-0.5 rounded-[12px] border px-1 py-2 text-center transition-[transform,border-color,background-color,opacity] duration-300 hover:-translate-y-0.5 ${
-                  on ? 'border-secondary/80 bg-[rgba(37,80,250,0.22)]' : 'border-white/8 bg-white/[0.03]'
-                } ${on === false ? 'opacity-45' : ''}`}
-              >
-                <span className="t-h2 text-brand-gradient leading-none">{a.id}</span>
-                <span className="t-micro font-semibold text-white">{a.ru}</span>
-              </button>
-            );
-          })}
-        </div>
-      </Section>
-
-      <Connector reducedMotion={reducedMotion} />
-
-      <Section n="03" en="Performance" ru="Эффективность">
-        <ul className="glass flex flex-col gap-1.5 p-3">
-          {EFFECTIVENESS.map((e) => {
-            const Icon = e.icon;
-            return (
-              <li key={e.id} className="flex items-center gap-2">
-                <Icon className="size-4 shrink-0 text-secondary" aria-hidden strokeWidth={1.8} />
-                <span className="t-small text-white">{e.label}</span>
+              <li key={n.id} className="flex flex-col" style={{ paddingLeft: `${i * 7}%` }}>
+                {i > 0 ? (
+                  <span aria-hidden className="relative ml-5 flex h-5 w-px items-center bg-highlight/50">
+                    <span className="absolute left-1/2 size-2 -translate-x-1/2 rotate-45 border border-highlight bg-deep" />
+                  </span>
+                ) : null}
+                <button {...b} className={`${b.className} relative flex flex-col py-2 pl-4 pr-3`}>
+                  <span aria-hidden className="absolute inset-y-2 left-0 w-[3px] rounded-r-full bg-[image:var(--grad-brand)]" />
+                  <span className="t-small font-semibold leading-tight text-white">{n.label}</span>
+                  {n.sub ? <span className="t-micro text-highlight/85">{n.sub}</span> : null}
+                </button>
               </li>
             );
           })}
-        </ul>
+        </ol>
       </Section>
 
       <Connector reducedMotion={reducedMotion} />
 
-      <Section n="04" en="Growth" ru="Рост FootureX">
-        <ul className="glass flex flex-col gap-1.5 p-3">
-          {GROWTH_ITEMS.map((item, i) => (
-            <li key={item} className="flex items-center gap-2">
-              <span className="t-micro font-display text-highlight">{String(i + 1).padStart(2, '0')}</span>
-              <span className="t-small text-white">{item}</span>
-            </li>
-          ))}
-        </ul>
+      <Section n={cSc.n} en={cSc.en} ru={cSc.ru} focal>
+        <div className="glass-strong p-2" style={{ borderColor: 'rgba(37,147,250,0.55)' }}>
+          {/* 2×2 по часовой стрелке со стрелками в зазорах и числом повторов в центре */}
+          <div className="relative grid auto-rows-fr grid-cols-2 gap-7 [--g:28px]">
+            {SCRUM.map((n, i) => {
+              const b = btn(`sc:${n.id}`);
+              const area = ['1 / 1', '1 / 2', '2 / 2', '2 / 1'][i];
+              return (
+                <button key={n.id} {...b} style={{ gridArea: area }} className={`${b.className} flex flex-col justify-center px-3 py-2`}>
+                  <span className="t-micro font-display text-highlight">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="t-small font-semibold leading-tight text-white">{n.label}</span>
+                </button>
+              );
+            })}
+            <CycleArrow pos="top">
+              <ArrowRight />
+            </CycleArrow>
+            <CycleArrow pos="right">
+              <ArrowDown />
+            </CycleArrow>
+            <CycleArrow pos="bottom">
+              <ArrowLeft />
+            </CycleArrow>
+            <CycleArrow pos="left">
+              <ArrowUp />
+            </CycleArrow>
+            <span
+              role="img"
+              aria-label={SPRINTS_BADGE}
+              className="pointer-events-none absolute left-1/2 top-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-secondary/60 bg-[rgba(14,22,41,0.95)] shadow-[0_0_20px_-4px_rgba(37,147,250,0.75)]"
+            >
+              <span className="t-small font-display leading-none text-white" aria-hidden>
+                ×{SPRINTS}
+              </span>
+            </span>
+          </div>
+        </div>
       </Section>
 
-      <div className="mt-3 flex items-center gap-3 rounded-[14px] border border-dashed border-highlight/35 px-3 py-2.5">
+      <Connector reducedMotion={reducedMotion} />
+
+      <Section n={cOut.n} en={cOut.en} ru={cOut.ru}>
+        <ol className="flex flex-col">
+          {OUTPUTS.map((n, i) => {
+            const Icon = OUTPUT_ICONS[n.id];
+            const b = btn(`out:${n.id}`);
+            return (
+              <li key={n.id} className="flex flex-col">
+                {i > 0 ? <ArrowDown className="mx-auto my-1 size-4 text-highlight/70" aria-hidden /> : null}
+                <button {...b} className={`${b.className} flex items-center gap-2 px-3 py-2`}>
+                  {Icon ? <Icon className="size-4 shrink-0 text-secondary" aria-hidden strokeWidth={1.8} /> : null}
+                  <span className="t-small font-medium leading-tight text-white">{n.label}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </Section>
+
+      <button
+        type="button"
+        aria-pressed={sel === 'loop'}
+        onClick={() => toggle('loop')}
+        className={`mt-3 flex cursor-pointer items-center gap-3 rounded-[14px] border border-dashed px-3 py-2.5 text-left transition-[border-color,background-color] duration-300 ${
+          state('loop') === 'on' ? 'border-secondary/80 bg-[rgba(37,80,250,0.2)]' : 'border-highlight/35'
+        }`}
+      >
         <CornerLeftUp className="size-5 shrink-0 text-secondary" aria-hidden />
-        <p className="t-small text-ice">
+        <span className="t-small text-ice">
           <ChartLine className="mr-1 inline size-4 align-[-2px] text-secondary" aria-hidden />
-          <span className="font-semibold text-white">{LOOP_LABEL}</span> — обратная связь к HR-процессам
-        </p>
-      </div>
-      <p className="t-micro mt-2 text-mute">{AMO_NOTE}</p>
+          <span className="font-semibold text-white">Обратная связь:</span> {LOOP_LABEL}
+        </span>
+      </button>
+      <p className="t-micro mt-2 text-mute">{METHOD_NOTE}</p>
     </div>
   );
 }
@@ -112,12 +163,26 @@ function Section({ n, en, ru, focal = false, children }: { n: string; en: string
       <p className="t-micro font-display uppercase tracking-[0.16em] text-highlight">
         <span className="text-white">{n}</span> · {en}
       </p>
-      <h2 className={`t-h3 mb-2 flex items-center gap-2 ${focal ? 'text-gradient' : ''}`}>
-        {focal ? <Users className="size-4 text-highlight" aria-hidden /> : null}
-        {ru}
-      </h2>
+      <h2 className={`t-h3 mb-2 ${focal ? 'text-gradient' : ''}`}>{ru}</h2>
       {children}
     </section>
+  );
+}
+
+/** Стрелка Scrum-цикла в зазоре сетки 2×2 (--g — ширина зазора). */
+function CycleArrow({ pos, children }: { pos: 'top' | 'right' | 'bottom' | 'left'; children: ReactNode }) {
+  const style =
+    pos === 'top'
+      ? { left: '50%', top: 'calc((100% - var(--g)) / 4)' }
+      : pos === 'bottom'
+        ? { left: '50%', top: 'calc(100% - (100% - var(--g)) / 4)' }
+        : pos === 'right'
+          ? { left: 'calc(100% - (100% - var(--g)) / 4)', top: '50%' }
+          : { left: 'calc((100% - var(--g)) / 4)', top: '50%' };
+  return (
+    <span aria-hidden className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 text-highlight [&>svg]:size-4" style={style}>
+      {children}
+    </span>
   );
 }
 

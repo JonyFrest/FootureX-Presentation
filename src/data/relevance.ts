@@ -1,21 +1,19 @@
 /**
  * Сцена 03 «Почему проектное управление критично для технологического стартапа».
- * Три проблемы — по одной цифре на каждую, плюс вывод для FootureX.
- *
- * ВНИМАНИЕ: пока docs/research-notes-pm.md не готов, цифры ниже — КАНДИДАТЫ (verified: false).
- * На слайде у таких карточек выводится пометка «источник проверяется». После проверки замените
- * формулировку, число, источник, год и URL на отмеченные VERIFIED и выставьте verified: true.
+ * Три проблемы — по одной проверенной цифре на каждую, и вывод для FootureX.
+ * Источник проверки: docs/research-notes-pm.md (часть A, статус VERIFIED, проверено 22.10.2026).
  * Компонент сцены читает значения отсюда: цифры и тип инфографики меняются без правки раскладки.
  */
 
 export type RelevanceVisual = 'gauge' | 'bars' | 'dots';
 
-/** Строка сравнения для инфографики 'bars' (значение в процентах). */
+/** Строка сравнения для инфографики 'bars'. */
 export interface RelevanceBarRow {
+  /** Подпись строки слева (например, год). */
   label: string;
   value: number;
-  /** Подпись значения справа, по умолчанию «N%». */
-  display?: string;
+  /** Подпись значения справа. */
+  display: string;
 }
 
 export interface RelevanceItem {
@@ -24,14 +22,16 @@ export interface RelevanceItem {
   title: string;
   /** Крупное число на карточке. */
   value: number;
+  /** Знаков после запятой у крупного числа. */
+  decimals?: number;
   /** Единица числа: '%' включает пропорциональные визуализации; иначе выводится рядом с числом. */
   unit: string;
-  /** Знак перед числом (например, «+»), необязательно. */
-  prefix?: string;
-  /** Короткое слово перед числом (например, «лишь»), необязательно. */
+  /** Короткое слово перед числом (например, «до»), необязательно. */
   lead?: string;
   /** Подпись после числа, не длиннее 12 слов. */
   caption: string;
+  /** Дополнительная короткая строка из того же источника, необязательно. */
+  note?: string;
   /** Полная формулировка для слайда и экранного диктора. */
   statement: string;
   /** Издатель и название отчёта. */
@@ -41,75 +41,69 @@ export interface RelevanceItem {
   verified: boolean;
   /** Тип анимированной инфографики. */
   visual: RelevanceVisual;
-  /** 'bars': строки сравнения; без них — одна полоса со значением карточки. */
-  rows?: readonly RelevanceBarRow[];
-  /** 'dots' для не-процентов: подпись масштаба, например «1 точка — 1 млн». */
-  dotLegend?: string;
+  /** 'bars': подпись над полосами и строки сравнения (длина — доля от максимума строк). */
+  bars?: { title: string; rows: readonly RelevanceBarRow[] };
 }
 
 export const RELEVANCE: readonly RelevanceItem[] = [
   {
-    // КАНДИДАТ — ждёт проверки в docs/research-notes-pm.md.
+    // research-notes-pm A1.1 + A1.2
     id: 'time-budget',
     title: 'Сроки и бюджет',
-    value: 45,
+    value: 31,
     unit: '%',
-    prefix: '+',
-    caption: 'в среднем перерасход бюджета крупных IT-проектов',
-    statement: 'Крупные IT-проекты в среднем превышают бюджет на 45% и срок на 7%',
-    source: 'McKinsey & University of Oxford, 2012',
-    sourceYear: 2012,
-    url: 'https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/delivering-large-scale-it-projects-on-time-on-budget-and-on-value',
-    verified: false,
-    visual: 'bars',
-    rows: [
-      { label: 'Бюджет', value: 45, display: '+45%' },
-      { label: 'Срок', value: 7, display: '+7%' },
-    ],
+    caption: 'сложных проектов не достигают всех запланированных выгод',
+    note: 'Из-за плохо управляемой сложности 35% срывают сроки, 28% превышают бюджет',
+    statement:
+      '31% сложных проектов не достигают запланированных выгод; из-за плохо управляемой сложности 35% проектов срывают сроки, 28% превышают бюджет',
+    source: 'PMI, Pulse of the Profession 2026',
+    sourceYear: 2026,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pulse-of-the-profession_2026_pdf.pdf',
+    verified: true,
+    visual: 'gauge',
   },
   {
-    // КАНДИДАТ — ждёт проверки в docs/research-notes-pm.md.
+    // research-notes-pm A2.1 + A2.2 (Узбекистан, пессимистичный сценарий, тыс. специалистов)
     id: 'talent-gap',
     title: 'Нехватка проектных специалистов',
-    value: 25,
+    value: 29.8,
+    decimals: 1,
     unit: 'млн',
-    caption: 'новых специалистов по управлению проектами нужно миру к 2030 году',
-    statement: 'К 2030 году миру понадобится 25 млн новых специалистов по управлению проектами',
-    source: 'PMI, Talent Gap, 2021',
-    sourceYear: 2021,
-    url: 'https://www.pmi.org/learning/careers/talent-gap-2021',
-    verified: false,
-    visual: 'dots',
-    dotLegend: '1 точка — 1 млн специалистов',
+    lead: 'до',
+    caption: 'дефицит проектных специалистов в мире к 2035 году',
+    statement:
+      'К 2035 году дефицит проектных специалистов в мире составит до 29,8 млн; Узбекистан — в топ-10 стран по росту спроса: +70%, со 107 до 182 тыс.',
+    source: 'PMI, Global Project Management Talent Gap 2025',
+    sourceYear: 2025,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/talent_gap_2025-v3.pdf',
+    verified: true,
+    visual: 'bars',
+    bars: {
+      title: 'Узбекистан: спрос +70%',
+      rows: [
+        { label: '2025', value: 107, display: '107 тыс.' },
+        { label: '2035', value: 182, display: '182 тыс.' },
+      ],
+    },
   },
   {
-    // КАНДИДАТ — ждёт проверки в docs/research-notes-pm.md.
+    // research-notes-pm A3.1 (версия от 05.03.2026; цифры 2021 года 38% / 35% не цитировать)
     id: 'uncertainty',
     title: 'Неопределённость стартапа',
-    value: 38,
+    value: 43,
     unit: '%',
-    caption: 'закрывшихся стартапов: закончились деньги или не удалось привлечь инвестиции',
-    statement: '38% закрывшихся стартапов назвали причиной нехватку денег или неудачу с привлечением инвестиций',
-    source: 'CB Insights, Why Startups Fail, 2021',
-    sourceYear: 2021,
+    caption: 'закрывшихся стартапов: слабое соответствие продукта рынку',
+    statement: 'У 43% закрывшихся венчурных стартапов корневая причина — слабое соответствие продукта рынку',
+    source: 'CB Insights, The top 9 reasons startups fail, 2026',
+    sourceYear: 2026,
     url: 'https://www.cbinsights.com/research/report/startup-failure-reasons-top/',
-    verified: false,
-    visual: 'gauge',
+    verified: true,
+    visual: 'dots',
   },
 ];
 
 /** Вывод для FootureX (связка статистики с проектом, без новых цифр). */
 export const RELEVANCE_TAKEAWAY = {
   lead: 'Для FootureX это значит:',
-  text: 'маленькой команде с фиксированным бюджетом нужны ясный план, чёткие приоритеты и контроль рисков с первого спринта.',
-} as const;
-
-/** Контекст Узбекистана: рост IT-сферы — больше технологических проектов (VERIFIED, research-notes A.4). */
-export const RELEVANCE_UZ_CONTEXT = {
-  label: 'Цель «Узбекистан-2030»',
-  value: '300 тыс.',
-  text: 'молодых людей в IT-сфере',
-  source: 'Указ УП-158 от 11.09.2023',
-  url: 'https://lex.uz/ru/docs/6600404',
-  verified: true,
+  text: 'маленькой команде с жёстким бюджетом нужны ясный план, приоритеты и контроль рисков с первого спринта.',
 } as const;

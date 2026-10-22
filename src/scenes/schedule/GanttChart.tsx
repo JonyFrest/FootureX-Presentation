@@ -34,7 +34,7 @@ const VARS = {
   '--dia': 'clamp(11px, calc(var(--u) * 0.85), 17px)',
 } as CSSProperties;
 
-const COLUMNS = 'clamp(100px, calc(var(--u) * 7.3), 150px) clamp(304px, calc(var(--u) * 21), 420px) minmax(0, 1fr)';
+const COLUMNS = 'clamp(110px, calc(var(--u) * 7.6), 152px) clamp(304px, calc(var(--u) * 21), 420px) minmax(0, 1fr)';
 
 /** Раскладка строк сетки: шапка (месяцы, спринты), группы результатов с отступами, ось вех. */
 function buildLayout() {
@@ -191,13 +191,13 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
 
       {/* Ось вех. */}
       <div className="flex flex-col justify-start gap-[3px] pt-[calc(var(--dia)*0.9)]" style={{ gridColumn: '1 / 3', gridRow: LAYOUT.msLine }}>
-        <span className="t-micro flex items-center gap-[var(--gap-1)] text-soft">
+        <span className="t-micro flex items-center gap-[var(--gap-1)] whitespace-nowrap text-soft">
           <LegendSwatch kind="critical" /> критический путь
           <LegendSwatch kind="regular" className="ml-[var(--gap-1)]" /> другие работы
+          <Diamond className="mr-[3px] ml-[calc(var(--gap-1)+3px)] size-[9px]" /> веха
         </span>
-        <span className="t-micro flex items-center gap-[var(--gap-1)] text-soft">
-          <Diamond className="mx-[6px] size-[9px]" /> веха · конец спринта
-          <LegendSwatch kind="optional" className="ml-[var(--gap-1)]" /> задел · ид — идеальные человеко-дни
+        <span className="t-micro flex items-center gap-[var(--gap-1)] whitespace-nowrap text-soft">
+          <LegendSwatch kind="optional" /> задел из буфера · ид — идеальные человеко-дни
         </span>
       </div>
       <div className="relative border-t border-[rgba(142,180,255,0.35)]" style={{ gridColumn: 3, gridRow: LAYOUT.msLine }}>

@@ -36,12 +36,14 @@ function CharterDocument({ active, bind }: { active: SmartLetter | null; bind: L
           {PROJECT.code}
         </span>
         <span className="t-small text-highlight">{PROJECT.program}</span>
+        <Approval className="ml-auto" />
       </div>
-      <h2 className="t-h2 relative mt-[var(--gap-2)] text-balance text-white">{PROJECT.name}</h2>
+      <h2 className="t-h2 relative mt-[var(--gap-1)] text-balance text-white">{PROJECT.name}</h2>
 
-      <div className="hairline my-[var(--gap-2)]" aria-hidden />
-
-      <p className="t-small font-semibold text-highlight">Цель проекта</p>
+      <p className="t-small mt-[var(--gap-2)] flex items-center gap-[var(--gap-2)] font-semibold text-highlight">
+        Цель проекта
+        <span aria-hidden className="h-px flex-1 bg-gradient-to-r from-highlight/45 to-transparent" />
+      </p>
       <GoalSentence
         active={active}
         bind={bind}
@@ -86,7 +88,6 @@ function CharterTabs() {
         idBase={ID_BASE}
         render={(id) => (id === 'scope' ? <ScopeContent /> : id === 'limits' ? <LimitsContent /> : <AcceptContent />)}
       />
-      <Approval className="mt-[var(--gap-2)] border-t border-white/[0.08] pt-[var(--gap-2)]" />
     </Glass>
   );
 }
@@ -95,12 +96,14 @@ function FactsStrip() {
   return (
     <Glass
       className="grid items-stretch"
-      style={{ gridTemplateColumns: 'minmax(0,1.3fr) minmax(0,1.15fr) minmax(0,0.85fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.5fr)' }}
+      style={{ gridTemplateColumns: 'minmax(0,1.2fr) minmax(0,1.1fr) minmax(0,0.8fr) minmax(0,1fr) minmax(0,1.15fr) minmax(0,1.45fr)' }}
     >
       {FACTS.map((fact, i) => (
         <div
           key={fact.id}
-          className={`min-w-0 px-[var(--gap-3)] py-[var(--gap-2)] ${i > 0 ? 'border-l border-white/[0.08]' : ''}`}
+          className={`min-w-0 px-[var(--gap-3)] py-[var(--gap-2)] ${i > 0 ? 'border-l border-white/[0.08]' : ''} ${
+            i === 0 ? '' : 'pl-[var(--gap-2)]'
+          }`}
         >
           <p className="t-small text-mute">{fact.label}</p>
           <div className="mt-[calc(var(--gap-1)*0.8)]">

@@ -264,13 +264,13 @@ export const FACTS: readonly FactItem[] = [
     unit: `по ${PROJECT.sprintWeeks} ${plural(PROJECT.sprintWeeks, WEEK_FORMS)}`,
     numeric: true,
   },
-  { id: 'budget', label: 'Бюджет команды', value: BUDGET_MONTHLY, unit: 'в месяц', numeric: true },
+  { id: 'budget', label: 'Бюджет команды', value: BUDGET_MONTHLY, unit: '/ мес', numeric: true },
 ];
 
 export function FactValue({ fact }: { fact: FactItem }) {
   if (!fact.numeric) return <p className="t-h3 leading-tight text-white">{fact.value}</p>;
   return (
-    <p className="flex flex-wrap items-baseline gap-x-[0.4em] leading-none">
+    <p className="flex items-baseline gap-x-[0.4em] leading-none whitespace-nowrap">
       <span className="t-h2 leading-none text-white t-num">{fact.value}</span>
       {fact.unit ? <span className="t-small text-soft">{fact.unit}</span> : null}
     </p>
@@ -373,12 +373,12 @@ const SPONSOR_ROLE = ROLES.find((r) => r.id === 'sponsor');
 
 export function Approval({ className = '' }: { className?: string }) {
   if (!SPONSOR_ROLE) return null;
-  const focus = SPONSOR_ROLE.focus.charAt(0).toLowerCase() + SPONSOR_ROLE.focus.slice(1);
+  const who = SPONSOR_ROLE.title.charAt(0).toLowerCase() + SPONSOR_ROLE.title.slice(1);
   return (
     <p className={`t-small flex items-start gap-[var(--gap-1)] leading-snug text-soft ${className}`}>
       <BadgeCheck aria-hidden className="mt-[0.1em] size-[1.25em] shrink-0 text-secondary" strokeWidth={1.8} />
       <span className="min-w-0">
-        <span className="font-semibold text-white">{SPONSOR_ROLE.title}</span> {focus}
+        Устав утверждает <span className="font-semibold text-white">{who}</span>
       </span>
     </p>
   );
