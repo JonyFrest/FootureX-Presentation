@@ -8,6 +8,7 @@ import { EASE, useHoverSelect } from './kit';
 import { CHARTER_TABS, type CharterTab, type SmartLetter } from './charterData';
 import {
   AcceptContent,
+  Approval,
   FACTS,
   FactValue,
   GoalSentence,
@@ -80,6 +81,7 @@ export function CharterMobile() {
             <h2 className="t-h3 mt-2 text-white">{PROJECT.name}</h2>
             <p className="t-small mt-3 font-semibold text-highlight">Цель проекта</p>
             <GoalSentence active={active} bind={bind} className="t-small mt-1 font-medium [line-height:1.6]" />
+            <Approval className="mt-3 border-t border-white/[0.08] pt-3" />
           </Glass>
         </Reveal>
 

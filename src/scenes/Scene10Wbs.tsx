@@ -12,7 +12,7 @@ export default function Scene10Wbs() {
   const compact = useIsCompact();
   return (
     <SceneFrame justify={compact ? 'start' : 'center'}>
-      <SceneHeader title="Иерархическая структура работ" />
+      <SceneHeader title="Иерархическая структура работ" className="max-w-none!" />
       {compact ? <WbsMobile /> : <WbsDesktop />}
     </SceneFrame>
   );

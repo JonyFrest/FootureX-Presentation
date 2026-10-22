@@ -34,9 +34,9 @@ export function RiskRegister({ active, pinned, bind }: RegisterProps) {
   const { ready, reducedMotion } = useScene();
   const show = ready || reducedMotion;
   return (
-    <div data-risk-register>
+    <div data-risk-register data-interactive>
       <div className="flex flex-wrap items-baseline justify-between gap-x-[var(--gap-2)] gap-y-0.5 px-[var(--gap-1)]">
-        <p className="t-eyebrow tracking-[0.14em]">Реестр рисков · по баллу p × i</p>
+        <p className="t-eyebrow tracking-[0.14em]">Реестр рисков · балл = вероятность × влияние</p>
         <p className="t-micro text-mute">
           {STRATEGY_COUNTS.map((s) => `${s.title} ${s.count}`).join(' · ')} · из бэклога {BACKLOG_COUNT} из {REGISTER.length}
         </p>

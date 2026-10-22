@@ -115,7 +115,7 @@ export function SmartTile({
     >
       <span
         aria-hidden
-        className={`t-h2 shrink-0 leading-none transition-colors duration-300 ${
+        className={`t-h2 shrink-0 leading-none ${
           on ? 'text-white' : 'text-brand-gradient'
         } ${row ? 'w-[1.1em] pt-0.5 text-center' : ''}`}
       >
@@ -157,7 +157,7 @@ export function ScopeContent({ dense = false }: { dense?: boolean }) {
       </section>
       <section
         aria-label="Не входит в проект"
-        className="rounded-[12px] border border-dashed border-highlight/30 bg-white/[0.015] px-[var(--gap-2)] py-[calc(var(--gap-2)*0.8)]"
+        className="mt-auto rounded-[12px] border border-dashed border-highlight/30 bg-white/[0.015] px-[var(--gap-2)] py-[calc(var(--gap-2)*0.8)]"
       >
         <h3 className="t-small flex items-center gap-2 font-semibold text-soft">
           Не входит в проект
@@ -270,7 +270,7 @@ export const FACTS: readonly FactItem[] = [
 export function FactValue({ fact }: { fact: FactItem }) {
   if (!fact.numeric) return <p className="t-h3 leading-tight text-white">{fact.value}</p>;
   return (
-    <p className="flex items-baseline gap-x-[0.4em] leading-none whitespace-nowrap">
+    <p className="flex flex-wrap items-baseline gap-x-[0.4em] gap-y-1 leading-none">
       <span className="t-h2 leading-none text-white t-num">{fact.value}</span>
       {fact.unit ? <span className="t-small text-soft">{fact.unit}</span> : null}
     </p>

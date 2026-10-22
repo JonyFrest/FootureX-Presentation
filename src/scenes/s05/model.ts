@@ -39,7 +39,7 @@ export const INPUTS: readonly FlowNode[] = [
     label: `Бэклог: ${WORK_PACKAGES.length} ${ruPlural(WORK_PACKAGES.length, EPIC_FORMS)}`,
     icon: ListChecks,
   },
-  { id: 'budget', label: `Бюджет команды ${nb(formatUsd(PROJECT.teamBudgetMonthlyUsd))}/мес`, icon: Wallet },
+  { id: 'budget', label: `Бюджет команды ${nb(formatUsd(PROJECT.teamBudgetMonthlyUsd))}/\u2060мес`, icon: Wallet },
   { id: 'team', label: `Команда: ${TEAM_LABEL}`, icon: Users },
 ] as const;
 

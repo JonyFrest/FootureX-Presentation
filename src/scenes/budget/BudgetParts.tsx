@@ -61,7 +61,7 @@ function SliceRow({ slice, active, bind }: { slice: Slice; active: SliceId | nul
 export function SliceList({ active, bind }: { active: SliceId | null; bind: HoverBind<SliceId> }) {
   const baselineOn = active !== null && active !== 'reserve';
   return (
-    <div role="group" aria-label="Статьи бюджета проекта" className="flex flex-col gap-[calc(var(--gap-1)*0.6)]">
+    <div role="group" aria-label="Статьи бюджета проекта" className="flex flex-col gap-[calc(var(--gap-1)*0.6)]" data-interactive>
       <div className="flex items-baseline gap-[var(--gap-1)] px-[var(--gap-1)]">
         <span className={`t-eyebrow min-w-0 flex-1 tracking-[0.12em] transition-colors ${baselineOn ? 'text-white' : ''}`}>
           Базовый план затрат

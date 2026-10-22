@@ -22,7 +22,7 @@ export function RiskMatrix({ active, pinned, bind, small = false }: MatrixProps)
   const activeRisk = active;
 
   return (
-    <div className="flex flex-col" data-risk-matrix>
+    <div className="flex flex-col" data-risk-matrix data-interactive>
       <div className="grid" style={{ gridTemplateColumns: 'auto auto minmax(0, 1fr)', gridTemplateRows: 'minmax(0, 1fr) auto auto' }}>
         {/* Подпись оси Y. */}
         <div className="flex items-center justify-center" style={{ gridColumn: 1, gridRow: 1 }}>
@@ -80,7 +80,7 @@ export function RiskMatrix({ active, pinned, bind, small = false }: MatrixProps)
                     {score}
                   </span>
                   {risks.length > 0 ? (
-                    <span className={`flex flex-wrap items-center justify-center ${small ? 'gap-[3px]' : 'gap-[4px]'} pt-[8px]`}>
+                    <span className={`flex items-center justify-center ${small ? 'gap-[3px]' : 'gap-[4px]'} pt-[10px]`}>
                       {risks.map((r) => (
                         <RiskChip
                           key={r.id}
@@ -91,6 +91,7 @@ export function RiskMatrix({ active, pinned, bind, small = false }: MatrixProps)
                           show={show}
                           reducedMotion={reducedMotion}
                           small={small}
+                          tight={risks.length > 1}
                         />
                       ))}
                     </span>
@@ -139,6 +140,7 @@ function RiskChip({
   show,
   reducedMotion,
   small,
+  tight,
 }: {
   risk: RankedRisk;
   active: boolean;
@@ -147,6 +149,7 @@ function RiskChip({
   show: boolean;
   reducedMotion: boolean;
   small: boolean;
+  tight: boolean;
 }) {
   const high = risk.level === 'high';
   const [entered, setEntered] = useState(reducedMotion);
@@ -158,7 +161,9 @@ function RiskChip({
       aria-label={`${risk.id}: ${risk.title}. Вероятность ${risk.probability}, влияние ${risk.impact}, балл ${risk.score} — ${risk.levelLabel.toLowerCase()}`}
       data-risk-chip={risk.id}
       className={`relative z-[1] grid cursor-pointer place-items-center rounded-full border font-display leading-none transition-[background-color,color,box-shadow,border-color] duration-300 ${
-        small ? 'h-[26px] min-w-[30px] px-[5px] text-[11.5px]' : 'h-[clamp(24px,calc(var(--u)*2),38px)] min-w-[clamp(32px,calc(var(--u)*2.6),48px)] px-[6px] text-[length:var(--fs-micro)]'
+        small || tight
+          ? 'h-[clamp(22px,calc(var(--u)*1.75),34px)] min-w-[clamp(27px,calc(var(--u)*2.05),42px)] px-[3px] text-[length:var(--fs-micro)]'
+          : 'h-[clamp(24px,calc(var(--u)*2),38px)] min-w-[clamp(32px,calc(var(--u)*2.6),48px)] px-[6px] text-[length:var(--fs-micro)]'
       } ${
         active
           ? 'border-white bg-white text-primary shadow-[0_0_20px_rgba(142,180,255,0.95)]'

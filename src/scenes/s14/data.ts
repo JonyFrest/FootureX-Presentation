@@ -1,97 +1,126 @@
 import type { LucideIcon } from 'lucide-react';
-import { GraduationCap, HeartHandshake, TrendingUp, Wallet } from 'lucide-react';
-import { BUDGET_ASSUMPTIONS, BUDGET_LINES, BUDGET_TOTAL, HR_EXTRA_COSTS, formatBln } from '@/data/hr';
-import { TURNOVER_TARGET } from '../s04/stages';
+import { CalendarClock, ShieldCheck, TrendingUp, Wallet } from 'lucide-react';
+import {
+  BUDGET,
+  CAPACITY,
+  CONTROL_PILLARS,
+  MILESTONES,
+  PROJECT,
+  RESERVE_RATE,
+  RISKS,
+  WBS_TOTAL,
+  WORK_PACKAGES,
+  formatUsd,
+  riskScore,
+  type Risk,
+} from '@/data/project';
+import { INDEX_TARGET } from '../s04/stages';
+import { MILESTONE_FORMS, PACKAGE_FORMS, SPRINT_FORMS, plural } from '../s04/ru';
 
-const fmt = (n: number) => n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
+/** Неразрывные пробелы: «$37 290», «15 000» не разрываются между строками. */
+const nb = (s: string) => s.replace(/[  ]/g, ' ');
 
-const trainingMonthly = HR_EXTRA_COSTS.find((c) => c.id === 'training')?.monthly ?? 0;
-const salaries = BUDGET_LINES.find((l) => l.id === 'salaries');
-/** Доля окладов в годовом бюджете на персонал, % (округлено). */
-export const SALARY_SHARE = salaries ? Math.round((salaries.annual / BUDGET_TOTAL.annual) * 100) : 0;
-/** Неразрывные пробелы — сумма не разрывается между строками. */
-export const BUDGET_ANNUAL_LABEL = formatBln(BUDGET_TOTAL.annual).replace(/ /g, '\u00A0');
-export const BONUS_PCT = Math.round(BUDGET_ASSUMPTIONS.bonusRate * 100);
-export { TURNOVER_TARGET };
+type PillarId = (typeof CONTROL_PILLARS)[number]['id'];
 
-export type Highlight =
-  | { kind: 'stat'; value: string; unit?: string; caption: string }
-  | { kind: 'ladder'; steps: readonly string[]; caption: string }
-  | { kind: 'mission'; text: string; caption: string };
+const META: Record<PillarId, { en: string; icon: LucideIcon }> = {
+  schedule: { en: 'Schedule', icon: CalendarClock },
+  cost: { en: 'Cost', icon: Wallet },
+  quality: { en: 'Quality', icon: ShieldCheck },
+  value: { en: 'Value', icon: TrendingUp },
+};
+
+/** «SPI ≥ 0,95» → число «≥ 0,95» и подпись «SPI»; «15 000 MAU» → «15 000» и «MAU». */
+function splitMetric(metric: string): { value: string; unit: string } {
+  const m = metric.match(/(≥\s*)?\d[\d\s,.]*%?/);
+  if (!m || m.index === undefined) return { value: metric, unit: '' };
+  const value = nb(m[0].trim());
+  const unit = `${metric.slice(0, m.index)} ${metric.slice(m.index + m[0].length)}`.replace(/\s+/g, ' ').trim();
+  return { value, unit };
+}
 
 export interface Pillar {
-  id: string;
+  id: PillarId;
   ru: string;
   en: string;
   icon: LucideIcon;
-  highlight: Highlight;
-  items: readonly string[];
+  /** Целевое значение (план), крупно. */
+  value: string;
+  unit: string;
+  instruments: readonly string[];
 }
 
-export const PILLARS: readonly Pillar[] = [
-  {
-    id: 'money',
-    ru: 'Финансовая мотивация',
-    en: 'Compensation',
-    icon: Wallet,
-    highlight: {
-      kind: 'stat',
-      value: `${BONUS_PCT}%`,
-      unit: 'окладного фонда',
-      caption: 'квартальная премия по KPI · план',
-    },
-    items: ['Оклад на уровне рынка Ташкента', 'Квартальная премия по KPI', 'Ежегодный пересмотр окладов'],
-  },
-  {
-    id: 'career',
-    ru: 'Карьерное развитие',
-    en: 'Career',
-    icon: TrendingUp,
-    highlight: { kind: 'ladder', steps: ['Junior', 'Middle', 'Senior', 'Lead'], caption: 'грейды' },
-    items: ['Приоритет внутренним кандидатам на роли этапов 2–3', 'Кадровый резерв'],
-  },
-  {
-    id: 'learning',
-    ru: 'Обучение',
-    en: 'Learning',
-    icon: GraduationCap,
-    highlight: { kind: 'stat', value: fmt(trainingMonthly), unit: 'млн сум в месяц', caption: 'бюджет на обучение · план' },
-    items: ['Наставничество', 'Курсы, конференции, сертификация'],
-  },
-  {
-    id: 'culture',
-    ru: 'Корпоративная культура',
-    en: 'Culture',
-    icon: HeartHandshake,
-    highlight: { kind: 'mission', text: 'Creating a Digital Football Era', caption: 'миссия FootureX' },
-    items: ['Ценности Digital Football Era', 'Гибридный график', 'Внутренние турниры FootureX', 'eNPS-опрос раз в квартал'],
-  },
-] as const;
+export const PILLARS: readonly Pillar[] = CONTROL_PILLARS.map((p) => ({
+  id: p.id,
+  ru: p.title,
+  en: META[p.id].en,
+  icon: META[p.id].icon,
+  ...splitMetric(p.metric),
+  instruments: p.instruments,
+}));
 
-/** Выводы: части фраз с акцентом (числа считаются из src/data/hr.ts). */
-export const CONCLUSIONS: readonly { parts: readonly (string | { em: string })[] }[] = [
-  { parts: [{ em: 'HR — стратегическая функция' }, ' FootureX: каждому этапу развития нужен свой план персонала.'] },
+/** Ядро схемы: общий порог индексов освоенного объёма. */
+export const CORE = { label: 'Контроль', caption: `SPI · CPI ${INDEX_TARGET}`, note: 'целевое значение' } as const;
+
+/* ---------------- Выводы и рекомендации ---------------- */
+
+type Part = string | { em: string };
+
+/** Короткие формулировки рисков для вывода (полные названия и меры — в src/data/project.ts, сцена 13). */
+const RISK_SHORT: Record<string, { name: string; response: string }> = {
+  R1: { name: 'расползание содержания', response: 'жёсткие границы MVP' },
+  R2: { name: 'платежи в регионе', response: 'запасной способ оплаты' },
+  R3: { name: 'дисбаланс экономики', response: 'настройка по данным беты' },
+  R4: { name: 'уход ключевого инженера', response: 'общие знания в команде' },
+};
+
+const short = (r: Risk) => RISK_SHORT[r.id] ?? { name: r.title.toLowerCase(), response: r.response.toLowerCase() };
+
+/** Два риска с наибольшей оценкой «вероятность × влияние». */
+export const TOP_RISKS = [...RISKS].sort((a, b) => riskScore(b) - riskScore(a)).slice(0, 2).map(short);
+
+export const CONCLUSIONS: readonly { parts: readonly Part[] }[] = [
   {
     parts: [
-      'Бюджет на персонал этапа 1 — ',
-      { em: `≈${BUDGET_ANNUAL_LABEL}` },
-      ' в год, из них ',
-      { em: `${SALARY_SHARE}%` },
-      ' — оклады.',
+      'Проектный подход превращает стратегию FootureX в ',
+      { em: 'управляемый план' },
+      ': устав, ',
+      { em: nb(plural(WORK_PACKAGES.length, PACKAGE_FORMS)) },
+      ', ',
+      { em: nb(plural(PROJECT.sprints, SPRINT_FORMS)) },
+      ' и ',
+      { em: nb(plural(MILESTONES.length, MILESTONE_FORMS)) },
+      '.',
     ],
   },
   {
     parts: [
-      'Главный риск — ',
-      { em: 'удержание IT-специалистов' },
-      '; его снижают KPI-премии, грейды, обучение и культура.',
+      'План реалистичен: ',
+      { em: `${WBS_TOTAL}\u00A0ид` },
+      ' при ёмкости ',
+      { em: `${CAPACITY.min}–\u2060${CAPACITY.max}\u00A0ид` },
+      '; бюджет ',
+      { em: nb(formatUsd(BUDGET.total)) },
+      ' с резервом ',
+      { em: `${Math.round(RESERVE_RATE * 100)}%` },
+      '.',
+    ],
+  },
+  {
+    parts: [
+      'Главные риски — ',
+      { em: `${TOP_RISKS[0].name} и ${TOP_RISKS[1].name}` },
+      '; их снижают ',
+      { em: TOP_RISKS[0].response },
+      ' и ',
+      { em: TOP_RISKS[1].response },
+      '.',
     ],
   },
 ];
 
 export const RECOMMENDATIONS: readonly string[] = [
-  'Внедрить HR-систему и KPI-панель с первого месяца',
-  'Запустить реферальную программу найма',
-  'Проводить eNPS-опрос ежеквартально',
-  'Сформировать кадровый резерв к этапу 2',
+  'Пересматривать риски и SPI/CPI на каждом обзоре спринта',
+  'Калибровать оценки после спринта 1 и обновлять базовый план',
+  'Не расширять содержание MVP без решения спонсора',
+  'Использовать опыт MVP как шаблон для проектов этапов 2–3',
 ];

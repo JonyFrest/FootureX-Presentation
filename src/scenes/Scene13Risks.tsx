@@ -8,7 +8,7 @@ import { REGISTER } from './risks/riskData';
 import { useHoverSelect } from './schedule/shared';
 
 const TITLE = 'Управление рисками';
-const LEAD = 'Экспертная оценка проекта (план): вероятность × влияние по шкале 1–5';
+const LEAD = 'Экспертная оценка проекта (план)';
 
 /** 13 · Risk Management: тепловая карта 5×5, ранжированный реестр и карточка меры реагирования. */
 export default function Scene13Risks() {
@@ -71,7 +71,7 @@ export default function Scene13Risks() {
       <div className="mt-[var(--gap-3)] grid items-stretch gap-[var(--gap-3)]" style={{ gridTemplateColumns: 'auto minmax(0, 1fr)' }}>
         <Reveal delay={0.2}>
           <Glass strong className="h-full p-[var(--gap-3)]">
-            <div style={{ width: 'clamp(300px, calc(var(--u) * 27), 520px)' }}>
+            <div style={{ width: 'clamp(300px, calc(var(--u) * 29.5), 560px)' }}>
               <RiskMatrix active={sel.active} pinned={sel.pinned} bind={sel.bind} />
             </div>
           </Glass>

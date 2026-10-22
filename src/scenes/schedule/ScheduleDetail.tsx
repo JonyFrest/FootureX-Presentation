@@ -24,6 +24,7 @@ export function ScheduleDetail({ activeKey, className = '' }: { activeKey: strin
       className={`glass-strong relative overflow-hidden px-[var(--gap-3)] py-[var(--gap-2)] ${className}`}
       aria-live="polite"
       data-schedule-detail
+      data-interactive
     >
       <span
         aria-hidden

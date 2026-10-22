@@ -74,8 +74,8 @@ export const CELL_STYLE: Record<RiskLevel, { background: string; border: string 
     border: 'rgba(142,180,255,0.5)',
   },
   medium: {
-    background: 'linear-gradient(135deg, rgba(37,147,250,0.2), rgba(37,80,250,0.26))',
-    border: 'rgba(142,180,255,0.22)',
+    background: 'linear-gradient(135deg, rgba(37,147,250,0.24), rgba(37,80,250,0.3))',
+    border: 'rgba(142,180,255,0.26)',
   },
   low: {
     background: 'rgba(142,180,255,0.045)',

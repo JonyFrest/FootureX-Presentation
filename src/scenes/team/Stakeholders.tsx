@@ -290,17 +290,19 @@ export function StakeholderMatrix({ active, bind, visible }: { active: string | 
 
       <span aria-hidden />
       {/* Ось X: заинтересованность. */}
-      <div className="relative h-[calc(var(--fs-micro)*1.5)]">
-        {TICKS.map((v) => (
-          <span
-            key={v}
-            className={`t-micro absolute top-0 -translate-x-1/2 t-num ${v === THRESHOLD ? 'text-highlight' : 'text-mute'}`}
-            style={{ left: `${axisPos(v) * 100}%` }}
-          >
-            {v}
-          </span>
-        ))}
-        <span className="t-micro absolute top-0 right-0 text-soft">Заинтересованность →</span>
+      <div>
+        <div className="relative h-[calc(var(--fs-micro)*1.45)]">
+          {TICKS.map((v) => (
+            <span
+              key={v}
+              className={`t-micro absolute top-0 -translate-x-1/2 t-num ${v === THRESHOLD ? 'text-highlight' : 'text-mute'}`}
+              style={{ left: `${axisPos(v) * 100}%` }}
+            >
+              {v}
+            </span>
+          ))}
+        </div>
+        <p className="t-micro text-right text-soft">Заинтересованность →</p>
       </div>
     </div>
   );

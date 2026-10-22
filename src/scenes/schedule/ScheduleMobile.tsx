@@ -29,7 +29,7 @@ export function ScheduleMobile({ activeKey, onSelect, criticalMode }: MobileProp
         const milestones = MILESTONES.filter((m) => sprints.includes(m.sprint));
         return (
           <Reveal key={month} delay={0.2 + i * 0.05} className="min-w-0">
-            <section className="glass p-3" aria-label={`Месяц ${month}`}>
+            <section className="glass p-3" aria-label={`Месяц ${month}`} data-interactive>
               <header className="mb-1.5 flex items-baseline justify-between gap-2">
                 <h2 className="t-small font-semibold text-white">Месяц {month}</h2>
                 <span className="t-micro font-display text-mute">

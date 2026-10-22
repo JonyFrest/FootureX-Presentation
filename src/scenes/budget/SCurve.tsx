@@ -62,9 +62,11 @@ export function SCurve({ activeMonth, activeSlice, bindMonth }: SCurveProps) {
   const line = points.map((p, i) => `${i ? 'L' : 'M'}${p.x} ${p.y}`).join(' ');
   const area = `${line} L${points[points.length - 1].x} ${y(0)} L${points[0].x} ${y(0)} Z`;
   const stackSlice = activeSlice && activeSlice !== 'reserve' ? activeSlice : null;
+  /** На узком графике «Месяц 1» не помещается в полосу — короткая подпись «М1». */
+  const shortMonths = band > 0 && band < 66;
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className="flex h-full min-h-0 flex-col" data-interactive>
       <div ref={ref} className="relative min-h-0 flex-1" data-interactive data-scurve>
         {w > 0 && h > 0 ? (
           <>
@@ -230,7 +232,7 @@ export function SCurve({ activeMonth, activeSlice, bindMonth }: SCurveProps) {
                 on ? 'bg-[rgba(37,147,250,0.16)]' : 'hover:bg-[rgba(142,180,255,0.06)]'
               }`}
             >
-              <span className="t-micro block leading-tight text-soft">Месяц {p.month}</span>
+              <span className="t-micro block leading-tight text-soft">{shortMonths ? `М${p.month}` : `Месяц ${p.month}`}</span>
               <span className="t-micro block font-semibold leading-tight text-white t-num">{formatUsd(p.value)}</span>
             </button>
           );

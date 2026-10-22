@@ -70,6 +70,7 @@ export function GanttChart({ activeKey, pinnedKey, bind, criticalMode, onToggleC
       className="relative grid gap-x-[var(--gap-2)]"
       style={{ ...VARS, gridTemplateColumns: COLUMNS, gridTemplateRows: LAYOUT.template }}
       data-gantt
+      data-interactive
     >
       {/* Фон шкалы: полосы месяцев и линии спринтов. */}
       <div aria-hidden className="pointer-events-none relative" style={{ gridColumn: 3, gridRow: `1 / ${LAYOUT.lastBodyLine}` }}>

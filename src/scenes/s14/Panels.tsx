@@ -1,12 +1,13 @@
 import { useId, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowUpRight, Check } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Glass } from '@/components/ui';
-import { CONCLUSIONS, PILLARS, RECOMMENDATIONS, type Highlight } from './data';
+import { CONCLUSIONS, PILLARS, RECOMMENDATIONS, type Pillar } from './data';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+const pad2 = (n: number) => String(n).padStart(2, '0');
 
-/** Инструменты выбранной опоры удержания. */
+/** Инструменты и целевое значение выбранного измерения контроля. */
 export function PillarDetail({ selected, reducedMotion }: { selected: number; reducedMotion: boolean }) {
   const pillar = PILLARS[selected];
   return (
@@ -15,74 +16,53 @@ export function PillarDetail({ selected, reducedMotion }: { selected: number; re
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/80 to-transparent"
       />
-      <div className="min-h-[clamp(230px,calc(var(--u)*18),350px)]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={pillar.id}
-            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-            transition={{ duration: reducedMotion ? 0.01 : 0.32, ease: EASE }}
-          >
-            <p className="t-micro font-display uppercase tracking-[0.18em] text-highlight">
-              {String(selected + 1).padStart(2, '0')} / 04 · {pillar.en}
-            </p>
-            <h2 className="t-h3 mt-1 text-white">{pillar.ru}</h2>
-            <HighlightView h={pillar.highlight} />
-            <ul className="mt-[var(--gap-3)] flex flex-col gap-[var(--gap-1)]">
-              {pillar.items.map((item) => (
-                <li key={item} className="flex items-start gap-[var(--gap-1)]">
-                  <span className="mt-[0.2em] grid size-[1.25em] shrink-0 place-items-center rounded-full bg-secondary/20 text-secondary">
-                    <Check className="size-[70%]" strokeWidth={2.4} aria-hidden />
-                  </span>
-                  <span className="t-small leading-snug text-ice">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </AnimatePresence>
+      {/* Все измерения в одной ячейке сетки: высота панели = самое длинное измерение, без скачков */}
+      <div className="grid">
+        {PILLARS.map((p, i) => (
+          <div key={p.id} className="invisible [grid-area:1/1]" aria-hidden>
+            <PillarBody pillar={p} index={i} />
+          </div>
+        ))}
+        <div className="[grid-area:1/1]">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={pillar.id}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: reducedMotion ? 0.01 : 0.32, ease: EASE }}
+            >
+              <PillarBody pillar={pillar} index={selected} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </Glass>
   );
 }
 
-function HighlightView({ h }: { h: Highlight }) {
-  if (h.kind === 'stat') {
-    return (
+function PillarBody({ pillar, index }: { pillar: Pillar; index: number }) {
+  return (
+    <div>
+      <p className="t-micro font-display uppercase tracking-[0.18em] text-highlight">
+        {pad2(index + 1)} / {pad2(PILLARS.length)} · {pillar.en}
+      </p>
+      <h2 className="t-h3 mt-1 text-white">{pillar.ru}</h2>
       <div className="mt-[var(--gap-2)]">
         <p className="flex flex-wrap items-baseline gap-x-2">
-          <span className="t-stat text-gradient whitespace-nowrap">{h.value}</span>
-          {h.unit ? <span className="t-small font-medium text-highlight">{h.unit}</span> : null}
+          <span className="t-stat text-gradient whitespace-nowrap">{pillar.value}</span>
+          {pillar.unit ? <span className="t-small font-medium text-highlight">{pillar.unit}</span> : null}
         </p>
-        <p className="t-micro mt-1 text-mute">{h.caption}</p>
+        <span className="chip chip-plan mt-1.5">целевое значение · план</span>
       </div>
-    );
-  }
-  if (h.kind === 'ladder') {
-    return (
-      <div className="mt-[var(--gap-2)]">
-        <ol className="flex items-end gap-1.5" aria-label="Грейды">
-          {h.steps.map((step, i) => (
-            <li key={step} className="flex flex-1 flex-col gap-1">
-              <span className="t-micro text-center font-display uppercase text-ice">{step}</span>
-              <span
-                className="block rounded-t-md border border-b-0 border-secondary/40"
-                style={{
-                  height: `calc(var(--u) * ${0.8 + i * 0.7} + 6px)`,
-                  background: `linear-gradient(180deg, rgba(37,147,250,${0.25 + i * 0.18}) 0%, rgba(37,80,250,0.08) 100%)`,
-                }}
-              />
-            </li>
-          ))}
-        </ol>
-        <p className="t-micro mt-1 text-mute">{h.caption}</p>
-      </div>
-    );
-  }
-  return (
-    <div className="mt-[var(--gap-2)] rounded-[12px] border border-secondary/30 bg-[rgba(37,80,250,0.12)] px-3 py-2.5">
-      <p className="t-small font-display text-brand-gradient leading-snug">{h.text}</p>
-      <p className="t-micro mt-0.5 text-mute">{h.caption}</p>
+      <ul className="mt-[var(--gap-3)] flex flex-col gap-[var(--gap-1)]" aria-label="Инструменты контроля">
+        {pillar.instruments.map((item) => (
+          <li key={item} className="flex items-start gap-[var(--gap-1)]">
+            <span aria-hidden className="mt-[0.5em] size-[0.42em] shrink-0 rotate-45 border border-secondary bg-secondary/30" />
+            <span className="t-small leading-snug text-ice">{item}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -97,7 +77,7 @@ export function Takeaways({ reducedMotion }: { reducedMotion: boolean }) {
   ];
 
   return (
-    <Glass className="relative h-full p-[clamp(16px,calc(var(--u)*1.8),36px)]">
+    <Glass className="relative flex h-full flex-col p-[clamp(16px,calc(var(--u)*1.8),36px)]">
       <div role="tablist" aria-label="Итоги" className="flex gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1">
         {tabs.map((t) => {
           const on = tab === t.id;
@@ -127,60 +107,67 @@ export function Takeaways({ reducedMotion }: { reducedMotion: boolean }) {
         })}
       </div>
 
-      <div
-        id={`${id}-panel`}
-        role="tabpanel"
-        aria-labelledby={`${id}-tab-${tab}`}
-        className="mt-[var(--gap-3)] min-h-[clamp(200px,calc(var(--u)*16),320px)]"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          {tab === 'conclusions' ? (
-            <motion.ol
-              key="c"
-              className="flex flex-col gap-[var(--gap-3)]"
+      {/* Обе вкладки в одной ячейке сетки: высота панели не прыгает при переключении */}
+      <div id={`${id}-panel`} role="tabpanel" aria-labelledby={`${id}-tab-${tab}`} className="mt-[var(--gap-3)] grid">
+        <div className="invisible [grid-area:1/1]" aria-hidden>
+          <ConclusionList />
+        </div>
+        <div className="invisible [grid-area:1/1]" aria-hidden>
+          <RecommendationList />
+        </div>
+        <div className="[grid-area:1/1]">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={tab}
               initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: reducedMotion ? 0.01 : 0.3, ease: EASE }}
             >
-              {CONCLUSIONS.map((c, i) => (
-                <li key={i} className="flex gap-[var(--gap-2)]">
-                  <span className="t-h3 font-display font-normal text-brand-gradient leading-none">{String(i + 1).padStart(2, '0')}</span>
-                  <p className="t-small leading-snug text-ice">
-                    {c.parts.map((part, k) =>
-                      typeof part === 'string' ? (
-                        <span key={k}>{part}</span>
-                      ) : (
-                        <strong key={k} className="font-semibold text-white">
-                          {part.em}
-                        </strong>
-                      ),
-                    )}
-                  </p>
-                </li>
-              ))}
-            </motion.ol>
-          ) : (
-            <motion.ul
-              key="r"
-              className="flex flex-col gap-[var(--gap-2)]"
-              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: reducedMotion ? 0.01 : 0.3, ease: EASE }}
-            >
-              {RECOMMENDATIONS.map((r) => (
-                <li key={r} className="flex items-center gap-[var(--gap-2)] rounded-[12px] border border-white/8 bg-white/[0.03] px-3 py-2">
-                  <span className="grid size-[clamp(24px,calc(var(--u)*2),34px)] shrink-0 place-items-center rounded-full bg-secondary/20 text-secondary">
-                    <ArrowUpRight className="size-[60%]" strokeWidth={2} aria-hidden />
-                  </span>
-                  <span className="t-small leading-snug text-ice">{r}</span>
-                </li>
-              ))}
-            </motion.ul>
-          )}
-        </AnimatePresence>
+              {tab === 'conclusions' ? <ConclusionList /> : <RecommendationList />}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
+      <p className="t-micro mt-auto pt-[var(--gap-2)] text-mute">Цифры — плановые значения проекта</p>
     </Glass>
+  );
+}
+
+function ConclusionList() {
+  return (
+    <ol className="flex flex-col gap-[var(--gap-3)]">
+      {CONCLUSIONS.map((c, i) => (
+        <li key={i} className="flex gap-[var(--gap-2)]">
+          <span className="t-h3 font-display font-normal text-brand-gradient leading-none">{pad2(i + 1)}</span>
+          <p className="t-small leading-snug text-ice">
+            {c.parts.map((part, k) =>
+              typeof part === 'string' ? (
+                <span key={k}>{part}</span>
+              ) : (
+                <strong key={k} className="font-semibold text-white">
+                  {part.em}
+                </strong>
+              ),
+            )}
+          </p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function RecommendationList() {
+  return (
+    <ul className="flex flex-col gap-[var(--gap-2)]">
+      {RECOMMENDATIONS.map((r) => (
+        <li key={r} className="flex items-center gap-[var(--gap-2)] rounded-[12px] border border-white/8 bg-white/[0.03] px-3 py-2">
+          <span className="grid size-[clamp(24px,calc(var(--u)*2),34px)] shrink-0 place-items-center rounded-full bg-secondary/20 text-secondary">
+            <ArrowUpRight className="size-[60%]" strokeWidth={2} aria-hidden />
+          </span>
+          <span className="t-small leading-snug text-ice">{r}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
