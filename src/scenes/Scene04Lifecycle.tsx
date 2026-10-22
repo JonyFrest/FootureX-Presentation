@@ -5,8 +5,8 @@ import { LifecycleRing } from './s04/LifecycleRing';
 import { StageDetail } from './s04/StageDetail';
 import { MobileStepper } from './s04/MobileStepper';
 
-const TITLE = 'Жизненный цикл HR';
-const LEAD = 'Шесть этапов работы с персоналом образуют замкнутый цикл: каждый этап питает следующий.';
+const TITLE = 'Жизненный цикл проекта';
+const LEAD = 'Пять групп процессов PMI ведут FootureX MVP от устава до приёмки.';
 
 export default function Scene04Lifecycle() {
   const { ready, reducedMotion } = useScene();

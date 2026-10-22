@@ -185,12 +185,19 @@ function StageCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reducedMotion ? 0.01 : 0.25 }}
-            className="mt-auto flex items-center gap-1 pt-[var(--gap-2)] text-highlight"
+            className="mt-auto pt-[var(--gap-3)]"
           >
-            <span className="t-micro">
-              {FOCUS_LABEL}: {stage.focus.length}
-            </span>
-            <ChevronRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden />
+            <p className="t-micro flex items-center gap-1 font-display uppercase tracking-[0.16em] text-highlight/80">
+              {FOCUS_LABEL}
+              <ChevronRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden />
+            </p>
+            <ul className="mt-[var(--gap-1)] flex flex-wrap gap-1.5">
+              {stage.focus.map(({ label }) => (
+                <li key={label} className={planned ? 'chip chip-plan' : 'chip'}>
+                  {label}
+                </li>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
@@ -216,7 +223,7 @@ export function ProjectFacts({ stage, compact = false }: { stage: RoadmapStage; 
   return (
     <dl
       className={`grid rounded-[var(--radius-md)] border border-white/[0.08] bg-white/[0.03] ${
-        compact ? 'grid-cols-2' : 'grid-cols-[repeat(auto-fit,minmax(min(100%,7.2em),1fr))]'
+        compact ? 'grid-cols-2' : 'grid-cols-[repeat(4,auto)]'
       }`}
     >
       {stage.facts.map((fact, i) => (
@@ -250,7 +257,7 @@ export function FocusList({ stage, columns = 1 }: { stage: RoadmapStage; columns
       <p className="t-micro font-display uppercase tracking-[0.16em] text-highlight">{FOCUS_LABEL}</p>
       <ul
         className={`mt-[var(--gap-1)] grid gap-x-[var(--gap-3)] gap-y-[var(--gap-1)] ${
-          columns === 2 ? 'grid-cols-[repeat(auto-fit,minmax(min(100%,14em),1fr))]' : 'grid-cols-1'
+          columns === 2 ? 'grid-cols-[auto_auto] justify-start' : 'grid-cols-1'
         }`}
       >
         {stage.focus.map(({ label, icon: Icon }) => (

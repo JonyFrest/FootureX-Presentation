@@ -112,6 +112,7 @@ export function LifecycleRing({ selected, onSelect, ready, reducedMotion }: Life
   }, [ready, reducedMotion]);
 
   const drawn = ready || reducedMotion;
+  const spansAll = LIFECYCLE[selected]?.spansAll ?? false;
   const ticks = Array.from({ length: 48 }, (_, k) => k * 7.5 + angle);
 
   return (
@@ -157,16 +158,23 @@ export function LifecycleRing({ selected, onSelect, ready, reducedMotion }: Life
         <ellipse cx={CX} cy={CY - 30} rx={RX * 1.38} ry={RY * 1.75} fill={`url(#shade-${uid})`} />
         <ellipse cx={CX} cy={CY} rx={RX * 1.22} ry={RY * 1.22} fill={`url(#floor-${uid})`} />
         <ellipse cx={CX} cy={CY} rx={RX * 1.12} ry={RY * 1.12} fill="none" stroke="rgba(142,180,255,0.12)" strokeWidth="1" />
+        {/* Внутренняя орбита — «сквозной» мониторинг и контроль: подсвечивается, когда выбран этот этап */}
         <ellipse
           cx={CX}
           cy={CY}
           rx={RX * 0.6}
           ry={RY * 0.6}
           fill="none"
-          stroke="rgba(142,180,255,0.2)"
-          strokeWidth="1"
-          strokeDasharray="2 7"
-        />
+          stroke={spansAll ? '#8EB4FF' : 'rgba(142,180,255,0.2)'}
+          strokeOpacity={spansAll ? 0.75 : 1}
+          strokeWidth={spansAll ? 1.6 : 1}
+          strokeDasharray={spansAll ? '6 6' : '2 7'}
+          style={{ transition: reducedMotion ? 'none' : 'stroke 0.5s ease, stroke-opacity 0.5s ease, stroke-width 0.5s ease' }}
+        >
+          {spansAll && ready && !reducedMotion ? (
+            <animate attributeName="stroke-dashoffset" from="0" to="-48" dur="2.4s" repeatCount="indefinite" />
+          ) : null}
+        </ellipse>
 
         {/* Шкала — вращается вместе с кольцом */}
         {ticks.map((deg, k) => {
@@ -308,7 +316,7 @@ export function LifecycleRing({ selected, onSelect, ready, reducedMotion }: Life
               <span className="flex flex-col">
                 <span className="t-small max-w-[9.5em] font-semibold leading-tight text-white">{stage.ru}</span>
                 <span className="t-micro font-display uppercase leading-tight tracking-[0.12em] text-highlight/85">
-                  {stage.en}
+                  {stage.enShort ?? stage.en}
                 </span>
               </span>
             </span>
