@@ -31,7 +31,7 @@ npm run preview    # просмотр сборки: http://localhost:4173
 ```
 
 Сборка использует относительные пути (`base: './'`), поэтому `dist/` работает на любом
-статическом хостинге и на GitHub Pages. Шрифты вшиты в сборку — интернет на защите не нужен.
+статическом хостинге. Шрифты вшиты в сборку — интернет на защите не нужен.
 Открывать `dist/index.html` двойным щелчком нельзя (браузер блокирует модули с `file://`) —
 используйте `npm run preview`.
 
@@ -232,7 +232,6 @@ npm run shots -- --scenes all --sizes 1920x1080,1366x768,390x844
 | **Vercel** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJonyFrest%2FFootureX-Presentation&project-name=footurex-presentation) — войдите через GitHub и нажмите **Deploy**. Адрес: `https://<проект>.vercel.app` |
 | **Netlify** | [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/JonyFrest/FootureX-Presentation) — войдите через GitHub и нажмите **Deploy**. Адрес: `https://<проект>.netlify.app` |
 | **Cloudflare Pages** | Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git** → репозиторий `FootureX-Presentation`; Framework preset **Vite** (Build command `npm run build`, Build output `dist`) → **Save and Deploy**. Адрес: `https://<проект>.pages.dev` |
-| **GitHub Pages** | **Settings → Pages → Source: GitHub Actions**, затем перезапустите workflow `Deploy to GitHub Pages`. Адрес: `https://jonyfrest.github.io/FootureX-Presentation/` |
 
 Публикация из командной строки (нужен токен сервиса в переменной окружения):
 
