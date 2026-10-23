@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, FolderKanban } from 'lucide-react';
 import { CountUp } from '@/components/ui';
-import { ROADMAP, STATUS_LABEL, type RoadmapStage } from './stages';
+import { FOCUS_LABEL, ROADMAP, STATUS_LABEL, type RoadmapStage } from './stages';
 
 interface TimelineProps {
   selected: number;
@@ -139,7 +139,7 @@ function StageCard({
       <button
         type="button"
         aria-expanded={selected}
-        aria-label={`Этап ${stage.n}: ${stage.title}. ${STATUS_LABEL[stage.status]}`}
+        aria-label={`Этап ${stage.n}: ${stage.title}. ${stage.project.label}: ${stage.project.name}. ${STATUS_LABEL[stage.status]}`}
         onClick={(e) => {
           e.stopPropagation();
           onSelect();
@@ -161,8 +161,9 @@ function StageCard({
         <span className={`${selected ? 't-h2' : 't-h3 font-display font-normal'} block text-balance ${planned ? 'text-ice' : 'text-white'}`}>
           {stage.title}
         </span>
+        <ProjectTag stage={stage} />
       </button>
-      <p className={`t-small mt-[var(--gap-1)] ${planned ? 'text-soft' : 'text-ice'}`}>{stage.text}</p>
+      <p className={`t-small mt-[var(--gap-1)] text-pretty ${planned ? 'text-soft' : 'text-ice'}`}>{stage.text}</p>
 
       <AnimatePresence initial={false} mode="popLayout">
         {selected ? (
@@ -172,18 +173,10 @@ function StageCard({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reducedMotion ? 0.01 : 0.4, delay: reducedMotion ? 0 : 0.18, ease: EASE }}
-            className="mt-[var(--gap-3)] grid grid-cols-[repeat(auto-fit,minmax(min(100%,13em),1fr))] gap-[var(--gap-3)]"
+            className="mt-[var(--gap-3)] flex flex-col gap-[var(--gap-3)]"
           >
-            {stage.stat ? (
-              <div className="min-w-0">
-                <div className="flex items-baseline gap-2">
-                  <CountUp to={stage.stat.value} className="t-stat text-gradient" />
-                  <span className="t-small font-medium text-highlight">{stage.stat.unit}</span>
-                </div>
-                <p className="t-micro mt-1 text-mute">{stage.stat.caption}</p>
-              </div>
-            ) : null}
-            <FocusList stage={stage} />
+            {stage.facts ? <ProjectFacts stage={stage} /> : null}
+            <FocusList stage={stage} columns={stage.focus.length > 3 ? 2 : 1} />
           </motion.div>
         ) : (
           <motion.div
@@ -192,10 +185,19 @@ function StageCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: reducedMotion ? 0.01 : 0.25 }}
-            className="mt-auto flex items-center gap-1 pt-[var(--gap-2)] text-highlight"
+            className="mt-auto pt-[var(--gap-3)]"
           >
-            <span className="t-micro">HR-фокус: {stage.focus.length}</span>
-            <ChevronRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden />
+            <p className="t-micro flex items-center gap-1 font-display uppercase tracking-[0.16em] text-highlight/80">
+              {FOCUS_LABEL}
+              <ChevronRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden />
+            </p>
+            <ul className="mt-[var(--gap-1)] flex flex-wrap gap-1.5">
+              {stage.focus.map(({ label }) => (
+                <li key={label} className={planned ? 'chip chip-plan' : 'chip'}>
+                  {label}
+                </li>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
@@ -203,11 +205,61 @@ function StageCard({
   );
 }
 
-export function FocusList({ stage }: { stage: RoadmapStage }) {
+/** Проект этапа: «Проект · FootureX MVP». */
+export function ProjectTag({ stage }: { stage: RoadmapStage }) {
+  const planned = stage.status === 'planned';
+  return (
+    <span className="t-small inline-flex items-center gap-2">
+      <FolderKanban className={`size-[1.1em] shrink-0 ${planned ? 'text-highlight/70' : 'text-secondary'}`} strokeWidth={1.8} aria-hidden />
+      <span className="text-mute">{stage.project.label}</span>
+      <span className={`font-semibold ${planned ? 'text-ice' : 'text-white'}`}>{stage.project.name}</span>
+    </span>
+  );
+}
+
+/** Паспорт текущего проекта: срок, спринты, команда, бюджет (значения из project.ts). */
+export function ProjectFacts({ stage, compact = false }: { stage: RoadmapStage; compact?: boolean }) {
+  if (!stage.facts) return null;
+  return (
+    <dl
+      className={`grid rounded-[var(--radius-md)] border border-white/[0.08] bg-white/[0.03] ${
+        compact ? 'grid-cols-2' : 'grid-cols-[repeat(4,auto)]'
+      }`}
+    >
+      {stage.facts.map((fact, i) => (
+        <div
+          key={fact.id}
+          className={`flex flex-col gap-1 px-[var(--gap-2)] py-[var(--gap-2)] ${
+            compact
+              ? `${i % 2 ? 'border-l border-white/[0.08]' : ''} ${i > 1 ? 'border-t border-white/[0.08]' : ''}`
+              : i > 0
+                ? 'border-l border-white/[0.08]'
+                : ''
+          }`}
+        >
+          <dt className="t-micro order-2 leading-snug text-soft">{fact.caption}</dt>
+          <dd className="t-h2 order-1 leading-none whitespace-nowrap">
+            {fact.value !== undefined ? (
+              <CountUp to={fact.value} prefix={fact.prefix} duration={1.4} delay={0.1 + i * 0.12} className="text-gradient" />
+            ) : (
+              <span className="t-num text-gradient">{fact.text}</span>
+            )}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+export function FocusList({ stage, columns = 1 }: { stage: RoadmapStage; columns?: 1 | 2 }) {
   return (
     <div className="min-w-0">
-      <p className="t-micro font-display uppercase tracking-[0.16em] text-highlight">HR-фокус</p>
-      <ul className="mt-[var(--gap-1)] flex flex-col gap-[var(--gap-1)]">
+      <p className="t-micro font-display uppercase tracking-[0.16em] text-highlight">{FOCUS_LABEL}</p>
+      <ul
+        className={`mt-[var(--gap-1)] grid gap-x-[var(--gap-3)] gap-y-[var(--gap-1)] ${
+          columns === 2 ? 'grid-cols-[auto_auto] justify-start' : 'grid-cols-1'
+        }`}
+      >
         {stage.focus.map(({ label, icon: Icon }) => (
           <li key={label} className="flex items-center gap-[var(--gap-1)]">
             <span

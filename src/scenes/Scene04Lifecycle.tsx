@@ -5,8 +5,8 @@ import { LifecycleRing } from './s04/LifecycleRing';
 import { StageDetail } from './s04/StageDetail';
 import { MobileStepper } from './s04/MobileStepper';
 
-const TITLE = 'Жизненный цикл HR';
-const LEAD = 'Шесть этапов работы с персоналом образуют замкнутый цикл: каждый этап питает следующий.';
+const TITLE = 'Жизненный цикл проекта';
+const LEAD = 'Пять групп процессов PMI — от устава до приёмки MVP.';
 
 export default function Scene04Lifecycle() {
   const { ready, reducedMotion } = useScene();
@@ -27,7 +27,7 @@ export default function Scene04Lifecycle() {
   return (
     <SceneFrame justify="center">
       <div className="grid w-full grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] items-center gap-[var(--gap-4)]">
-        <div className="flex flex-col gap-[var(--gap-4)]">
+        <div className="flex flex-col gap-[var(--gap-3)]">
           <SceneHeader title={TITLE} lead={LEAD} />
           <Reveal delay={0.24}>
             <StageDetail selected={selected} onSelect={setSelected} reducedMotion={reducedMotion} />

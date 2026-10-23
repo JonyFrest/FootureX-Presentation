@@ -5,7 +5,7 @@ import { BrandLogo } from '@/components/brand/BrandLogo';
 import { SOURCES } from '@/data/sources';
 import { pad2 } from '@/data/scenes';
 
-const KIND_LABEL = { law: 'Право', book: 'Учебник', report: 'Отчёт', stat: 'Статистика' } as const;
+const KIND_LABEL = { standard: 'Стандарт', book: 'Учебник', report: 'Исследование', law: 'Право' } as const;
 
 /** Сцена 15 — финал: логотип, благодарность и проверяемые источники 2021–2026. */
 export default function Scene15Final() {

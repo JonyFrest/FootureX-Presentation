@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { animate, motion, useMotionValue, useTransform } from 'motion/react';
 import { useScene } from '@/components/scene';
 
@@ -139,50 +139,75 @@ export function GaugeVisual({ fraction, delay = 0 }: VisualProps) {
 }
 
 /* ------------------------------------------------------------------
-   Две полосы «набор навыков 2025 → 2030»: доля изменившихся навыков вырастает.
+   Полосы сравнения (например, спрос 2025 → 2035): длина — доля от максимума строк.
+   В последней строке ярко горит прирост относительно предыдущей.
    ------------------------------------------------------------------ */
 
 const SEGMENTS = 25;
 
-export function SkillBarsVisual({ fraction, delay = 0 }: VisualProps) {
+export interface BarRow {
+  label: string;
+  value: number;
+  display: string;
+}
+
+interface BarsVisualProps {
+  rows: readonly BarRow[];
+  title?: string;
+  delay?: number;
+}
+
+const SEG_OFF = 'rgba(142,180,255,0.14)';
+const SEG_BASE = 'rgba(142,180,255,0.5)';
+const SEG_KEEP = 'rgba(37,147,250,0.5)';
+const SEG_GROW = '#2593FA';
+
+export function BarsVisual({ rows, title, delay = 0 }: BarsVisualProps) {
   const { ready, reducedMotion } = useScene();
   const on = ready || reducedMotion;
-  const changed = Math.round(fraction * SEGMENTS);
+  const max = Math.max(...rows.map((r) => r.value), 1);
+  const litCounts = rows.map((r) => Math.round((r.value / max) * SEGMENTS));
 
-  const row = (year: string, highlight: boolean) => (
-    <div className="flex items-center gap-[var(--gap-2)]">
-      <span className="t-micro w-[3.4em] shrink-0 font-display text-mute">{year}</span>
-      <div className="relative flex h-[clamp(18px,calc(var(--u)*1.9),34px)] flex-1 gap-[2px]">
-        {Array.from({ length: SEGMENTS }, (_, i) => {
-          // Изменившиеся навыки — правая часть полосы, растущая к 2030 году.
-          const isChanged = highlight && i >= SEGMENTS - changed;
-          const order = SEGMENTS - 1 - i;
+  return (
+    <div className="flex h-full w-full flex-col justify-center gap-[var(--gap-2)]" aria-hidden>
+      {title ? <p className="t-micro font-semibold text-highlight">{title}</p> : null}
+      <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-[var(--gap-2)] gap-y-[var(--gap-2)]">
+        {rows.map((row, r) => {
+          const last = r === rows.length - 1;
+          const lit = litCounts[r];
+          const prev = r > 0 ? litCounts[r - 1] : 0;
+          const rowDelay = delay + 0.3 + r * 0.45;
           return (
-            <motion.span
-              key={i}
-              className="flex-1 rounded-[3px]"
-              initial={{ backgroundColor: 'rgba(142,180,255,0.22)', opacity: highlight ? 0.55 : 0.9 }}
-              animate={
-                on
-                  ? {
-                      backgroundColor: isChanged ? '#2593FA' : 'rgba(142,180,255,0.22)',
-                      opacity: 1,
-                      boxShadow: isChanged ? '0 0 12px rgba(37,147,250,0.75)' : '0 0 0 rgba(0,0,0,0)',
-                    }
-                  : undefined
-              }
-              transition={reducedMotion ? { duration: 0 } : { duration: 0.35, delay: delay + 0.35 + order * 0.045 }}
-            />
+            <Fragment key={row.label}>
+              <span className="t-micro font-display text-mute">{row.label}</span>
+              <div className="flex h-[clamp(16px,calc(var(--u)*1.7),30px)] gap-[2px]">
+                {Array.from({ length: SEGMENTS }, (_, i) => {
+                  const isLit = i < lit;
+                  const grow = last && rows.length > 1 && isLit && i >= prev;
+                  const color = !isLit ? SEG_OFF : !last ? SEG_BASE : grow ? SEG_GROW : SEG_KEEP;
+                  return (
+                    <motion.span
+                      key={i}
+                      className="flex-1 rounded-[3px]"
+                      initial={{ backgroundColor: SEG_OFF, boxShadow: '0 0 0 rgba(0,0,0,0)' }}
+                      animate={
+                        on
+                          ? {
+                              backgroundColor: color,
+                              boxShadow: grow ? '0 0 12px rgba(37,147,250,0.75)' : '0 0 0 rgba(0,0,0,0)',
+                            }
+                          : undefined
+                      }
+                      transition={reducedMotion ? { duration: 0 } : { duration: 0.3, delay: rowDelay + i * 0.035 }}
+                    />
+                  );
+                })}
+              </div>
+              <span className={`t-micro whitespace-nowrap ${last ? 'font-semibold text-white' : 'text-soft'}`}>{row.display}</span>
+            </Fragment>
           );
         })}
       </div>
-    </div>
-  );
-
-  return (
-    <div className="flex h-full w-full flex-col justify-center gap-[var(--gap-3)]" aria-hidden>
-      {row('2025', false)}
-      {row('2030', true)}
     </div>
   );
 }

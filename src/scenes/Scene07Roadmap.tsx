@@ -4,8 +4,8 @@ import { useIsCompact } from '@/hooks/useMediaQuery';
 import { Timeline } from './s07/Timeline';
 import { TimelineMobile } from './s07/TimelineMobile';
 
-const TITLE = 'Дорожная карта развития';
-const LEAD = 'Каждый этап развития FootureX требует своей кадровой стратегии.';
+const TITLE = 'Программа развития';
+const LEAD = 'Одна программа — три проекта. Сейчас идёт первый.';
 
 export default function Scene07Roadmap() {
   const { ready, reducedMotion } = useScene();

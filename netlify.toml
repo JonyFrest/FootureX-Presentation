@@ -1,0 +1,13 @@
+# Netlify: сборка Vite-проекта, публикуется папка dist.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Файлы в /assets содержат хэш в имени — их можно кэшировать навсегда.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

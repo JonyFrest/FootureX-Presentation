@@ -1,6 +1,7 @@
 /**
- * Список литературы (2021–2026). Каждая позиция проверена по первоисточнику
- * 22.10.2026 — подробности и цитаты в docs/research-notes.md, полный список в docs/SOURCES.md.
+ * Список литературы (2021–2026) по управлению проектами. Каждая позиция проверена
+ * 22.10.2026 — подробности, цитаты и статус проверки в docs/research-notes.md,
+ * полный список по ГОСТ — в docs/SOURCES.md.
  */
 export interface Source {
   id: string;
@@ -10,25 +11,113 @@ export interface Source {
   site: string;
   year: number;
   url: string;
-  kind: 'law' | 'book' | 'report' | 'stat';
+  kind: 'standard' | 'book' | 'report' | 'law';
 }
 
 export const SOURCES: readonly Source[] = [
   {
-    id: 'labour-code',
-    short: 'Трудовой кодекс Республики Узбекистан (утв. Законом от 28.10.2022 № ЗРУ-798, в силе с 30.04.2023)',
-    site: 'lex.uz',
-    year: 2022,
-    url: 'https://lex.uz/ru/docs/6257291',
-    kind: 'law',
+    id: 'pmbok8',
+    short: 'PMBOK® Guide and The Standard for Project Management. 8th ed. — PMI, 2025',
+    site: 'pmi.org',
+    year: 2025,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/publications/pmbok-guide-eighth-edition_table-of-contents.pdf',
+    kind: 'standard',
   },
   {
-    id: 'tax-code',
-    short: 'Налоговый кодекс Республики Узбекистан (ред. 2026 г.): ст. 381, 385, 405',
-    site: 'lex.uz',
+    id: 'pmbok7',
+    short: 'PMBOK® Guide and The Standard for Project Management. 7th ed. — PMI, 2021',
+    site: 'pmi.org',
+    year: 2021,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/pmbok-standards/pmbok-guide-public-faqs-1-july-2021.pdf',
+    kind: 'standard',
+  },
+  {
+    id: 'process-groups',
+    short: 'Process Groups: A Practice Guide. — PMI, 2022',
+    site: 'ISBN 978-1-62825-783-0',
+    year: 2022,
+    url: 'https://pmi.bookstore.ipgbook.com/process-groups--a-practice-guide-products-9781628257830.php',
+    kind: 'standard',
+  },
+  {
+    id: 'agile-guide',
+    short: 'Agile Practice Guide. 2nd ed. — PMI, Agile Alliance, 2026',
+    site: 'ISBN 978-1-62825-831-8',
     year: 2026,
-    url: 'https://lex.uz/ru/docs/4674893',
-    kind: 'law',
+    url: 'https://newsouthbooks.com.au/books/agile-practice-guide-second-edition-english/',
+    kind: 'standard',
+  },
+  {
+    id: 'kerzner',
+    short: 'Kerzner H. Project Management: A Systems Approach to Planning, Scheduling, and Controlling. 13th ed. — Wiley, 2022',
+    site: 'wiley.com',
+    year: 2022,
+    url: 'https://www.wiley.com/en-us/Project+Management%3A+A+Systems+Approach+to+Planning%2C+Scheduling%2C+and+Controlling%2C+13th+Edition-p-9781119805373',
+    kind: 'book',
+  },
+  {
+    id: 'rogova',
+    short: 'Управление проектами: учебник и практикум / под ред. Е. М. Роговой. — М.: Юрайт, 2026. — 302 с.',
+    site: 'urait.ru',
+    year: 2026,
+    url: 'https://urait.ru/bcode/582619',
+    kind: 'book',
+  },
+  {
+    id: 'gorbashko',
+    short: 'Горбашко Е. А. Управление проектами: учебник для вузов. — М.: Юрайт, 2026. — 358 с.',
+    site: 'urait.ru',
+    year: 2026,
+    url: 'https://urait.ru/bcode/589651',
+    kind: 'book',
+  },
+  {
+    id: 'schwaber',
+    short: 'Швабер К. Скрам: гибкое управление продуктом и бизнесом. — М.: Альпина Паблишер, 2024. — 236 с.',
+    site: 'alpinabook.ru',
+    year: 2024,
+    url: 'https://alpinabook.ru/catalog/book-skram/',
+    kind: 'book',
+  },
+  {
+    id: 'pulse-2026',
+    short: 'PMI. Pulse of the Profession® 2026: Driving Success in Complex Projects',
+    site: 'pmi.org',
+    year: 2026,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pulse-of-the-profession_2026_pdf.pdf',
+    kind: 'report',
+  },
+  {
+    id: 'talent-gap-2025',
+    short: 'PMI. Global Project Management Talent Gap, 2025',
+    site: 'pmi.org',
+    year: 2025,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/talent_gap_2025-v3.pdf',
+    kind: 'report',
+  },
+  {
+    id: 'pulse-2024',
+    short: 'PMI. Pulse of the Profession® 2024: The Future of Project Work',
+    site: 'pmi.org',
+    year: 2024,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/pmi-pulse-of-the-profession-2024-report.pdf',
+    kind: 'report',
+  },
+  {
+    id: 'success-2024',
+    short: 'PMI. Maximizing Project Success, 2024',
+    site: 'pmi.org',
+    year: 2024,
+    url: 'https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/project_success_report_2024.pdf',
+    kind: 'report',
+  },
+  {
+    id: 'cbinsights-2026',
+    short: 'CB Insights. The top 9 reasons startups fail (обновлено 05.03.2026)',
+    site: 'cbinsights.com',
+    year: 2026,
+    url: 'https://www.cbinsights.com/research/report/startup-failure-reasons-top/',
+    kind: 'report',
   },
   {
     id: 'uz2030',
@@ -37,85 +126,5 @@ export const SOURCES: readonly Source[] = [
     year: 2023,
     url: 'https://lex.uz/ru/docs/6600404',
     kind: 'law',
-  },
-  {
-    id: 'kibanov',
-    short: 'Кибанов А. Я. Управление персоналом организации: учебник. — 4-е изд. — М.: ИНФРА-М, 2023. — 695 с.',
-    site: 'znanium.ru',
-    year: 2023,
-    url: 'https://znanium.ru/catalog/product/1951170',
-    kind: 'book',
-  },
-  {
-    id: 'armstrong',
-    short: "Armstrong M., Taylor S. Armstrong's Handbook of Human Resource Management Practice. 16th ed. — Kogan Page, 2023",
-    site: 'ISBN 978-1-3986-0663-0',
-    year: 2023,
-    url: 'https://openlibrary.org/books/OL38181609M',
-    kind: 'book',
-  },
-  {
-    id: 'dessler',
-    short: 'Dessler G. Human Resource Management. 17th ed. — Pearson, 2024',
-    site: 'pearson.com',
-    year: 2024,
-    url: 'https://www.pearson.com/en-us/subject-catalog/p/human-resource-management/P200000009678/9780137930654',
-    kind: 'book',
-  },
-  {
-    id: 'gallup-2026',
-    short: 'Gallup. State of the Global Workplace: 2026 Report',
-    site: 'gallup.com',
-    year: 2026,
-    url: 'https://www.gallup.com/file/workplace/707798/state-of-the-global-workplace-2026-download.pdf',
-    kind: 'report',
-  },
-  {
-    id: 'wef-2025',
-    short: 'World Economic Forum. The Future of Jobs Report 2025',
-    site: 'weforum.org',
-    year: 2025,
-    url: 'https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf',
-    kind: 'report',
-  },
-  {
-    id: 'manpower-2026',
-    short: 'ManpowerGroup. Global Talent Shortage 2026: пресс-релиз от 26.02.2026',
-    site: 'manpowergroup.com',
-    year: 2026,
-    url: 'https://investor.manpowergroup.com/node/68796',
-    kind: 'report',
-  },
-  {
-    id: 'linkedin-2024',
-    short: 'LinkedIn Learning. Workplace Learning Report 2024',
-    site: 'linkedin.com',
-    year: 2024,
-    url: 'https://learning.linkedin.com/content/dam/lem/business/en/learn/resources/workplace-learning-report-2024/LinkedIn-Workplace-Learning-Report-2024.pdf',
-    kind: 'report',
-  },
-  {
-    id: 'deloitte-2025',
-    short: 'Deloitte. 2025 Global Human Capital Trends',
-    site: 'deloitte.com',
-    year: 2025,
-    url: 'https://www.deloitte.com/us/en/services/consulting/articles/human-capital-and-hr-trends-thought-leadership.html',
-    kind: 'report',
-  },
-  {
-    id: 'stat-uz-2026',
-    short: 'Нацкомстат РУз. Среднемесячная номинальная начисленная заработная плата, январь–июнь 2026 г.',
-    site: 'stat.uz',
-    year: 2026,
-    url: 'https://stat.uz/img/press-relizlar/ish-haqi--rus_p84215.pdf',
-    kind: 'stat',
-  },
-  {
-    id: 'hh-2025',
-    short: 'hh.uz. Рынок труда в сфере информационных технологий: итоги 2025 года (18.02.2026)',
-    site: 'hh.uz',
-    year: 2026,
-    url: 'https://hh.uz/article/34221',
-    kind: 'stat',
   },
 ] as const;
