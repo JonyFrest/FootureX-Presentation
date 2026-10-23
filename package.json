@@ -2,7 +2,7 @@
   "name": "footurex-presentation-os",
   "private": true,
   "version": "1.0.0",
-  "description": "FootureX Presentation OS — интерактивная 3D-презентация «Управление персоналом FootureX Uzbekistan»",
+  "description": "FootureX Presentation OS — интерактивная 3D-презентация «Управление проектами FootureX Uzbekistan»",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,8 @@
     "typecheck": "tsc -b --pretty",
     "test:sums": "node scripts/check-project.mjs",
     "test:nav": "node scripts/nav-test.mjs",
+    "test:remote": "node scripts/remote-test.mjs",
+    "test:qr": "node scripts/check-qr.mjs",
     "qa": "node scripts/qa.mjs",
     "shots": "node scripts/screenshots.mjs"
   },

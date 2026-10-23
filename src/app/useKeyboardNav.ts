@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { usePresentation } from './store';
 import { toggleFullscreen } from '@/hooks/useFullscreen';
 import { openSpeakerWindow } from './speakerChannel';
+import { toggleRemoteDialog, useRemote } from './remote/presenterRemote';
 
 function isTypingTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false;
@@ -15,7 +16,7 @@ function isActivatable(target: EventTarget | null): boolean {
 
 /**
  * Клавиатура: → / Space / PageDown — далее; ← / PageUp — назад; Home / End;
- * F — полный экран; M — список сцен; S — окно докладчика; Esc — закрыть меню
+ * F — полный экран; M — список сцен; S — окно докладчика; P — пульт на телефоне; Esc — закрыть меню
  * (выход из полноэкранного режима по Esc выполняет браузер).
  */
 export function useKeyboardNav(): void {
@@ -24,6 +25,8 @@ export function useKeyboardNav(): void {
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
       if (isTypingTarget(event.target)) return;
       const store = usePresentation.getState();
+      // Окно пульта обрабатывает клавиши само (Esc, Tab).
+      if (useRemote.getState().dialogOpen) return;
 
       if (event.key === 'Escape') {
         if (store.menuOpen) {
@@ -86,6 +89,13 @@ export function useKeyboardNav(): void {
         case 'Ы':
           event.preventDefault();
           openSpeakerWindow();
+          break;
+        case 'p':
+        case 'P':
+        case 'з':
+        case 'З':
+          event.preventDefault();
+          toggleRemoteDialog();
           break;
         default:
           break;

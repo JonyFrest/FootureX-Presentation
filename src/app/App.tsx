@@ -9,6 +9,8 @@ import { Stage } from './Stage';
 import { usePresentation } from './store';
 import { useKeyboardNav } from './useKeyboardNav';
 import { useSpeakerBridge } from './useSpeakerBridge';
+import { RemoteDialog } from './remote/RemoteDialog';
+import { resumeRemote } from './remote/presenterRemote';
 
 /** Номер сцены в адресе (#/07) и заголовок вкладки — перезагрузка не сбрасывает позицию. */
 function useUrlSync() {
@@ -60,6 +62,7 @@ export default function App() {
   useKeyboardNav();
   useSpeakerBridge();
   useUrlSync();
+  useEffect(resumeRemote, []);
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-deep text-white">
@@ -72,6 +75,7 @@ export default function App() {
           <TopBar />
           <NavBar />
           <SceneMenu />
+          <RemoteDialog />
         </>
       )}
       <LiveRegion />
