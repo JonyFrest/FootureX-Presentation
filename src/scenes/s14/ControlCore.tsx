@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import { Gauge } from 'lucide-react';
+import { LOW_TIER } from '@/app/deviceTier';
 import { CORE, PILLARS } from './data';
 
 /* Координаты viewBox. Ядро «Контроль» в центре, четыре сегмента-измерения на диагоналях,
@@ -47,7 +48,8 @@ interface ControlCoreProps {
 export function ControlCore({ selected, onSelect, ready, reducedMotion, compact = false }: ControlCoreProps) {
   const uid = useId().replace(/:/g, '');
   const drawn = ready || reducedMotion;
-  const spin = ready && !reducedMotion;
+  // Телефон: без вращения орбит — SMIL-поворот перерисовывает всё ядро в каждом кадре.
+  const spin = ready && !reducedMotion && !LOW_TIER;
 
   return (
     <div className="relative mx-auto w-full" style={{ aspectRatio: `${VB_W} / ${VB_H}`, maxWidth: compact ? 460 : 680 }}>

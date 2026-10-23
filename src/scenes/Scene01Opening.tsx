@@ -3,7 +3,11 @@ import { motion } from 'motion/react';
 import { SceneFrame, Reveal, useScene } from '@/components/scene';
 import { BrandLogo } from '@/components/brand/BrandLogo';
 import { useFinePointer, useIsCompact } from '@/hooks/useMediaQuery';
+import { LOW_TIER } from '@/app/deviceTier';
 import { MaskLine } from './s01/MaskLine';
+
+/** Телефон: свечение за логотипом без blur — градиент и так мягкий, а размытие пересчитывалось бы в каждом кадре появления. */
+const GLOW_BLUR = LOW_TIER ? '' : 'blur-xl';
 
 /**
  * 01 · Opening — кинематографичная обложка. За контентом — 3D-стадион в фирменном свете
@@ -17,7 +21,7 @@ export default function Scene01Opening() {
         <Reveal delay={0} y={-12} className="relative">
           <span
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[260%] w-[180%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(37,80,250,0.38),transparent)] blur-xl"
+            className={`pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[260%] w-[180%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(37,80,250,0.38),transparent)] ${GLOW_BLUR}`}
           />
           <BrandLogo size="clamp(24px, calc(var(--u) * 2.05), 40px)" tagline="Uzbekistan" />
         </Reveal>

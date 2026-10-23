@@ -3,9 +3,11 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { SCENES, type CameraPose } from '@/data/scenes';
-import { TRANSITION, EASE } from '@/animations/timing';
+import { TRANSITION, TRANSITION_LITE, EASE } from '@/animations/timing';
 import { usePresentation } from '@/app/store';
+import { LOW_TIER } from '@/app/deviceTier';
 import { prefersReducedMotion } from '@/hooks/useReducedMotion';
+import { requestFullRate } from './frameRate';
 
 const DEFAULT_FOV = 42;
 
@@ -87,6 +89,7 @@ export function CameraRig({ parallax = true, drift = true }: { parallax?: boolea
       from.current = intro;
       progress.current.t = 0;
       gsap.to(progress.current, { t: 1, duration: 2.4, ease: 'power3.out' });
+      requestFullRate(2.4);
     }
 
     let tween: gsap.core.Tween | null = null;
@@ -97,11 +100,9 @@ export function CameraRig({ parallax = true, drift = true }: { parallax?: boolea
       to.current = toPose(SCENES[state.index].camera);
       progress.current.t = 0;
       const fast = prefersReducedMotion() || state.instant;
-      tween = gsap.to(progress.current, {
-        t: 1,
-        duration: fast ? TRANSITION.reduced : TRANSITION.camera,
-        ease: fast ? 'power1.out' : EASE.camera,
-      });
+      const duration = fast ? TRANSITION.reduced : LOW_TIER ? TRANSITION_LITE.camera : TRANSITION.camera;
+      tween = gsap.to(progress.current, { t: 1, duration, ease: fast ? 'power1.out' : EASE.camera });
+      requestFullRate(duration);
     });
     return () => {
       unsubscribe();

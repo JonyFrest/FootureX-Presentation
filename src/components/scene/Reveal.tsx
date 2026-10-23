@@ -1,6 +1,10 @@
 import { useEffect, useState, type ElementType, type ReactNode } from 'react';
 import { motion } from 'motion/react';
+import { LOW_TIER } from '@/app/deviceTier';
 import { useScene } from './SceneContext';
+
+/** Телефон: слой композитора на время появления (кадры каскада не перерисовывают содержимое). */
+const ANIMATING_LAYER = { willChange: 'transform, opacity' } as const;
 
 interface RevealProps {
   children: ReactNode;
@@ -34,6 +38,7 @@ export function Reveal({
   const { active, ready, enterDelay, reducedMotion } = useScene();
   const trigger = waitReady ? ready : active;
   const [shown, setShown] = useState(trigger);
+  const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     if (trigger) setShown(true);
@@ -52,6 +57,9 @@ export function Reveal({
           ? { duration: 0.2, delay: 0 }
           : { duration: 0.8, delay: baseDelay + delay, ease: [0.16, 1, 0.3, 1] }
       }
+      // После появления слой снимается — не держим лишнюю GPU-память.
+      style={LOW_TIER && shown && !settled ? ANIMATING_LAYER : undefined}
+      onAnimationComplete={LOW_TIER && !settled ? () => setSettled(true) : undefined}
     >
       {children}
     </Tag>

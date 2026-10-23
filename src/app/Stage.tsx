@@ -1,13 +1,14 @@
-import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, type PointerEvent, type MouseEvent } from 'react';
+import { Suspense, startTransition, useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent, type MouseEvent } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import gsap from 'gsap';
 import { SCENES } from '@/data/scenes';
-import { TRANSITION, EASE, TRANSITION_TOTAL } from '@/animations/timing';
+import { TRANSITION, TRANSITION_LITE, EASE, TRANSITION_TOTAL } from '@/animations/timing';
 import { SceneContext, type SceneContextValue } from '@/components/scene/SceneContext';
 import { getSceneComponent, preloadScenes } from '@/scenes/registry';
 import { useReducedMotion, prefersReducedMotion } from '@/hooks/useReducedMotion';
 import { useFinePointer, useIsCompact } from '@/hooks/useMediaQuery';
 import { usePresentation } from './store';
+import { LOW_TIER } from './deviceTier';
 import { hasTextSelection, isInteractiveTarget } from './interactive';
 
 /** Максимальный наклон контентного слоя от курсора, градусы. */
@@ -20,13 +21,19 @@ function SceneLayer({ index, current }: { index: number; current: boolean }) {
   const ready = usePresentation((s) => s.ready && current);
   const instant = usePresentation((s) => s.instant);
   const reducedMotion = useReducedMotion();
+  // Телефон: новую сцену React строит «нарезкой» (startTransition, без блокировки потока), пока
+  // уходит прежняя и летит камера, — вместо одной длинной задачи в первом кадре перехода.
+  const [mounted, setMounted] = useState(() => !LOW_TIER || usePresentation.getState().transitionId === 0);
+  useEffect(() => {
+    if (!mounted) startTransition(() => setMounted(true));
+  }, [mounted]);
 
   const value = useMemo<SceneContextValue>(
     () => ({
       meta,
       active: current,
       ready,
-      enterDelay: instant || reducedMotion ? 0.05 : TRANSITION.inDelay * 0.85,
+      enterDelay: instant || reducedMotion ? 0.05 : (LOW_TIER ? TRANSITION_LITE.inDelay : TRANSITION.inDelay) * 0.85,
       reducedMotion,
     }),
     [meta, current, ready, instant, reducedMotion],
@@ -34,9 +41,7 @@ function SceneLayer({ index, current }: { index: number; current: boolean }) {
 
   return (
     <SceneContext.Provider value={value}>
-      <Suspense fallback={null}>
-        <Component />
-      </Suspense>
+      <Suspense fallback={null}>{mounted ? <Component /> : null}</Suspense>
     </SceneContext.Provider>
   );
 }
@@ -75,13 +80,23 @@ export function Stage() {
     if (!incoming) return;
 
     const reduced = prefersReducedMotion();
-    const tl = gsap.timeline({ onComplete: () => completeTransition(id) });
+    // Телефон: will-change — только на время анимации: слой заранее выносится на композитор
+    // (кадры перехода без перерастеризации), а после перехода не держит лишнюю GPU-память.
+    const animated = outgoing ? [incoming, outgoing] : [incoming];
+    const releaseLayers = () => animated.forEach((el) => (el.style.willChange = ''));
+    if (LOW_TIER) animated.forEach((el) => (el.style.willChange = 'transform, opacity'));
+    const tl = gsap.timeline({
+      onComplete: () => {
+        releaseLayers();
+        completeTransition(id);
+      },
+    });
 
     if (id === 0) {
       // Первое появление презентации.
       tl.fromTo(
         incoming,
-        { autoAlpha: 0, scale: reduced ? 1 : 0.96 },
+        { autoAlpha: 0, scale: reduced || LOW_TIER ? 1 : 0.96 },
         { autoAlpha: 1, scale: 1, duration: reduced ? TRANSITION.reduced : 1.1, ease: EASE.in, delay: 0.15 },
       );
     } else if (instant || reduced) {
@@ -91,6 +106,16 @@ export function Stage() {
         { autoAlpha: 0, scale: 1, xPercent: 0 },
         { autoAlpha: 1, duration: TRANSITION.reduced, ease: 'none' },
         TRANSITION.reduced * 0.4,
+      );
+    } else if (LOW_TIER) {
+      // Телефон: только сдвиг и прозрачность (композитор, без перерастеризации), короче.
+      const { out, inDelay, in: inDuration, shift } = TRANSITION_LITE;
+      if (outgoing) tl.to(outgoing, { autoAlpha: 0, xPercent: -direction * shift, duration: out, ease: EASE.out }, 0);
+      tl.fromTo(
+        incoming,
+        { autoAlpha: 0, xPercent: direction * shift },
+        { autoAlpha: 1, xPercent: 0, duration: inDuration, ease: EASE.in },
+        inDelay,
       );
     } else {
       if (outgoing) {
@@ -120,6 +145,7 @@ export function Stage() {
     return () => {
       window.clearTimeout(safety);
       tl.kill();
+      releaseLayers();
     };
   }, [transitionId]);
 

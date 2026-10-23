@@ -69,6 +69,13 @@
   --grad-text: linear-gradient(100deg, #ffffff 0%, #dce7ff 40%, #8eb4ff 70%, #2593fa 100%);
 }
 
+/* Телефон (data-perf="low", см. src/app/deviceTier.ts): стекло без backdrop-filter, поэтому
+   подложка плотнее — читаемость та же, фирменный тёмно-синий тон тот же. */
+html[data-perf='low'] {
+  --glass-bg: rgba(14, 22, 41, 0.84);
+  --glass-bg-strong: rgba(10, 16, 32, 0.9);
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -204,6 +211,13 @@
     backdrop-filter: blur(22px) saturate(150%);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 70px -30px rgba(0, 0, 0, 0.85);
   }
+  /* Телефон: размытие фона под стеклом — самая дорогая операция композитора. 3D-фон
+     перерисовывается каждый кадр, и blur пришлось бы пересчитывать в каждом кадре при DPR 2–3. */
+  html[data-perf='low'] .glass,
+  html[data-perf='low'] .glass-strong {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
   .glass-hover {
     transition:
       transform 0.35s var(--ease-out-expo),
@@ -293,6 +307,32 @@
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Расходящееся кольцо-пульс (текущий этап дорожной карты на телефоне): только transform
+   и opacity — анимация идёт на композиторе. */
+@keyframes fx-pulse-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+.fx-pulse-ring {
+  animation: fx-pulse-ring 2.4s cubic-bezier(0, 0, 0.58, 1) infinite;
+}
+
+/* Телефон: размытые подложки (меню сцен, плановые карточки) — плотная заливка вместо blur. */
+@layer utilities {
+  html[data-perf='low'] .backdrop-blur-sm,
+  html[data-perf='low'] .backdrop-blur-md {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: rgba(7, 10, 18, 0.82);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
