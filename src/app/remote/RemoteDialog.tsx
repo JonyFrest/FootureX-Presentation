@@ -38,7 +38,7 @@ export function RemoteDialog() {
   }, [phoneOnline, open, setOpen]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' || (['p', 'P', 'з', 'З'].includes(e.key) && !e.altKey && !e.ctrlKey && !e.metaKey)) {
       e.preventDefault();
       setOpen(false);
       return;
