@@ -239,8 +239,11 @@ function facadeSkin(): THREE.Mesh {
   return mesh;
 }
 
-/** Мачты освещения с конусами света. */
-function floodlights(): THREE.Group {
+/**
+ * Мачты освещения с конусами света. lite (телефон): у конуса рисуются только внешние грани
+ * с удвоенной яркостью — при аддитивном смешивании вид тот же, а заливка пикселей вдвое меньше.
+ */
+function floodlights(lite: boolean): THREE.Group {
   const group = new THREE.Group();
   const corners: [number, number][] = [
     [-39, -29],
@@ -251,15 +254,15 @@ function floodlights(): THREE.Group {
   const coneMaterial = new THREE.ShaderMaterial({
     transparent: true,
     depthWrite: false,
-    side: THREE.DoubleSide,
+    side: lite ? THREE.FrontSide : THREE.DoubleSide,
     blending: THREE.AdditiveBlending,
-    uniforms: { uColor: { value: BRAND.highlight.clone() } },
+    uniforms: { uColor: { value: BRAND.highlight.clone() }, uAlpha: { value: lite ? 0.14 : 0.07 } },
     vertexShader: /* glsl */ `
       varying float vH;
       void main() { vH = uv.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: /* glsl */ `
-      uniform vec3 uColor; varying float vH;
-      void main() { gl_FragColor = vec4(uColor, pow(vH, 2.2) * 0.07); }`,
+      uniform vec3 uColor; uniform float uAlpha; varying float vH;
+      void main() { gl_FragColor = vec4(uColor, pow(vH, 2.2) * uAlpha); }`,
   });
   const mastMaterial = new THREE.MeshBasicMaterial({ color: '#1a2b57' });
   const mastGeometry = new THREE.CylinderGeometry(0.25, 0.45, 30, 8);
@@ -293,8 +296,8 @@ function floodlights(): THREE.Group {
   return group;
 }
 
-/** Футуристический стадион FootureX в фирменном синем освещении. */
-export function Stadium({ animate = true }: { animate?: boolean }) {
+/** Футуристический стадион FootureX в фирменном синем освещении. lite — облегчённый вариант для телефонов. */
+export function Stadium({ animate = true, lite = false }: { animate?: boolean; lite?: boolean }) {
   const { group, bowlMesh } = useMemo(() => {
     const g = new THREE.Group();
     g.add(pitchSurface());
@@ -307,14 +310,14 @@ export function Stadium({ animate = true }: { animate?: boolean }) {
     g.add(ellipseLine(BOWL.outerA + 0.6, BOWL.outerB + 0.6, 0.15, BRAND.primary, 0.7));
     g.add(roofHalo());
     g.add(facadeSkin());
-    g.add(floodlights());
+    g.add(floodlights(lite));
     // Мягкое свечение над полем.
     const haze = new THREE.Sprite(glowMaterial('#2550FA', 0.35));
     haze.position.set(0, 6, 0);
     haze.scale.set(90, 40, 1);
     g.add(haze);
     return { group: g, bowlMesh: b };
-  }, []);
+  }, [lite]);
 
   useFrame((_, delta) => {
     if (!animate) return;

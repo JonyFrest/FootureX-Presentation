@@ -17,6 +17,19 @@ export const TRANSITION = {
 
 export const TRANSITION_TOTAL = TRANSITION.inDelay + TRANSITION.in; // ≈ 1.3 с
 
+/**
+ * Облегчённый переход для телефонов (src/app/deviceTier.ts): короче и без масштабирования —
+ * слой сцены только сдвигается и проявляется, поэтому не перерастеризуется в каждом кадре.
+ */
+export const TRANSITION_LITE = {
+  out: 0.32,
+  camera: 1.0,
+  inDelay: 0.34,
+  in: 0.56,
+  /** Сдвиг слоя по горизонтали, % ширины. */
+  shift: 4,
+} as const; // переход ≈ 0.9 с, перелёт камеры 1 с
+
 export const EASE = {
   out: 'power2.in',
   in: 'power3.out',
