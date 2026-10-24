@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useScene } from '@/components/scene';
+import { LOW_TIER } from '@/app/deviceTier';
 import { pad2 } from '@/data/scenes';
 import { GOAL_MARK, TASKS, sceneRange, tasksLabel, type GoalTask } from './data';
 
@@ -21,11 +22,12 @@ interface GoalCoreProps {
 
 /**
  * Светящееся ядро цели: концентрические кольца, медленное вращение (только после
- * остановки камеры и без reduced motion), четыре точки подключения задач.
+ * остановки камеры, без reduced motion и не на телефоне: вращение SVG перерисовывает
+ * ядро в каждом кадре), четыре точки подключения задач.
  */
 export function GoalCore({ active, className = '' }: GoalCoreProps) {
   const { ready, reducedMotion } = useScene();
-  const spin = ready && !reducedMotion;
+  const spin = ready && !reducedMotion && !LOW_TIER;
 
   return (
     <div className={`relative aspect-square ${className}`}>

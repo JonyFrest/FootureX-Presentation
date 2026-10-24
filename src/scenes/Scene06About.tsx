@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { SceneFrame, Reveal, useScene } from '@/components/scene';
 import { pad2 } from '@/data/scenes';
 import { useIsCompact } from '@/hooks/useMediaQuery';
+import { LOW_TIER } from '@/app/deviceTier';
 import { MaskLine } from './s01/MaskLine';
 import { PILLARS, type Pillar } from './s06/pillars';
 
@@ -225,14 +226,18 @@ function PillarText({ pillar, small = false }: { pillar: Pillar; small?: boolean
   return <span className={`${size} text-pretty text-ice`}>{pillar.line}</span>;
 }
 
+/** Размытие при смене строки — только на десктопе: на телефоне анимированный blur слишком дорог. */
+const LINE_BLUR = LOW_TIER ? {} : { filter: 'blur(4px)' };
+const LINE_SHARP = LOW_TIER ? {} : { filter: 'blur(0px)' };
+
 function DetailLine({ pillar }: { pillar: Pillar }) {
   const { reducedMotion } = useScene();
   return (
     <motion.p
       className="flex items-start justify-center"
-      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 6, filter: 'blur(4px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -4, filter: 'blur(4px)' }}
+      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 6, ...LINE_BLUR }}
+      animate={{ opacity: 1, y: 0, ...LINE_SHARP }}
+      exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -4, ...LINE_BLUR }}
       transition={{ duration: reducedMotion ? 0.12 : 0.28, ease: [0.16, 1, 0.3, 1] }}
     >
       <PillarText pillar={pillar} />

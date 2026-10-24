@@ -9,6 +9,9 @@
 
 ```
 src/app/            App, Stage (переходы GSAP + параллакс + клик/свайп), store (zustand), клавиатура, окно докладчика
+  remote/           пульт на телефоне: окно с QR-кодом (RemoteDialog), генератор QR, клиент ретранслятора
+  speaker/          окно докладчика: раскладки SpeakerDesktop / SpeakerMobile, синхронизация, таймер
+api/remote.ts       ретранслятор пульта: функция Vercel; в `vite dev`/`vite preview` — тот же код через плагин
 src/components/
   scene/            SceneFrame, SceneHeader, Reveal, useScene()  ← используйте в каждой сцене
   ui/               Glass, Stat, CountUp

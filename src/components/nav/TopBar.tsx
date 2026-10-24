@@ -1,8 +1,9 @@
-import { LayoutGrid, Maximize, Minimize, MonitorPlay } from 'lucide-react';
+import { LayoutGrid, Maximize, Minimize, MonitorPlay, Smartphone } from 'lucide-react';
 import { BrandLogo } from '@/components/brand/BrandLogo';
 import { usePresentation } from '@/app/store';
 import { useFullscreen } from '@/hooks/useFullscreen';
 import { openSpeakerWindow } from '@/app/speakerChannel';
+import { useRemote } from '@/app/remote/presenterRemote';
 import { SCENES } from '@/data/scenes';
 
 /** Верхняя панель: знак FootureX, тема и служебные кнопки. */
@@ -11,6 +12,11 @@ export function TopBar() {
   const menuOpen = usePresentation((s) => s.menuOpen);
   const setMenuOpen = usePresentation((s) => s.setMenuOpen);
   const { isFullscreen, toggle, supported } = useFullscreen();
+  const remoteOpen = useRemote((s) => s.dialogOpen);
+  const setRemoteOpen = useRemote((s) => s.setDialogOpen);
+  const remoteStatus = useRemote((s) => s.status);
+  const phoneOnline = useRemote((s) => s.phoneOnline);
+  const remoteDot = remoteStatus === 'off' || remoteStatus === 'unavailable' ? null : phoneOnline ? 'bg-[#6ee7a8]' : 'bg-[#ffc46b]';
   const hideBrand = SCENES[index].id === 'opening' || SCENES[index].id === 'final';
 
   return (
@@ -35,6 +41,17 @@ export function TopBar() {
       <div className="pointer-events-auto flex items-center gap-2">
         <IconButton label="Список сцен (M)" onClick={() => setMenuOpen(!menuOpen)} active={menuOpen}>
           <LayoutGrid className="size-[18px]" aria-hidden />
+        </IconButton>
+        <IconButton
+          label={phoneOnline ? 'Пульт на телефоне: подключён (P)' : 'Пульт на телефоне (P)'}
+          onClick={() => setRemoteOpen(!remoteOpen)}
+          active={remoteOpen}
+          className="relative"
+        >
+          <Smartphone className="size-[18px]" aria-hidden />
+          {remoteDot ? (
+            <span className={`absolute top-[18%] right-[18%] size-2 rounded-full ring-2 ring-deep ${remoteDot}`} aria-hidden data-remote-dot />
+          ) : null}
         </IconButton>
         <IconButton label="Режим докладчика (S)" onClick={openSpeakerWindow} className="hidden sm:flex">
           <MonitorPlay className="size-[18px]" aria-hidden />

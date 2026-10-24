@@ -122,7 +122,7 @@ export function SceneMenu() {
               })}
             </ol>
             <p className="t-micro mt-[var(--gap-2)] text-mute">
-              Клавиши: ← → пробел — листать · Home / End — начало и конец · F — полный экран · S — окно докладчика · Esc — закрыть
+              Клавиши: ← → пробел — листать · Home / End — начало и конец · F — полный экран · S — окно докладчика · P — пульт на телефоне · Esc — закрыть
             </p>
           </motion.div>
         </motion.div>

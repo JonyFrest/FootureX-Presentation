@@ -194,7 +194,8 @@ function Connector({ reducedMotion }: { reducedMotion: boolean }) {
         <span className="fx-s05-dot absolute left-1/2 top-1 size-1.5 -translate-x-1/2 rounded-full bg-white shadow-[0_0_8px_2px_rgba(37,147,250,0.8)]" />
       ) : null}
       <ArrowDown className="relative size-4 text-highlight" />
-      <style>{`@keyframes fx-s05-fall{0%{top:4px;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:calc(100% - 8px);opacity:0}}.fx-s05-dot{animation:fx-s05-fall 1.8s ease-in-out infinite}`}</style>
+      {/* Только transform и opacity (top вызывал раскладку в каждом кадре): путь тот же — от top 4px до 100% − 8px. */}
+      <style>{`@keyframes fx-s05-fall{0%{transform:translateY(0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(calc(2rem - 8px));opacity:0}}.fx-s05-dot{animation:fx-s05-fall 1.8s ease-in-out infinite}`}</style>
     </div>
   );
 }

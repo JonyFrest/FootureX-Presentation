@@ -41,12 +41,8 @@ export function TimelineMobile({ selected, onSelect, ready, reducedMotion }: Tim
                 }`}
               >
                 {!planned && ready && !reducedMotion ? (
-                  <motion.span
-                    className="absolute inset-0 rounded-full border-2 border-secondary"
-                    initial={{ scale: 1, opacity: 0.7 }}
-                    animate={{ scale: 1.8, opacity: 0 }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
-                  />
+                  // CSS-анимация (transform + opacity) идёт на композиторе, без работы JS в каждом кадре.
+                  <span className="fx-pulse-ring absolute inset-0 rounded-full border-2 border-secondary" />
                 ) : null}
                 <Icon className="size-5" strokeWidth={1.8} />
               </span>

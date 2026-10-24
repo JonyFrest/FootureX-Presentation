@@ -147,9 +147,12 @@ export function Particles({ count = 1600, animate = true }: { count?: number; an
     return p;
   }, [count]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
+    const uniforms = (points.material as THREE.ShaderMaterial).uniforms;
+    // Размер точек — по текущей плотности пикселей (её меняет AdaptiveQuality).
+    uniforms.uPixelRatio.value = state.viewport.dpr;
     if (!animate) return;
-    (points.material as THREE.ShaderMaterial).uniforms.uTime.value += Math.min(delta, 0.1);
+    uniforms.uTime.value += Math.min(delta, 0.1);
   });
   useEffect(() => () => {
     points.geometry.dispose();

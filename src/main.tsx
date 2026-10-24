@@ -1,5 +1,6 @@
 import { StrictMode, Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
+import './app/deviceTier';
 import './styles/fonts';
 import './styles/index.css';
 
