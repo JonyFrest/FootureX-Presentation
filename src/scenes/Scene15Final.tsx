@@ -3,6 +3,7 @@ import { SceneFrame, Reveal } from '@/components/scene';
 import { Glass } from '@/components/ui';
 import { BrandLogo } from '@/components/brand/BrandLogo';
 import { SOURCES } from '@/data/sources';
+import { AUTHORS, GROUP, TEACHER } from '@/data/authors';
 import { pad2 } from '@/data/scenes';
 
 const KIND_LABEL = { standard: 'Стандарт', book: 'Учебник', report: 'Исследование', law: 'Право' } as const;
@@ -27,7 +28,7 @@ export default function Scene15Final() {
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="t-body mt-[var(--gap-3)] max-w-[34ch] text-soft">Готов ответить на ваши вопросы.</p>
+            <p className="t-body mt-[var(--gap-3)] max-w-[34ch] text-soft">Готовы ответить на ваши вопросы.</p>
           </Reveal>
           <Reveal delay={0.22}>
             <p className="mt-[var(--gap-3)] font-display text-highlight" style={{ fontSize: 'var(--fs-h3)' }}>
@@ -36,10 +37,17 @@ export default function Scene15Final() {
           </Reveal>
           <Reveal delay={0.3} className="mt-[var(--gap-4)] w-full">
             <dl className="t-small grid max-w-[520px] grid-cols-[auto_1fr] gap-x-5 gap-y-1.5 border-l border-secondary/40 pl-4">
-              <dt className="text-mute">Студент</dt>
-              <dd className="text-ice">Зафарбек Якубов · RB 25-01</dd>
+              <dt className="text-mute">Команда</dt>
+              <dd className="text-ice">
+                {AUTHORS.map((name) => (
+                  <span key={name} className="block">
+                    {name}
+                  </span>
+                ))}
+                <span className="block text-mute">Группа {GROUP}</span>
+              </dd>
               <dt className="text-mute">Преподаватель</dt>
-              <dd className="text-ice">Парвиз Мамедов</dd>
+              <dd className="text-ice">{TEACHER}</dd>
               <dt className="text-mute">Университет</dt>
               <dd className="text-ice">TIUE · Ташкент, 2026</dd>
             </dl>

@@ -4,6 +4,7 @@ import { SceneFrame, Reveal, useScene } from '@/components/scene';
 import { BrandLogo } from '@/components/brand/BrandLogo';
 import { useFinePointer, useIsCompact } from '@/hooks/useMediaQuery';
 import { LOW_TIER } from '@/app/deviceTier';
+import { AUTHORS, GROUP, TEACHER } from '@/data/authors';
 import { MaskLine } from './s01/MaskLine';
 
 /** Телефон: свечение за логотипом без blur — градиент и так мягкий, а размытие пересчитывалось бы в каждом кадре появления. */
@@ -99,13 +100,14 @@ function Key({ children }: { children: ReactNode }) {
 
 interface MetaItem {
   label: string;
-  value: string;
+  /** Несколько значений — по одному в строке (авторы). */
+  value: string | readonly string[];
   sub: string;
 }
 
 const META: readonly MetaItem[] = [
-  { label: 'Студент', value: 'Зафарбек Якубов', sub: 'Группа RB 25-01' },
-  { label: 'Преподаватель', value: 'Парвиз Мамедов', sub: 'Дисциплина «Управление проектами»' },
+  { label: 'Команда', value: AUTHORS, sub: `Группа ${GROUP}` },
+  { label: 'Преподаватель', value: TEACHER, sub: 'Дисциплина «Управление проектами»' },
   {
     label: 'Университет · TIUE',
     value: 'Tashkent International University of Education',
@@ -133,7 +135,15 @@ function MetaStrip() {
           className={`flex min-w-0 flex-col gap-0.5 px-[var(--gap-3)] py-[var(--gap-2)] text-center md:flex-auto md:px-[var(--gap-4)] md:py-[var(--gap-3)] ${CELL_CLASSES[i]}`}
         >
           <dt className="t-eyebrow tracking-[0.12em] text-highlight/80 md:tracking-[0.22em]">{item.label}</dt>
-          <dd className="t-small mt-1 font-semibold text-white">{item.value}</dd>
+          <dd className="t-small mt-1 font-semibold text-white">
+            {typeof item.value === 'string'
+              ? item.value
+              : item.value.map((name) => (
+                  <span key={name} className="block whitespace-nowrap">
+                    {name}
+                  </span>
+                ))}
+          </dd>
           <dd className="t-micro text-soft">{item.sub}</dd>
         </div>
       ))}
