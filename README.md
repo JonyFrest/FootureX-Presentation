@@ -203,6 +203,7 @@ scripts/        screenshots.mjs, qa.mjs, nav-test.mjs, remote-test.mjs, perf.mjs
 ```
 
 Как добавить или изменить сцену — [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+Полный контекст проекта (история, решения, публикация, что осталось) — [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md).
 
 Слои разделены: **3D-canvas** (фон, `pointer-events: none`) → **слой контента** (HTML-сцены)
 → **навигация**. Конфигурация сцен централизована в `src/data/scenes.ts`: порядок, ракурс
